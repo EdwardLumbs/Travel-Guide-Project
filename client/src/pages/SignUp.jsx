@@ -16,18 +16,18 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      }) 
+      const res = await fetch('/api/auth/signup', 
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }) 
       const data = await res.json();
 
-      if (data.success === 'false') {
+      if (data.success === false) {
         return;
       }
 

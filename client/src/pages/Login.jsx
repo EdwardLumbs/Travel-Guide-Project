@@ -60,7 +60,7 @@ export default function Login() {
         </div>
 
         <form 
-          onClick={handleSubmit}
+          onSubmit={handleSubmit}
           className='mt-6 flex flex-col gap-4 items-center'
         >
           <h1 className='font-semibold text-xl'>

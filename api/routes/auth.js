@@ -56,4 +56,55 @@ router.post('/login', async (req, res, next) => {
     }
 })
 
+router.post('/google', async (req, res, next) => {
+    const { username, email, photo } = req.body;
+
+    try {
+        const data = await pool.query("SELECT * FROM users WHERE email = $1",
+        [email]);
+
+        const user = data.rows[0];
+
+        if (!data) {
+            const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+        
+            try {
+                await pool.query("INSERT INTO users (username, email, password, photo) VALUES ($1, $2, $3, $4)",
+                    [username, email, hashedPassword, photo]);
+
+                res.status(201).json("User Created Successfully");
+            } catch (error) {
+                next(error);
+            }
+
+            const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const refreshToken = jwt.sign({id: user.id}, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
+
+            const {password: pass, ...rest} = user;
+
+            res
+                .cookie('access_token', token, {maxAge: 3600000, httpOnly: true, sameSite: 'strict' })
+                .cookie('refresh_token', refreshToken, {httpOnly: true, sameSite: 'strict' })
+                .status(200)
+                .json(rest)
+
+        } else {
+            const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const refreshToken = jwt.sign({id: user.id}, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
+
+            const {password: pass, ...rest} = user;
+
+            res
+                .cookie('access_token', token, {maxAge: 3600000, httpOnly: true, sameSite: 'strict' })
+                .cookie('refresh_token', refreshToken, {httpOnly: true, sameSite: 'strict' })
+                .status(200)
+                .json(rest)
+        }
+
+    } catch (error) {
+        next(error);
+    }
+})
+
 export default router;
