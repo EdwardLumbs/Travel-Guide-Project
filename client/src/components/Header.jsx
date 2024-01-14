@@ -4,7 +4,6 @@ export default function Header() {
   return (
     // change background color to white for finished layout
     // add custom 8xl spacing for max width 
-    // change font style of home button (maybe cursive)
     // change font style of header
     <header className='bg-slate-50'>
         <div className='flex justify-between max-w-7xl items-center px-3 py-5 mx-auto'>
