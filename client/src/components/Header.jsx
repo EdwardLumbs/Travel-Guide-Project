@@ -9,7 +9,14 @@ export default function Header() {
     <header className='bg-slate-50'>
         <div className='flex justify-between max-w-7xl items-center px-3 py-5 mx-auto'>
             <Link to='/'>
-                <div>EDWARD'S TRAVEL GUIDE</div>
+                <div className='text-xl'>
+                    <span className="font-logo font-extrabold text-green-700">
+                        Edward's
+                    </span>
+                    <span className="font-logo text-green-700">
+                      TravelGuide
+                    </span>
+                </div>
             </Link>
         
             <ul className='flex gap-4'>
@@ -28,11 +35,6 @@ export default function Header() {
                 <Link to='/login'>
                     <li className='border border-blue-600 rounded-lg text-blue-600 px-7 py-1'>
                         LOGIN
-                    </li>
-                </Link>
-                <Link to='/sign-up'>
-                    <li className='border border-blue-600 bg-blue-600 rounded-lg text-white px-7 py-1'>
-                        SIGNUP
                     </li>
                 </Link>
             </ul>
