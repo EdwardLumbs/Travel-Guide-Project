@@ -64,7 +64,6 @@ router.post('/google', async (req, res, next) => {
         [email]);
 
         const user = data.rows[0];
-        console.log(user)
 
         if (!user) {
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
