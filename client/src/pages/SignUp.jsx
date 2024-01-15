@@ -1,10 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { signUpStart, signUpSuccess, signUpFailure } from '../redux/slices/userSlice.js'
 import OAuth from "../components/OAuth";
 import { useState } from "react";
 
 export default function SignUp() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
+  const {loading, error} = useSelector((state) => state.user)
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -17,6 +22,7 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      dispatch(signUpStart())
       const res = await fetch('/api/auth/signup', 
         {
           method: 'POST',
@@ -28,14 +34,37 @@ export default function SignUp() {
       const data = await res.json();
 
       if (data.success === false) {
+        dispatch(signUpFailure(data.message))
         return;
       }
 
-      navigate('/login');
-      console.log(data)
-      
+      console.log(data);
+
+      try {
+        const res = await fetch('/api/auth/login',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+        const data = await res.json();
+  
+        if (data.success === false) {
+          return;
+        }
+        
+        dispatch(signUpSuccess(data))
+        navigate('/');
+        console.log(data);
+  
+      } catch (error) {
+        dispatch(signUpFailure(error.message))
+      }
+
     } catch (error) {
-      console.log(error)
+      dispatch(signUpFailure(error.message))
     }
   }
 
@@ -96,9 +125,13 @@ export default function SignUp() {
           <OAuth/>
 
           <button 
-            className="bg-blue-700 w-full p-3 font-semibold rounded-xl text-white hover:opacity-95">
-            CONTINUE
+            disabled={loading}
+            className="bg-blue-700 w-full p-3 font-semibold rounded-xl text-white hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? 'LOADING...' : 'CONTINUE'}
           </button>
+
+          {error && <p className="text-red-500 mt-5 font-semibold">{error}</p>}
 
         </form>
 

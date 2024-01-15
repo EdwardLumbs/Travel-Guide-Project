@@ -1,10 +1,15 @@
 import { Link, useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from 'react-redux'
+import { signInStart, signInSuccess, signInFailure } from '../redux/slices/userSlice.js'
 import OAuth from "../components/OAuth"
 import { useState } from "react"
 
 export default function Login() {
-  const navigate = useNavigate()
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
+  const {loading, error} = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -17,6 +22,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(signInStart());
       const res = await fetch('/api/auth/login',
         {
           method: 'POST',
@@ -28,14 +34,16 @@ export default function Login() {
       const data = await res.json();
 
       if (data.success === false) {
+        dispatch(signInFailure(data.message));
         return;
       }
       
+      dispatch(signInSuccess(data))
       navigate('/');
       console.log(data);
 
     } catch (error) {
-      console.log(error);
+      dispatch(signInFailure(error.message))
     }
   }
 
@@ -88,9 +96,14 @@ export default function Login() {
 
           <OAuth/>
 
-          <button className="bg-blue-700 w-full p-3 font-semibold rounded-xl text-white hover:opacity-95">
-            CONTINUE
+          <button 
+            disabled={loading}
+            className="bg-blue-700 w-full p-3 font-semibold rounded-xl text-white hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? 'LOADING...' : 'CONTINUE'}
           </button>
+
+          {error && <p className="text-red-500 mt-5 font-semibold">{error}</p>}
 
         </form>
 

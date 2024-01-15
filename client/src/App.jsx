@@ -5,7 +5,6 @@ import SignUp from './pages/SignUp'
 import Blogs from './pages/Blogs'
 import About from './pages/About'
 import Reviews from './pages/Reviews'
-
 import Header from './components/Header'
 
 function App() {

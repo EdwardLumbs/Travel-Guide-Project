@@ -1,10 +1,13 @@
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { app } from '../firebase'
+import { useDispatch, useSelector } from 'react-redux';
+import { signInSuccess } from '../redux/slices/userSlice.js'
 import { useNavigate } from 'react-router-dom';
 
 export default function OAuth() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleClick = async () => {
         try {
@@ -27,6 +30,7 @@ export default function OAuth() {
       
             const data = await res.json()
 
+            dispatch(signInSuccess(data))
             console.log(data);
             navigate('/')
         } catch (error) {
