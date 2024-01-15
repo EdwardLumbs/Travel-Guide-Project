@@ -64,16 +64,15 @@ router.post('/google', async (req, res, next) => {
         [email]);
 
         const user = data.rows[0];
+        console.log(user)
 
-        if (!data) {
+        if (!user) {
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
         
             try {
                 await pool.query("INSERT INTO users (username, email, password, photo) VALUES ($1, $2, $3, $4)",
                     [username, email, hashedPassword, photo]);
-
-                res.status(201).json("User Created Successfully");
             } catch (error) {
                 next(error);
             }

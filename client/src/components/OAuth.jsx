@@ -26,9 +26,14 @@ export default function OAuth() {
                   email: result.user.email,
                   photo: result.user.photoURL
                 })
-            })
-      
+            });
+           
             const data = await res.json()
+
+            if (data.success === false) {
+                console.log(data.message);
+                return;
+            }
 
             dispatch(signInSuccess(data))
             console.log(data);
