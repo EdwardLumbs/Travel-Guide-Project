@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 export default function Header() {
+    const { currentUser } = useSelector(state => state.user);
+
   return (
     // change background color to white for finished layout
     // add custom 8xl spacing for max width 
@@ -31,13 +33,21 @@ export default function Header() {
                 </Link>
             </ul>
 
-            <ul className='flex gap-2'>
-                <Link to='/login'>
-                    <li className='border border-blue-600 rounded-lg text-blue-600 px-7 py-1'>
-                        LOGIN
-                    </li>
-                </Link>
-            </ul>
+            <Link to='/profile'>
+                { currentUser ? (
+                    <img 
+                        src={currentUser.photo} 
+                        alt="profile"
+                        className='rounded-full h-7 w-7 object-cover' 
+                    />
+                    ) : <p className='border border-blue-600 rounded-lg text-blue-600 px-7 py-1'>
+                            LOGIN
+                        </p>
+                }
+                
+            
+            </Link>
+            
         </div>
     </header>
     
