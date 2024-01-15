@@ -11,10 +11,11 @@ const router = express.Router()
 router.post('/signup', async (req, res, next) => {
     const { username, email, password } = req.body;
     const hashedPassword = bcryptjs.hashSync(password, 10);
+    const defaultPhoto = 'https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg';
 
     try {
-        await pool.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
-            [username, email, hashedPassword]);
+        await pool.query("INSERT INTO users (username, email, password, photo) VALUES ($1, $2, $3, $4)",
+            [username, email, hashedPassword, defaultPhoto]);
         res.status(201).json("User Created Successfully");
 
     } catch (error) {
