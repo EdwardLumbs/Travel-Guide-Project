@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import pool from './database/db.js';
 import authRouter from './routes/auth.js';
+import userRouter from './routes/user.js'
 import cors from 'cors'
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 app.get('/test', async (req, res) => {
     try {
