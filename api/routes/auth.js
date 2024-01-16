@@ -106,4 +106,14 @@ router.post('/google', async (req, res, next) => {
     }
 })
 
+router.get('/signout', (req, res, next) => {
+    try {
+        res.clearCookie('access_token')
+        res.clearCookie('refresh_token')
+        res.status(200).json('User has been logged out!')
+    } catch (error) {
+        next(err)
+    }
+})
+
 export default router;

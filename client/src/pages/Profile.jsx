@@ -1,6 +1,27 @@
-export default function Profile() {
-  const handleSignOut = () => {
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutUserStart, signOutUserSuccess, signOutUserFailure } from '../redux/slices/userSlice.js';
 
+export default function Profile() {
+  const {currentUser, loading, error} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart);
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      console.log(data)
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+      dispatch(signOutUserSuccess());
+      navigate('/')
+    } catch (error) {
+      signOutUserFailure(error.message)
+    }
   }
 
   return (
