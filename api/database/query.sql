@@ -21,3 +21,6 @@ UPDATE users SET
   description = COALESCE(param_3, description),
   photo = COALESCE(param_4, photo),
 WHERE id = req.params.id;
+
+-- delete user
+DELETE FROM users WHERE id = req.params.id

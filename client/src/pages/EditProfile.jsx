@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserStart, updateUserSuccess, updateUserFailure, updatePasswordFailure, updatePasswordSuccess } from '../redux/slices/userSlice.js';
+import { updateUserStart, updateUserSuccess, updateUserFailure, updatePasswordFailure, updatePasswordSuccess, deleteUserFailure, deleteUserSuccess, deleteUserStart } from '../redux/slices/userSlice.js';
 import { CiCirclePlus } from "react-icons/ci";
 
 export default function EditProfile() {
@@ -53,6 +53,22 @@ export default function EditProfile() {
       ...formData,
       [e.target.id]: e.target.value
     })
+  }
+  const handleUserDelete = async (e) => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser.id}`, {
+        method: 'DELETE'
+      })
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess());
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message))
+    }
   }
 
   return (
@@ -133,6 +149,7 @@ export default function EditProfile() {
             </button>
 
             <button 
+              onClick={handleUserDelete}
               type="button"
               className='border hover:cursor-pointer hover:text-gray-600 hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full bg-gray-600 text-white'
             >
