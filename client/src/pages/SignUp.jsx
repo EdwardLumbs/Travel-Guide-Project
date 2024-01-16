@@ -56,7 +56,7 @@ export default function SignUp() {
         }
         
         dispatch(signUpSuccess(data))
-        navigate('/');
+        navigate('/profile');
         console.log(data);
   
       } catch (error) {

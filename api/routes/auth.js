@@ -1,12 +1,12 @@
 import express from "express";
 import pool from "../database/db.js";
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-import bcryptjs from 'bcryptjs'
-import { errorHandler } from '../utils/error.js'
-dotenv.config()
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import bcryptjs from 'bcryptjs';
+import { errorHandler } from '../utils/error.js';
+dotenv.config();
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/signup', async (req, res, next) => {
     const { username, email, password } = req.body;
