@@ -117,4 +117,18 @@ router.get('/signout', (req, res, next) => {
     }
 })
 
+router.get('/checkCookie', (req, res, next) => {
+    try {
+        const cookie = req.cookies.refresh_token
+        if (!cookie) {
+            res.json({'status' : false})
+        } else {
+            res.json({'status' : true})
+        }
+    } catch (err) {
+        next(err)
+    }
+})
+
+
 export default router;
