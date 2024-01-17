@@ -91,9 +91,13 @@ export default function EditProfile() {
         dispatch(updateUserFailure(data.message));
         return
       }
-      setUploadSuccess(true)
+      
       dispatch(updateUserSuccess(data));
       updateUserSuccess(true);
+      setUploadSuccess(true);
+      setTimeout(() => {
+        setUploadSuccess(false);
+      }, 2000);
 
     } catch (error) {
       dispatch(updateUserFailure(error.message));
