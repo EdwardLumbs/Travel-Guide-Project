@@ -1,16 +1,67 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserStart, updateUserSuccess, updateUserFailure, updatePasswordFailure, updatePasswordSuccess, deleteUserFailure, deleteUserSuccess, deleteUserStart } from '../redux/slices/userSlice.js';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { app } from '../firebase.js';
+import { 
+  updateUserStart, 
+  updateUserSuccess, 
+  updateUserFailure, 
+  updatePasswordFailure, 
+  updatePasswordSuccess, 
+  deleteUserFailure, 
+  deleteUserSuccess, 
+  deleteUserStart } from '../redux/slices/userSlice.js';
 import { CiCirclePlus } from "react-icons/ci";
+import { v4 } from 'uuid'
+import { Link } from 'react-router-dom';
 
 export default function EditProfile() {
   const {currentUser, error} = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const fileRef = useRef(null);
+
   const [formData, setFormData] = useState({});
   const [disabled, setDisabled] = useState(false);
+  const [imageFile, setImageFile] = useState(undefined);
+  const [imageFilePercentage, setImageFilePercentage] = useState(0);
+  const [imageFileUploadError, setImageFileUploadError] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false)
 
   console.log(formData)
+
+  useEffect(() => {
+    if (imageFile) {
+      handleFileUpload(imageFile);
+    }
+  }, [imageFile]);
+
+  const handleFileUpload = (imageFile) => {
+    const storage = getStorage(app)
+    const fileName = imageFile.name + v4()
+    const storageRef = ref(storage, `profile-picture/${fileName}`)
+    const uploadTask = uploadBytesResumable(storageRef, imageFile)
+
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred /
+        snapshot.totalBytes) * 100
+        setImageFilePercentage(Math.round(progress))
+      },
+      (error) => {
+      setImageFileUploadError(true)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(
+          (downloadURL) => {
+              setImageFileUploadError(false)
+              setFormData({...formData, photo: downloadURL})
+          }
+        )
+      }
+    )
+
+  }
 
   useEffect(() => {
     if (formData.newPassword != formData.confirmNewPassword){
@@ -23,9 +74,9 @@ export default function EditProfile() {
   }, [formData]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      dispatch(updateUserStart)
+      dispatch(updateUserStart());
 
       const res = await fetch(`/api/user/updateUser/${currentUser.id}`, {
         method: 'POST',
@@ -35,16 +86,17 @@ export default function EditProfile() {
         body: JSON.stringify(formData)
       })
 
-      const data = await res.json()
+      const data = await res.json();
       if (data.success === false) {
-        dispatch(updateUserFailure(data.message))
+        dispatch(updateUserFailure(data.message));
         return
       }
-      dispatch(updateUserSuccess(data))
-      setUpdateSuccess(true)
+      setUploadSuccess(true)
+      dispatch(updateUserSuccess(data));
+      updateUserSuccess(true);
 
     } catch (error) {
-      dispatch(updateUserFailure(err.message))
+      dispatch(updateUserFailure(error.message));
     }
   }
 
@@ -67,7 +119,7 @@ export default function EditProfile() {
       }
       dispatch(deleteUserSuccess());
     } catch (error) {
-      dispatch(deleteUserFailure(error.message))
+      dispatch(deleteUserFailure(error.message));
     }
   }
 
@@ -116,18 +168,44 @@ export default function EditProfile() {
             onChange={handleChange}
           />
 
-          {error && <p className='text-red-500 mt-5'>{error}</p>}
+          {error ? <p className='text-red-500 mt-5'>{error}</p> :
+            uploadSuccess ? <p className='text-green-500 mt-5'>Upload Successful!</p> : ''
+          }
         </div>
 
         {/* right */}
         <div className='flex-1 flex gap-2 flex-col items-center justify-center'>
           <img 
-            className='rounded-full h-40 w-40'
-            src={currentUser.photo}
+            className='rounded-full h-40 w-40 object-cover'
+            src={formData.photo || currentUser.photo}
             alt="Profile Picture" 
           />
+          {imageFileUploadError ? 
+            <span className='text-red-700'>
+              Error in Image Upload (image must be less than 2mb)
+            </span> :
+            imageFilePercentage > 0 && imageFilePercentage < 100 ? (
+              <span className='text-slate-700'>
+                {`Uploading ${imageFilePercentage}%`}
+              </span>
+            ) :
+            imageFilePercentage === 100 ? (
+              <span className='text-green-700'>
+                Upload Successful!
+              </span>
+            ) : ""
+          } 
+          <input 
+            onChange={(e) => setImageFile(e.target.files[0])}
+            type="file"
+            ref={fileRef}
+            hidden
+            accept='image/*' 
+          />
           <button 
-            className='flex items-center gap-2 text-blue-400'
+            type='button'
+            onClick={() => fileRef.current.click()}
+            className='flex items-center gap-2 text-blue-400 hover:opacity-80 hover:underline'
           >
             <CiCirclePlus className='scale-150'/>
             Upload New Profile Picture
@@ -141,13 +219,15 @@ export default function EditProfile() {
               Save Changes
             </button>
 
-            <button 
-              type="button"
-              className='border hover:cursor-pointer hover:text-red-600 hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full bg-red-600 text-white'
-            >
-              Cancel
-            </button>
-
+            <Link to='/profile'>
+              <button 
+                type="button"
+                className='border hover:cursor-pointer hover:text-red-600 hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full bg-red-600 text-white'
+              >
+                Cancel
+              </button>
+            </Link>
+            
             <button 
               onClick={handleUserDelete}
               type="button"

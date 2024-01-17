@@ -9,17 +9,17 @@ dotenv.config();
 const router = express.Router();
 
 router.post('/updateUser/:id', verifyToken, async (req, res, next) => {
-    const { username, description, newPassword, photo } = req.body;
-    console.log(req.body)
+    const { username, description, photo } = req.body;
+
     if (req.user.id != req.params.id)
         return next(errorHandler(401, 'Not your account'));
 
     try {
-        if (newPassword) {
-            const newPassword = bcryptjs.hashSync(newPassword, 10);
+        if (req.body.newPassword) {
+            req.body.newPassword = bcryptjs.hashSync(req.body.newPassword, 10);
         }
         await pool.query("UPDATE users SET username = COALESCE($1, username), password = COALESCE($2, password), description = COALESCE($3, description), photo = COALESCE($4, photo) WHERE id = $5;",
-        [username, newPassword, description, photo, req.params.id]);
+        [username, req.body.newPassword, description, photo, req.params.id]);
     
         try {
             const data = await pool.query("SELECT * FROM users WHERE id = $1",
