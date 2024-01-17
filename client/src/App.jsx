@@ -8,6 +8,8 @@ import Reviews from './pages/Reviews'
 import Profile from './pages/Profile'
 import EditProfile from './pages/ProfilePage/EditProfile'
 import UserPlans from './pages/ProfilePage/UserPlans'
+import UserBlogs from './pages/ProfilePage/UserBlogs'
+import UserReviews from './pages/ProfilePage/UserReviews'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
@@ -29,6 +31,8 @@ function App() {
           <Route element={<PrivateRoute/>}>
             <Route path='profile' element={<Profile/>}>
               <Route index element={<UserPlans/>} />
+              <Route path='user-blogs' element={<UserBlogs/>} />
+              <Route path='user-reviews' element={<UserReviews/>} />
               <Route path='edit' element={<EditProfile/>} />
             </Route>
           </Route>

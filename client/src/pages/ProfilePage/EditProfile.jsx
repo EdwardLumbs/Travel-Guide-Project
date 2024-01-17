@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { app } from '../firebase.js';
+import { app } from '../../firebase.js';
 import { 
   updateUserStart, 
   updateUserSuccess, 
@@ -10,7 +10,7 @@ import {
   updatePasswordSuccess, 
   deleteUserFailure, 
   deleteUserSuccess, 
-  deleteUserStart } from '../redux/slices/userSlice.js';
+  deleteUserStart } from '../../redux/slices/userSlice.js';
 import { CiCirclePlus } from "react-icons/ci";
 import { v4 } from 'uuid'
 import { Link } from 'react-router-dom';
