@@ -9,7 +9,7 @@ export const verifyToken = (req, res, next) => {
         if (!refreshToken) {
             return next(errorHandler(401, "No refresh token"))
         } else {
-            jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, decoded) => {
+            jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
                 if(err) return next(errorHandler(400, "Invalid Token"))
 
                 const token = jwt.sign({id: decoded.id}, process.env.JWT_SECRET, { expiresIn: '1h' })
