@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../utils/error.js';
+import { v4 } from "uuid";
 dotenv.config();
 
 const router = express.Router();
@@ -67,7 +68,7 @@ router.post('/google', async (req, res, next) => {
         const user = data.rows[0];
 
         if (!user) {
-            const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const generatedPassword = v4();
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
         
             try {
