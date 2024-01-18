@@ -8,4 +8,4 @@ CREATE TABLE countries (
 )
 
 -- get counties
-SELECT * FROM countries WHERE country = country
+SELECT * FROM countries WHERE country ILIKE country

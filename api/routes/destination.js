@@ -6,18 +6,18 @@ dotenv.config();
 
 const router = express.Router();
 
-router.get('/getLocation', async (req, res, next) => {
-    const {selector, value} = req.body;
+router.post('/getLocation/:name', async (req, res, next) => {
+    const {selector} = req.body;
 
     try {
-        const data = await pool.query("SELECT * FROM countries WHERE $1 = $2", 
-        [selector, value]);
+        const data = await pool.query(`SELECT * FROM countries WHERE ${selector} ILIKE $1`,
+        [req.params.name]);
 
         if (!data) {
             return next(errorHandler(404, 'Listing not found'));
         }
-
-        const location = data.rows[0]
+        
+        const location = data.rows[0];
         res.status(200).json(location);
     } catch (error) {
         next(error)
