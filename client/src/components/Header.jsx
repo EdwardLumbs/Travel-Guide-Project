@@ -8,6 +8,7 @@ export default function Header() {
     // change background color to white for finished layout
     // add custom 8xl spacing for max width 
     // change font style of header
+    // add more effects on hover
     <header className='bg-slate-50'>
         <div className='flex justify-between max-w-7xl items-center px-3 py-5 mx-auto'>
             <Link to='/'>
@@ -22,14 +23,23 @@ export default function Header() {
             </Link>
         
             <ul className='flex gap-4'>
+                <Link to='/destinations'>
+                    <li className='hover:underline'>DESTINATIONS</li>
+                </Link>
+                <Link to='/explore'>
+                    <li className='hover:underline'>EXPLORE</li>
+                </Link>
+                <Link to='/flights'>
+                    <li className='hover:underline'>FLIGHTS</li>
+                </Link>
                 <Link to='/blogs'>
-                    <li>BLOGS</li>
+                    <li className='hover:underline'>BLOGS</li>
                 </Link>
                 <Link to='/reviews'>
-                    <li>REVIEWS</li>
+                    <li className='hover:underline'>REVIEWS</li>
                 </Link>
                 <Link to='/about'>
-                    <li>ABOUT</li>
+                    <li className='hover:underline'>ABOUT</li>
                 </Link>
             </ul>
 

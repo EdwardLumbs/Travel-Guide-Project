@@ -6,10 +6,14 @@ import Blogs from './pages/Blogs'
 import About from './pages/About'
 import Reviews from './pages/Reviews'
 import Profile from './pages/Profile'
+import Destinations from './pages/Destinations'
+import Explore from './pages/Explore'
+import Flights from './pages/Flights'
 import EditProfile from './pages/ProfilePage/EditProfile'
 import UserPlans from './pages/ProfilePage/UserPlans'
 import UserBlogs from './pages/ProfilePage/UserBlogs'
 import UserReviews from './pages/ProfilePage/UserReviews'
+import Country from './pages/Country'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
@@ -25,6 +29,13 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='login' element={<Login/>} />
           <Route path='sign-up' element={<SignUp/>} />
+          <Route path='destinations' element={<Destinations/>} />
+          {/* routing to be determined */}
+          <Route path='/destinations/:continent' element={<Continent/>} />
+          <Route path='/destinations/:continent/:country' element={<Country/>} />
+          
+          <Route path='explore' element={<Explore/>} />
+          <Route path='flights' element={<Flights/>} />
           <Route path='blogs' element={<Blogs/>} />
           <Route path='about' element={<About/>} />
           <Route path='reviews' element={<Reviews/>} />
