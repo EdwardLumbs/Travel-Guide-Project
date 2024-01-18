@@ -14,6 +14,7 @@ import UserPlans from './pages/ProfilePage/UserPlans'
 import UserBlogs from './pages/ProfilePage/UserBlogs'
 import UserReviews from './pages/ProfilePage/UserReviews'
 import Country from './pages/Country'
+import Continent from './pages/Continent'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
