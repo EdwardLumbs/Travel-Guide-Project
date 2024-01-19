@@ -10,12 +10,24 @@ CREATE TABLE countries (
 CREATE TABLE continents (
     id SERIAL PRIMARY KEY,
     continent_name VARCHAR(20) NOT NULL,
-    photo TEXT,
-    description TEXT
+    continent_photo TEXT,
+    continent_description TEXT
 )
 
--- get countries
-SELECT * FROM countries WHERE country ILIKE country
+-- get country
+SELECT *
+FROM countries
+JOIN continents 
+ON continent_id = continents.id
+WHERE country ILIKE country
 
--- get continents
-SELECT * FROM continents WHERE continent_name ILIKE continent
+-- get continent
+SELECT * FROM continents
+WHERE continent_name = continent
+
+-- get countries on continents
+SELECT photo, country
+FROM countries
+JOIN continents 
+ON continent_id = continents.id
+WHERE continent_name ILIKE continent

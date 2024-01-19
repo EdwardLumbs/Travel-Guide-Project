@@ -6,19 +6,62 @@ dotenv.config();
 
 const router = express.Router();
 
-router.post('/getLocation/:name', async (req, res, next) => {
-    const {selector} = req.body;
-
+router.get('/getCountry/:name', async (req, res, next) => {
     try {
-        const data = await pool.query(`SELECT * FROM countries WHERE ${selector} ILIKE $1`,
+        const data = await pool.query(`SELECT *
+        FROM countries
+        JOIN continents 
+        ON continent_id = continents.id
+        WHERE country ILIKE $1`,
         [req.params.name]);
 
-        if (!data) {
+        if (data.rows.length === 0) {
             return next(errorHandler(404, 'Listing not found'));
         }
         
         const location = data.rows[0];
         res.status(200).json(location);
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/getContinent/:name', async (req, res, next) => {
+    try {
+        const data = await pool.query(`SELECT *
+        FROM continents 
+        WHERE continent_name ILIKE $1`,
+        [req.params.name]);
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Listing not found'));
+        }
+        
+        const location = data.rows[0];
+        res.status(200).json(location);
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/getContinentCountry/:name', async (req, res, next) => {
+    try {
+        const data = await pool.query(`SELECT photo, country
+        FROM countries
+        JOIN continents 
+        ON continent_id = continents.id
+        WHERE continent_name ILIKE $1`,
+        [req.params.name]);
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Listing not found'));
+        }
+        
+        const location = data.rows;
+        res.status(200).json(location);
+        
     } catch (error) {
         next(error)
     }
