@@ -16,10 +16,27 @@ router.get('/getCountry/:name', async (req, res, next) => {
         [req.params.name]);
 
         if (data.rows.length === 0) {
-            return next(errorHandler(404, 'Listing not found'));
+            return next(errorHandler(404, 'Country not found'));
         }
         
         const location = data.rows[0];
+        res.status(200).json(location);
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/getCountries/', async (req, res, next) => {
+    try {
+        const data = await pool.query(`SELECT country, photo
+        FROM countries`);
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Country not found'));
+        }
+        
+        const location = data.rows;
         res.status(200).json(location);
         
     } catch (error) {
@@ -35,10 +52,27 @@ router.get('/getContinent/:name', async (req, res, next) => {
         [req.params.name]);
 
         if (data.rows.length === 0) {
-            return next(errorHandler(404, 'Listing not found'));
+            return next(errorHandler(404, 'Continent not found'));
         }
         
         const location = data.rows[0];
+        res.status(200).json(location);
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/getContinents/', async (req, res, next) => {
+    try {
+        const data = await pool.query(`SELECT continent_name, continent_photo
+        FROM continents`);
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Continents not found'));
+        }
+        
+        const location = data.rows;
         res.status(200).json(location);
         
     } catch (error) {
@@ -56,7 +90,7 @@ router.get('/getContinentCountry/:name', async (req, res, next) => {
         [req.params.name]);
 
         if (data.rows.length === 0) {
-            return next(errorHandler(404, 'Listing not found'));
+            return next(errorHandler(404, 'Countries not found'));
         }
         
         const location = data.rows;

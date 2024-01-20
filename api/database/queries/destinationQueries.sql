@@ -21,9 +21,17 @@ JOIN continents
 ON continent_id = continents.id
 WHERE country ILIKE country
 
+-- get countries
+SELECT country, photo
+FROM countries
+
 -- get continent
 SELECT * FROM continents
 WHERE continent_name = continent
+
+-- get continents
+SELECT continent_name, continent_photo
+FROM continents
 
 -- get countries on continents
 SELECT photo, country
