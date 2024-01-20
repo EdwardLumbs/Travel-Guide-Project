@@ -1,6 +1,6 @@
 import DestinationCard from '../components/DestinationCard'
-import useGetCountries from '../hooks/useGetCountries'
-import useGetContinents from '../hooks/useGetContinents';
+import useGetCountry from '../hooks/useGetCountry'
+import useGetContinent from '../hooks/useGetContinent';
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,21 +10,24 @@ export default function Destinations() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState({
     type: 'country',
-    sort: 'ASC'
+    sort: 'ASC',
+    change: true
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
+    
     const searchTermFromUrl = urlParams.get('searchTerm');
-    console.log(searchTermFromUrl)
     const typeFromUrl = urlParams.get('type')
     const sortFromUrl = urlParams.get('sort')
 
     if (searchTermFromUrl) {
       setSearchTerm(searchTermFromUrl || '')
-    } else if (typeFromUrl ||sortFromUrl) {
+    } 
+    
+    if (typeFromUrl || sortFromUrl) {
       setSelectedOption({
         type: typeFromUrl || 'country',
         sort: sortFromUrl || 'ASC'
@@ -39,42 +42,34 @@ export default function Destinations() {
   }
 
   const handleOptionChange = (e) => {
-    console.log(e.target.id)
-    console.log(e.target.value)
     setSelectedOption((prevState) => ({
       ...prevState, 
-      [e.target.id]: e.target.value 
+      [e.target.id]: e.target.value,
     })
     );
   }
-
-  // useEffect(() => {
-  //   handleOptionSubmit()
-  // }, [selectedOption])
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     const urlParams = new URLSearchParams()
     urlParams.set('searchTerm', searchTerm)
-    urlParams.set('type', selectedOption.type)
-    urlParams.set('sort', selectedOption.sort)
     const searchQuery = urlParams.toString()
     navigate(`/destinations?${searchQuery}`)
   }
 
-  const handleOptionSubmit = () => {
+  const handleOptionSubmit = (e) => {
+    e.preventDefault()
     console.log('submitted')
     const urlParams = new URLSearchParams()
-    urlParams.set('searchTerm', searchTerm)
     urlParams.set('type', selectedOption.type)
     urlParams.set('sort', selectedOption.sort)
     const searchQuery = urlParams.toString()
-    navigate(`/destinations?${searchQuery}`)
+    navigate(`/destinations?${searchQuery}`);
   }
 
 
-  const countries = useGetCountries();
-  const continents = useGetContinents();
+  const country = useGetCountry();
+  const continent = useGetContinent();
 
   return (
     <div className='p-9 flex justify-center'>
@@ -96,31 +91,39 @@ export default function Destinations() {
             </button>
           </form>
 
-          <label className='flex items-center'>
-            Filter by type:
-          </label>
-          <select 
-            value={selectedOption.type}
-            className='border rounded-lg w-40'
-            id="type" 
-            onChange={handleOptionChange}
-          >
-            <option value="country">Country</option>
-            <option value="capital">Capital</option>
-            <option value="continent">Continent</option>
-          </select>
-          <label className='flex items-center'>
-            Sort by:
-          </label>
-          <select 
-            value={selectedOption.sort}
-            className='border rounded-lg w-40'
-            id="sort" 
-            onChange={handleOptionChange}
-          >
-            <option value="ASC">A-Z</option>
-            <option value="DESC">Z-A</option>
-          </select>
+          <form onSubmit={handleOptionSubmit}>
+            <label className='flex items-center'>
+              Filter by type:
+            </label>
+            <select 
+              value={selectedOption.type}
+              className='border rounded-lg w-40'
+              id="type" 
+              onChange={handleOptionChange}
+            >
+              <option value="country">Country</option>
+              <option value="capital">Capital</option>
+              <option value="continent">Continent</option>
+            </select>
+            <label className='flex items-center'>
+              Sort by:
+            </label>
+            <select 
+              value={selectedOption.sort}
+              className='border rounded-lg w-40'
+              id="sort" 
+              onChange={handleOptionChange}
+            >
+              <option value="ASC">A-Z</option>
+              <option value="DESC">Z-A</option>
+            </select>
+            <button
+              type='submit'
+            >
+              Filter
+            </button>
+          </form>
+          
         </div>
         
         <div>
