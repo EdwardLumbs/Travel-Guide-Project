@@ -1,17 +1,21 @@
-import { useParams } from "react-router-dom"
-import useGetContinent from "../hooks/useGetContinent"
-import useGetContinentCountries from "../hooks/useGetContinentCountries"
+import { useParams } from "react-router-dom";
+import useGetContinent from "../hooks/useGetContinent";
+import useGetContinentCountries from "../hooks/useGetContinentCountries";
 
 export default function Continent() {
-  const { continent } = useParams()
-  const {continentData, continentLoading} = useGetContinent(continent)
-  const {continentCountries, continentCountriesLoading} = useGetContinentCountries(continent)
-  console.log(continentCountries)
-  console.log(continentCountriesLoading)
+  const { continent } = useParams();
+  const {continentData, continentLoading, continentError} = useGetContinent(continent);
+  const {continentCountries, continentCountriesLoading, continentCountriesError} = useGetContinentCountries(continent);
+  console.log(continentCountries);
+  console.log(continentCountriesLoading);
 
   return (
     <>
-    {continentLoading ? 
+    {continentError ? 
+      <p className="text-3xl">
+        {continentError}
+      </p>
+    : continentLoading ? 
       <p className="text-3xl">
         Loading...
       </p>
@@ -40,7 +44,11 @@ export default function Continent() {
 
         <div className="flex">
           {
-            continentCountriesLoading ? 
+            continentCountriesError ?
+              <p className="text-3xl">
+                {continentCountriesError}
+              </p> 
+            : continentCountriesLoading ? 
               <p className="text-3xl">
                 Loading...
               </p> : 
@@ -48,6 +56,7 @@ export default function Continent() {
               continentCountries.map((country) => (
                 <div className="">
                   <img 
+                    key={country.id}
                     className="h-20"
                     src={country.photo}
                     alt="country photo" 

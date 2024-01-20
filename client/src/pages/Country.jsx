@@ -1,14 +1,17 @@
-import { useParams } from "react-router-dom"
-import useGetCountry from "../hooks/useGetCountry"
+import { useParams } from "react-router-dom";
+import useGetCountry from "../hooks/useGetCountry";
 
 export default function Country() {
-    const { country } = useParams()
-    const { chosenCountry, loading } = useGetCountry(country)
-    console.log(chosenCountry)
+    const { country } = useParams();
+    const { chosenCountry, loading, countryError } = useGetCountry(country);
+    console.log(chosenCountry);
    
   return (
     <>
-    {loading ? <p className="text-3xl">
+    { countryError ? <p className="text-3xl">
+      {countryError}
+    </p>
+    : loading ? <p className="text-3xl">
       Loading...
     </p> :
       <div className="flex items-center flex-col gap-5">

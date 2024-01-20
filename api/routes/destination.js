@@ -48,7 +48,7 @@ router.get('/getContinent/:name', async (req, res, next) => {
 
 router.get('/getContinentCountry/:name', async (req, res, next) => {
     try {
-        const data = await pool.query(`SELECT photo, country
+        const data = await pool.query(`SELECT countries.id, photo, country
         FROM countries
         JOIN continents 
         ON continent_id = continents.id

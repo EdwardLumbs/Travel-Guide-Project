@@ -1,27 +1,29 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export default function useGetContinentCountries (value) {
     const [continentCountries, setContinentCountries] = useState([]);
     const [continentCountriesLoading, setLoading] = useState(false);
+    const [continentCountriesError, setError] = useState(null);
 
     const fetchDestination = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             const res = await fetch(`/api/destination/getContinentCountry/${value}`);
             
             const destination = await res.json();
-            console.log(destination)
+            console.log(destination);
             setContinentCountries(destination);
-            setLoading(false)
+            setLoading(false);
         } catch (error) {
-            setLoading(false)
+            setError(error.message);
+            setLoading(false);
             console.log(error);
         }
     }
 
     useEffect(() => {
       fetchDestination();
-    }, [value])
+    }, [value]);
 
-  return ({continentCountries, continentCountriesLoading});
+  return ({continentCountries, continentCountriesLoading, continentCountriesError});
 }

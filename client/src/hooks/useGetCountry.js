@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export default function useGetCountry (value) {
     const [chosenCountry, setChosenCountry] = useState({});
     const [loading, setLoading] = useState(false);
+    const [countryError, setError] = useState(null);
 
     const fetchDestination = async () => {
         try {
@@ -10,18 +11,19 @@ export default function useGetCountry (value) {
             const res = await fetch(`/api/destination/getCountry/${value}`);
             
             const destination = await res.json();
-            console.log(destination)
+            console.log(destination);
             setChosenCountry(destination);
-            setLoading(false)
+            setLoading(false);
         } catch (error) {
+            setError(error.message);
             console.log(error);
-            setLoading(false)
-        }
+            setLoading(false);
+        };
     }
 
     useEffect(() => {
       fetchDestination();
-    }, [value])
+    }, [value]);
 
-  return ({chosenCountry, loading});
+  return ({chosenCountry, loading, countryError});
 }
