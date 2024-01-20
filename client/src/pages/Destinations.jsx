@@ -1,6 +1,14 @@
 import DestinationCard from '../components/DestinationCard'
+import useGetCountries from '../hooks/useGetCountries'
+import useGetContinents from '../hooks/useGetContinents';
 
 export default function Destinations() {
+  const countries = useGetCountries();
+  const continents = useGetContinents();
+  console.log(continents)
+  console.log(countries)
+
+
   return (
     <div className='p-9 flex justify-center'>
       <div className=''>
