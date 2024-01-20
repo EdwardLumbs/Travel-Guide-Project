@@ -33,7 +33,7 @@ function App() {
           <Route path='destinations' element={<Destinations/>} />
           {/* routing to be determined */}
           <Route path='/destinations/:continent' element={<Continent/>} />
-          <Route path='/destinations/:continent/:country' element={<Country/>} />
+          <Route path='/destinations/:continent/:countryName' element={<Country/>} />
           
           <Route path='explore' element={<Explore/>} />
           <Route path='flights' element={<Flights/>} />

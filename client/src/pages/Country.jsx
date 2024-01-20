@@ -2,9 +2,10 @@ import { useParams } from "react-router-dom";
 import useGetCountry from "../hooks/useGetCountry";
 
 export default function Country() {
-    const { country } = useParams();
-    const { chosenCountry, loading, countryError } = useGetCountry(country);
-    console.log(chosenCountry);
+    const { countryName } = useParams();
+    console.log(countryName)
+    const { country, loading, countryError } = useGetCountry(countryName);
+    console.log(country);
    
   return (
     <>
@@ -18,17 +19,17 @@ export default function Country() {
         <div className="">
           <img 
             className="object-cover rounded-2xl w-[960px]"
-            src={chosenCountry.photo} 
+            src={country.photo} 
             alt="cover photo" 
           />
           <div className="flex mt-9">
             <div>
               <p className="text-6xl">
-                {chosenCountry.country} 
-                  <span className="text-2xl"> {chosenCountry.continent_name}</span>
+                {country.country} 
+                  <span className="text-2xl"> {country.continent_name}</span>
               </p>
               <p className="mt-9">
-                {chosenCountry.description}
+                {country.description}
               </p>
               <p className="hover:underline hover:cursor-pointer text-blue-600">
                 Start a plan
