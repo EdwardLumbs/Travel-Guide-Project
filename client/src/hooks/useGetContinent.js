@@ -5,8 +5,6 @@ export default function useGetContinent (type='all') {
     const [continentLoading, setLoading] = useState(false);
     const [continentError, setError] = useState(null);
 
-    console.log(type)
-
     const fetchDestination = async () => {
       if (type === 'all') {
         try {

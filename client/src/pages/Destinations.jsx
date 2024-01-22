@@ -3,7 +3,7 @@ import useGetCountry from '../hooks/useGetCountry'
 import useGetContinent from '../hooks/useGetContinent';
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Destinations() {
   const [loading, setLoading] = useState(false);
@@ -13,28 +13,85 @@ export default function Destinations() {
     sort: 'ASC',
     change: true
   });
+  const [destinations, setDestinations] = useState([])
+  console.log(destinations)
 
   const navigate = useNavigate();
 
+  
+  const { country } = useGetCountry();
+  const { continentData } = useGetContinent();
+
+  console.log(country)
+  console.log(continentData)
+
+// add error handlers and when no listing found and loading
+// regex
+// limit Number
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    const typeFromUrl = urlParams.get('type')
-    const sortFromUrl = urlParams.get('sort')
+    console.log(urlParams.size)
+    if(urlParams.size === 0) {
+      setDestinations(country)
+    } else {
+      const filterQuery = urlParams.toString()
+      const searchTermFromUrl = urlParams.get('searchTerm');
+      const typeFromUrl = urlParams.get('type')
+      const sortFromUrl = urlParams.get('sort')
 
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl || '')
-    } 
-    
-    if (typeFromUrl || sortFromUrl) {
-      setSelectedOption({
-        type: typeFromUrl || 'country',
-        sort: sortFromUrl || 'ASC'
-      })
+      console.log(searchTermFromUrl)
+
+      if (searchTermFromUrl) {
+        setSearchTerm(searchTermFromUrl || '')
+      } 
+
+      if (typeFromUrl || sortFromUrl) {
+        setSelectedOption({
+          type: typeFromUrl || 'country',
+          sort: sortFromUrl || 'ASC'
+        })
+      }
+
+      const fetchSearchedLocation = () => {
+        const searchedCountry = country.find((destinations) => destinations.country.toLowerCase() === searchTermFromUrl.toLowerCase());
+        const searchedContinent = continentData.find((destinations) => destinations.continent_name.toLowerCase() === searchTermFromUrl.toLowerCase());
+        console.log(searchedCountry)
+        console.log(searchedContinent)
+        if (searchedCountry) {
+          console.log('selected')
+          setDestinations([searchedCountry]);
+        } else if (searchedContinent) {
+          setDestinations([searchedContinent]);
+        } else {
+          // Handle the case when neither country nor continent is found. Maybe add error handler
+          setDestinations([]);
+        }
+      } 
+
+      const fetchFilteredLocations = async (filterQuery) => {
+        try {
+          const res = await fetch(`/api/destination/filterCountries?${filterQuery}`);
+          const destination = await res.json();
+          console.log(destination);
+          setDestinations(destination);
+        } catch (error) {
+          console.log(error);
+          // setError(error.message);
+          // setLoading(false);
+        };
+      }
+
+      if (searchTermFromUrl) {
+        console.log('selected')
+        fetchSearchedLocation()
+      }
+
+      if (typeFromUrl || sortFromUrl) {
+        fetchFilteredLocations(filterQuery)
+      } 
     }
-
-  }, [location.search])
+  }, [location.search, country, continentData])
 
 
   const handleSearchChange = (e) => {
@@ -59,17 +116,13 @@ export default function Destinations() {
 
   const handleOptionSubmit = (e) => {
     e.preventDefault()
-    console.log('submitted')
+    setSearchTerm('')
     const urlParams = new URLSearchParams()
     urlParams.set('type', selectedOption.type)
     urlParams.set('sort', selectedOption.sort)
     const searchQuery = urlParams.toString()
     navigate(`/destinations?${searchQuery}`);
   }
-
-
-  const country = useGetCountry();
-  const continent = useGetContinent();
 
   return (
     <div className='p-9 flex justify-center'>
@@ -102,7 +155,6 @@ export default function Destinations() {
               onChange={handleOptionChange}
             >
               <option value="country">Country</option>
-              <option value="capital">Capital</option>
               <option value="continent">Continent</option>
             </select>
             <label className='flex items-center'>
@@ -126,8 +178,14 @@ export default function Destinations() {
           
         </div>
         
-        <div>
-          <DestinationCard />
+        <div className='flex flex-wrap gap-4'>
+          {destinations.length > 0 && destinations.map((destination, index) => (
+              <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : `${destination.continent_name}`}>
+                <DestinationCard key={index} destination={destination}/>
+              </Link>
+            ))
+          }
+          
         </div>
       </div>
     </div>

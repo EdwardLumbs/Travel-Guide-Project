@@ -39,3 +39,14 @@ FROM countries
 JOIN continents 
 ON continent_id = continents.id
 WHERE continent_name ILIKE continent
+
+-- filtering alphabetical
+-- countries
+SELECT country, photo
+FROM countries
+ORDER BY country order
+
+-- continents
+SELECT continent_name, continent_photo
+FROM continents
+ORDER BY continent_name order
