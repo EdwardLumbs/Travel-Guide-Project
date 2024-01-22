@@ -6,34 +6,25 @@ export default function useGetCountry (type='all') {
     const [countryError, setError] = useState(null);
 
     const fetchDestination = async () => {
+      let sqlQuery
       if (type === 'all') {
-        try {
-          setLoading(true)
-          const res = await fetch(`/api/destination/getCountries`);
-          const destination = await res.json();
-          console.log(destination);
-          setCountry(destination);
-          setLoading(false);
-        } catch (error) {
-          setError(error.message);
-          console.log(error);
-          setLoading(false);
-        };
+        sqlQuery = `/api/destination/getCountries`
       } else {
-        try {
-          setLoading(true)
-          const res = await fetch(`/api/destination/getCountry/${type}`);
-          
-          const destination = await res.json();
-          console.log(destination);
-          setCountry(destination);
-          setLoading(false);
-        } catch (error) {
-          setError(error.message);
-          console.log(error);
-          setLoading(false);
-        };
+        sqlQuery = `/api/destination/getCountry/${type}`
       }
+
+      try {
+        setLoading(true)
+        const res = await fetch(sqlQuery);
+        const destination = await res.json();
+        console.log(destination);
+        setCountry(destination);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        console.log(error);
+        setLoading(false);
+      };
     }
 
     useEffect(() => {
