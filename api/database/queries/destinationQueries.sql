@@ -22,12 +22,15 @@ ON continent_id = continents.id
 WHERE country ILIKE country
 
 -- get countries
-SELECT country, photo
+SELECT country, continent_name, photo
 FROM countries
+JOIN continents 
+ON continent_id = continents.id
 
 -- get continent
-SELECT * FROM continents
-WHERE continent_name = continent
+SELECT *
+FROM continents 
+WHERE continent_name ILIKE continent
 
 -- get continents
 SELECT continent_name, continent_photo
@@ -42,11 +45,25 @@ WHERE continent_name ILIKE continent
 
 -- filtering alphabetical
 -- countries
-SELECT country, photo
-FROM countries
-ORDER BY country order
-
+SELECT country, continent_name, photo 
+FROM countries 
+JOIN continents  
+ON continent_id = continents.id 
+ORDER BY country
 -- continents
 SELECT continent_name, continent_photo
 FROM continents
-ORDER BY continent_name order
+ORDER BY continent_name
+
+-- search destinations
+-- countries
+SELECT country, continent_name, photo
+FROM countries
+JOIN continents
+ON continent_id = continents.id
+WHERE country ILIKE country
+-- continents
+SELECT continent_name, continent_photo
+FROM continents
+WHERE continent_name ILIKE continents
+

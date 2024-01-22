@@ -103,6 +103,36 @@ router.get('/getContinentCountry/:name', async (req, res, next) => {
     }
 })
 
+router.get('/searchDestination/:destination', async (req, res, next) => {
+    const { destination } = req.params
+    console.log(destination)
+
+    try {
+        let data = await pool.query(`SELECT country, continent_name, photo
+        FROM countries
+        JOIN continents
+        ON continent_id = continents.id
+        WHERE country ILIKE $1`, [`%${destination}%`])
+
+        if (data.rows.length === 0) {
+            const continentData = await pool.query(`SELECT continent_name, continent_photo
+            FROM continents
+            WHERE continent_name ILIKE $1`, [`%${destination}%`])
+            if (continentData.rows.length === 0) {
+                return next(errorHandler(404, `No destinations found for ${destination}`));
+            } 
+
+            data = continentData
+        }
+
+        const location = data.rows;
+        res.status(200).json(location);
+
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.get('/filterCountries', async (req, res, next) => {
     const {type, sort} = req.query;
 
