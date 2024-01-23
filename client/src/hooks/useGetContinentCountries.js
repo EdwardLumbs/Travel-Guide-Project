@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function useGetContinentCountries (value) {
+    console.log(value)
     const [continentCountries, setContinentCountries] = useState([]);
     const [continentCountriesLoading, setLoading] = useState(false);
     const [continentCountriesError, setError] = useState(null);
@@ -8,7 +9,7 @@ export default function useGetContinentCountries (value) {
     const fetchDestination = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`/api/destination/getContinentCountry/${value}`);
+            const res = await fetch(`/api/destination/getContinentCountry?continent=${value}`);
             
             const destination = await res.json();
             console.log(destination);
@@ -17,7 +18,7 @@ export default function useGetContinentCountries (value) {
               setError(destination.message)
               return
             }
-            setContinentCountries(destination);
+            setContinentCountries(destination.location);
             setLoading(false);
         } catch (error) {
             setError(error.message);

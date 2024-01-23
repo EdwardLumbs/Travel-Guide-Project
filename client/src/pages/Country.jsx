@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import useGetCountry from "../hooks/useGetCountry";
 
 export default function Country() {
+  // add a function where if continent and country arent validate, return error
     const { countryName } = useParams();
     console.log(countryName)
     const { country, loading, countryError } = useGetCountry(countryName);

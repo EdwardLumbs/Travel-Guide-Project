@@ -1,5 +1,4 @@
 import DestinationCard from '../components/DestinationCard'
-import useGetCountry from '../hooks/useGetCountry'
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,16 +8,20 @@ export default function Destinations() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState({
     type: '',
-    sort: ''
+    sort: '',
+    page: 1,
+    continent: ''
   });
   const [destinations, setDestinations] = useState([]);
   const [error, setError] = useState('');
+  const [pages, setPages] = useState()
+  const pageSize = 8
+
+  console.log(pages)
+  console.log(Math.ceil(pages))
 
   const navigate = useNavigate();
-  const { country } = useGetCountry();
-// add error handlers and when no listing found and loading
-// regex
-// limit Number
+
 // create loading animation
 
   const getUrlParams = () => {
@@ -26,30 +29,47 @@ export default function Destinations() {
     return urlParams
   }
 
+  const handlePageChange = (newPage) => {
+    setSelectedOption((prevState) => ({
+      ...prevState,
+      page: newPage
+    }))
+    const urlParams = getUrlParams();
+    urlParams.set('page', newPage);
+    const searchQuery = urlParams.toString();
+    navigate(`/destinations?${searchQuery}`);
+  }
+
   useEffect(() => {
     const urlParams = getUrlParams();
-    console.log(urlParams.size);
-    if (urlParams.size === 0) {
-      setDestinations(country)
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    const typeFromUrl = urlParams.get('type');
+    const sortFromUrl = urlParams.get('sort');
+    const pageFromUrl = urlParams.get('page');
+    const continentFromUrl = urlParams.get('continent');
+    
+    if (!searchTermFromUrl && !typeFromUrl && !sortFromUrl) {
+      navigate(`/destinations?type=country&sort=ASC&page=1`)
     } else {
       const filterQuery = urlParams.toString();
-      const searchTermFromUrl = urlParams.get('searchTerm');
-      const typeFromUrl = urlParams.get('type');
-      const sortFromUrl = urlParams.get('sort');
+      console.log(filterQuery)
 
       if (searchTermFromUrl) {
         setSearchTerm(searchTermFromUrl || '');
       } 
 
-      if (typeFromUrl || sortFromUrl) {
+      if (typeFromUrl || sortFromUrl || pageFromUrl || continentFromUrl) {
         setSelectedOption({
           type: typeFromUrl || 'country',
-          sort: sortFromUrl || 'ASC'
+          sort: sortFromUrl || 'ASC',
+          page: parseInt(pageFromUrl) || 1,
+          continent: continentFromUrl || ''
         });
       };
 
       const fetchSearchedLocation = async () => {
         setLoading(true);
+        setPages(null)
 
         try {
           const res = await fetch(`/api/destination/searchDestination/${searchTerm}`);
@@ -70,30 +90,56 @@ export default function Destinations() {
           setLoading(false);
         }
       } 
-
+      console.log(filterQuery)
       const fetchFilteredLocations = async (filterQuery) => {
         setLoading(true);
-        try {
-          const res = await fetch(`/api/destination/filterCountries?${filterQuery}`);
-          const destination = await res.json();
+        console.log(continentFromUrl)
+        if (typeFromUrl === 'country' && continentFromUrl) {
+          try {
+            const res = await fetch(`/api/destination/getContinentCountry?${filterQuery}`);
+            const destination = await res.json();
+            console.log(destination.totalItems)
+            if (destination.success === false) {
+              setLoading(false);
+              setError(destination.message);
+            } else {
+              setLoading(false);
+              setError(null);
+              setDestinations(destination.location);
+              setPages(destination.totalItems / pageSize)
+              console.log(destinations)
+              // setPages(destination.totalItems / pageSize)
+            }
+          } catch (error) {
+            console.log(error);
+            setError(error.message);
+            setLoading(false);
+          };
+        } else if (typeFromUrl === 'continent' && continentFromUrl) {
+          navigate('/destinations?type=continent&sort=ASC&page=1')
+        } else {
+          try {
+            const res = await fetch(`/api/destination/filterCountries?${filterQuery}`);
+            const destination = await res.json();
 
-          if (destination.success === false) {
+            if (destination.success === false) {
+              setLoading(false);
+              setError(destination.message);
+            } else {
+              setLoading(false);
+              setError(null);
+              setDestinations(destination.location);
+              setPages(destination.totalItems / pageSize)
+            }
+          } catch (error) {
+            console.log(error);
+            setError(error.message);
             setLoading(false);
-            setError(destination.message);
-          } else {
-            setLoading(false);
-            setError(null);
-            setDestinations(destination);
-          }
-        } catch (error) {
-          console.log(error);
-          setError(error.message);
-          setLoading(false);
-        };
+          };
+        }
       }
 
       if (searchTermFromUrl) {
-        console.log('selected');
         fetchSearchedLocation();
       }
 
@@ -101,7 +147,7 @@ export default function Destinations() {
         fetchFilteredLocations(filterQuery);
       } 
     }
-  }, [location.search, country]);
+  }, [location.search]);
 
 
   const handleSearchChange = (e) => {
@@ -121,11 +167,15 @@ export default function Destinations() {
     const urlParams = getUrlParams();
     setSelectedOption({
       type: '',
-      sort: ''
+      sort: '',
+      page: '',
+      continent: ''
     })
     urlParams.set('searchTerm', searchTerm);
-    urlParams.set('type', '');
-    urlParams.set('sort', '');
+    urlParams.delete('type');
+    urlParams.delete('sort');
+    urlParams.delete('page');
+    urlParams.delete('continent');
     const searchQuery = urlParams.toString();
     navigate(`/destinations?${searchQuery}`);
   }
@@ -134,9 +184,14 @@ export default function Destinations() {
     e.preventDefault();
     const urlParams = getUrlParams();
     setSearchTerm('');
-    urlParams.set('searchTerm', '');
+    urlParams.delete('searchTerm');
     urlParams.set('type', selectedOption.type);
     urlParams.set('sort', selectedOption.sort);
+    urlParams.set('continent', selectedOption.continent);
+    if (selectedOption.type === 'continent') {
+      urlParams.delete('continent');
+    }
+    urlParams.set('page', 1);
     const searchQuery = urlParams.toString();
     navigate(`/destinations?${searchQuery}`);
   }
@@ -153,6 +208,7 @@ export default function Destinations() {
               placeholder='Search'
               value={searchTerm}
               onChange={handleSearchChange}
+              required
             />
             <button 
               type='submit'
@@ -162,20 +218,46 @@ export default function Destinations() {
           </form>
 
           <form onSubmit={handleOptionSubmit}>
-            <label className='flex items-center'>
-              Filter by type of Place:
-            </label>
-            <select 
-              value={selectedOption.type}
-              className='border rounded-lg w-40'
-              id="type" 
-              onChange={handleOptionChange}
-              required
-            >
-              <option value="" disabled selected>Type</option>
-              <option value="country">Country</option>
-              <option value="continent">Continent</option>
-            </select>
+            <div className='flex'>
+              <div>
+                <label className='flex items-center'>
+                  Filter by type of Place:
+                </label>
+                <select 
+                  value={selectedOption.type}
+                  className='border rounded-lg w-40'
+                  id="type" 
+                  onChange={handleOptionChange}
+                  required
+                >
+                  <option value="" disabled selected>Type</option>
+                  <option value="country">Country</option>
+                  <option value="continent">Continent</option>
+                </select>
+              </div>
+              { selectedOption.type === 'country' && 
+                <div>
+                  <label className='flex items-center'>
+                    Filter by Continent:
+                  </label>
+                  <select 
+                    value={selectedOption.continent}
+                    className='border rounded-lg w-40'
+                    id="continent" 
+                    onChange={handleOptionChange}
+                  >
+                    <option value="" selected>Any</option>
+                    <option value="asia">Asia</option>
+                    <option value="europe">Europe</option>
+                    <option value="north america">North America</option>
+                    <option value="south america">South America</option>
+                    <option value="africa">Africa</option>
+                    <option value="australia">Australia</option>
+                  </select>
+                </div>
+              }
+            </div>
+            
             <label className='flex items-center'>
               Sort palces by:
             </label>
@@ -209,10 +291,35 @@ export default function Destinations() {
         </p> :
           <div className='flex flex-wrap gap-4'>
             {destinations.length > 0 && destinations.map((destination) => (
-                <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : `${destination.continent_name}`}>
+                <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : 
+                `${destination.continent_name}`}>
                   <DestinationCard key={destination.country} destination={destination}/>
                 </Link>
               ))
+            }
+          </div>
+        }
+
+        {pages &&
+          <div className='flex justfy-center my-4'>
+            {pages > 1 &&
+              <button
+                onClick={() => handlePageChange(selectedOption.page - 1)}
+                disabled={selectedOption.page === 1}
+                className='px-4 py-2 mr-2 bg-blue-500 text-white'
+              >
+                Previous Page
+              </button>
+            }
+            <span className='text-lg font-semibold'>{`${selectedOption.page} of ${Math.ceil(pages)}`}</span>
+            {pages > 1 &&
+              <button
+                onClick={() => handlePageChange(selectedOption.page + 1)}
+                disabled={selectedOption.page === Math.ceil(pages)}
+                className='px-4 py-2 mr-2 bg-blue-500 text-white'
+              >
+                Next Page
+              </button>
             }
           </div>
         }

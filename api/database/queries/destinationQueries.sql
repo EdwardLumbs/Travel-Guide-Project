@@ -26,6 +26,9 @@ SELECT country, continent_name, photo
 FROM countries
 JOIN continents 
 ON continent_id = continents.id
+ORDER BY country
+LIMIT limit
+OFFSET offset
 
 -- get continent
 SELECT *
@@ -37,11 +40,15 @@ SELECT continent_name, continent_photo
 FROM continents
 
 -- get countries on continents
-SELECT photo, country
+-- destination page
+SELECT countries.id, country, continent_name, photo
 FROM countries
 JOIN continents 
 ON continent_id = continents.id
 WHERE continent_name ILIKE continent
+ORDER BY country 
+LIMIT limit
+OFFSET offset
 
 -- filtering alphabetical
 -- countries
@@ -49,7 +56,9 @@ SELECT country, continent_name, photo
 FROM countries 
 JOIN continents  
 ON continent_id = continents.id 
-ORDER BY country
+ORDER BY country order
+LIMIT limit
+OFFSET offset
 -- continents
 SELECT continent_name, continent_photo
 FROM continents
