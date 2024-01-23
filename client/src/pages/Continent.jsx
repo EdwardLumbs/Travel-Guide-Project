@@ -1,6 +1,7 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useGetContinent from "../hooks/useGetContinent";
 import useGetContinentCountries from "../hooks/useGetContinentCountries";
+import DestinationCard from "../components/DestinationCard";
 
 export default function Continent() {
   const { continent } = useParams();
@@ -57,17 +58,11 @@ export default function Continent() {
               </p> : 
               
               continentCountries.map((country) => (
-                <div className="">
-                  <img 
-                    key={country.id}
-                    className="h-20"
-                    src={country.photo}
-                    alt="country photo" 
-                  />
-                  <p>
-                    {country.country}
-                  </p>
-                </div>
+                <Link to={`${country.country}`}>
+                  <div className="">
+                    <DestinationCard key={country.id} destination={country}/>
+                  </div>
+                </Link>
               ))  
           }
         </div>

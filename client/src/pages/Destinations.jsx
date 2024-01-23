@@ -17,9 +17,6 @@ export default function Destinations() {
   const [pages, setPages] = useState()
   const pageSize = 8
 
-  console.log(pages)
-  console.log(Math.ceil(pages))
-
   const navigate = useNavigate();
 
 // create loading animation
@@ -52,7 +49,6 @@ export default function Destinations() {
       navigate(`/destinations?type=country&sort=ASC&page=1`)
     } else {
       const filterQuery = urlParams.toString();
-      console.log(filterQuery)
 
       if (searchTermFromUrl) {
         setSearchTerm(searchTermFromUrl || '');
@@ -74,7 +70,6 @@ export default function Destinations() {
         try {
           const res = await fetch(`/api/destination/searchDestination/${searchTerm}`);
           const searchedDestination = await res.json();
-          console.log(searchedDestination);
 
           if (searchedDestination.success === false) {
             setLoading(false);
@@ -90,15 +85,12 @@ export default function Destinations() {
           setLoading(false);
         }
       } 
-      console.log(filterQuery)
       const fetchFilteredLocations = async (filterQuery) => {
         setLoading(true);
-        console.log(continentFromUrl)
         if (typeFromUrl === 'country' && continentFromUrl) {
           try {
             const res = await fetch(`/api/destination/getContinentCountry?${filterQuery}`);
             const destination = await res.json();
-            console.log(destination.totalItems)
             if (destination.success === false) {
               setLoading(false);
               setError(destination.message);
@@ -107,7 +99,6 @@ export default function Destinations() {
               setError(null);
               setDestinations(destination.location);
               setPages(destination.totalItems / pageSize)
-              console.log(destinations)
               // setPages(destination.totalItems / pageSize)
             }
           } catch (error) {

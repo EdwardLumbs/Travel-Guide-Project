@@ -95,7 +95,6 @@ router.get('/getContinents/', async (req, res, next) => {
 
 router.get('/searchDestination/:destination', async (req, res, next) => {
     const { destination } = req.params
-    console.log(destination)
 
     try {
         let data = await pool.query(`SELECT country, continent_name, photo
@@ -133,6 +132,7 @@ router.get('/getContinentCountry', async (req, res, next) => {
     let sqlQuery
     let totalItems
 
+    // for destination page
     if (sort) {
         const countData = await pool.query(`SELECT COUNT(*)
         FROM countries
@@ -153,6 +153,7 @@ router.get('/getContinentCountry', async (req, res, next) => {
         } else {
             return next(errorHandler(400, 'Invalid type parameter'));
         }
+    // for continent page
     } else {
         sqlQuery = `SELECT countries.id, country, continent_name, photo
         FROM countries
@@ -164,7 +165,6 @@ router.get('/getContinentCountry', async (req, res, next) => {
 
     try {
         const data = await pool.query(sqlQuery, [continent]);
-        console.log(data)
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Countries not found'));
         }
