@@ -69,6 +69,15 @@ export default function Profile() {
                 </div>
               </Link>}
             </div>
+            <div className='basis-full'>{
+              currentUser.user_iata || 
+              <Link to='edit'>
+                <div className="flex items-center gap-2 opacity-70 hover:opacity-100 hover:cursor-pointer">
+                  <CiCirclePlus className="scale-150"/> 
+                  <p>Add the IATA code near you</p>
+                </div>
+              </Link>}
+            </div>
             <div className='flex gap-6 flex-1 basis-full'>
               <div className='basis-full'>
                 <p className='text-sm'>Travel Plans:</p>
@@ -86,6 +95,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      {/* ADD TABS TO ACCESS OUTLETS */}
       <Outlet/>
     </div>
   )

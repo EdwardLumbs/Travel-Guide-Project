@@ -14,6 +14,7 @@ import {
 import { CiCirclePlus } from "react-icons/ci";
 import { v4 } from 'uuid'
 import { Link } from 'react-router-dom';
+import '../../App.css'
 
 export default function EditProfile() {
   const {currentUser, error} = useSelector((state) => state.user);
@@ -105,10 +106,17 @@ export default function EditProfile() {
   }
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value
-    })
+    if (e.target.id === 'user_iata') {
+      setFormData({
+        ...formData,
+        'user_iata': e.target.value.toUpperCase()
+      })
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value
+      })
+    }
   }
   const handleUserDelete = async (e) => {
     try {
@@ -138,11 +146,12 @@ export default function EditProfile() {
       >
         {/* left */}
         <div className='flex flex-col gap-4 flex-1 w-[400px]'>
+          <label for="from">from</label>
           <input 
             className='border border-black px-3 py-2 rounded-lg'
             type="text" 
             placeholder='Name' 
-            id="username" 
+            id="from" 
             onChange={handleChange}
             defaultValue={currentUser.username}
           />
@@ -154,6 +163,15 @@ export default function EditProfile() {
             id='description'
             onChange={handleChange}
             defaultValue={currentUser.description || ''}
+          />
+
+          <input 
+            className='border border-black px-3 py-2 rounded-lg'
+            type="text" 
+            placeholder='Enter the IATA code near you' 
+            id="user_iata" 
+            onChange={handleChange}
+            defaultValue={currentUser.user_iata || ''}
           />
 
           <input 
