@@ -5,6 +5,7 @@ import pool from './database/db.js';
 import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
 import destinationRouter from './routes/destination.js';
+import flightsRouter from './routes/flights.js'
 import cors from 'cors'
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(cors());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/destination", destinationRouter);
+app.use("/api/flights", flightsRouter);
 
 app.get('/test', async (req, res) => {
     try {

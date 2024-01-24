@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Flights() {
   const [flight, setFlight] = useState()
@@ -24,9 +25,10 @@ export default function Flights() {
   })
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     if (e.target.id === 'date_from') {
@@ -42,6 +44,72 @@ export default function Flights() {
   }
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(location.search)
+    console.log(urlParams)
+    const flyFromUrl = urlParams.get('fly_from');
+    const flyToUrl = urlParams.get('fly_to');
+    const dateFromUrl = urlParams.get('date_from');
+    const dateToUrl = urlParams.get('date_to');
+    const returnFromUrl = urlParams.get('return_from');
+    const returnToUrl = urlParams.get('return_to');
+    const currFromUrl = urlParams.get('curr');
+    const adultsFromUrl = urlParams.get('adults');
+    const childrenFromUrl = urlParams.get('children');
+    const infantsFromUrl = urlParams.get('infants');
+    const cabinsFromUrl = urlParams.get('selected_cabins');
+    const filterQuery = urlParams.toString();
+
+    if (flyFromUrl || 
+      flyToUrl ||
+      dateFromUrl ||
+      dateToUrl ||
+      returnFromUrl ||
+      returnToUrl ||
+      currFromUrl ||
+      adultsFromUrl ||
+      childrenFromUrl ||
+      infantsFromUrl ||
+      cabinsFromUrl) {
+        setParams({
+          fly_from: flyFromUrl || "",
+          fly_to: flyToUrl || "",
+          date_from: dateFromUrl || "",
+          date_to: dateToUrl || "",
+          return_from: returnFromUrl || "",
+          return_to: returnToUrl || "",
+          curr: currFromUrl || "PHP",
+          adults: parseInt(adultsFromUrl) || 1,
+          children: parseInt(childrenFromUrl) || 0,
+          infants: parseInt(infantsFromUrl) || 0,
+          selected_cabins: cabinsFromUrl || 'M'
+        })
+      }
+
+      const fetchFlightData = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`/api/flights/getFlight/${filterQuery}`);
+          const flightData = await res.json();
+          console.log(flightData)
+          if (flightData.success === false) {
+            setLoading(false)
+            setError(flightData.message)
+          }
+          setLoading(false)
+          setFlight(flightData)
+        } catch (error) {
+          setLoading(false)
+          setError(error)
+          console.log(error)
+        }
+      }
+
+      if (filterQuery){
+        fetchFlightData()
+      } 
+  }, [location.search])
+
+  useEffect(() => {
     const totalPassengers = params.adults + params.children + params.infants;
     setMaxInput({
       adults: 11 - (totalPassengers - params.adults),
@@ -50,33 +118,29 @@ export default function Flights() {
     });
   }, [params.adults, params.children, params.infants]);
 
-  const handleSearch = async (e) => {
-    setLoading(true)
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const queryString = new URLSearchParams(params).toString()
-    const url = `https://api.tequila.kiwi.com/v2/search?${queryString}`
-    try {
-      const data = await fetch(url , {
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_TEQUILA_API_KEY}`,
-          'Content-Type': 'application/json', 
-          'apikey': import.meta.env.VITE_TEQUILA_API_KEY
-        }
-      })
-      const flight = await data.json()
-      setLoading(false)
-      setFlight(flight.data[0])
-    } catch (error) {
-      setLoading(false)
-      setError(error.message)
-      console.log(error.message)
-    }
+    setLoading(true)
+    const urlParams = new URLSearchParams()
+    urlParams.set('fly_from', params.fly_from)
+    urlParams.set('fly_to', params.fly_to)
+    urlParams.set('date_from', params.date_from)
+    urlParams.set('date_to', params.date_to)
+    urlParams.set('return_from', params.return_from)
+    urlParams.set('return_to', params.return_to)
+    urlParams.set('curr', params.curr)
+    urlParams.set('adults', params.adults)
+    urlParams.set('children', params.children)
+    urlParams.set('infants', params.infants)
+    urlParams.set('selected_cabins', params.selected_cabins)
+    const searchQuery = urlParams.toString()
+    navigate(`/flights?${searchQuery}`)
   }
 
   return (
     <div className='flex flex-col'>
       <form 
-        onSubmit={handleSearch}
+        onSubmit={handleSubmit}
         className='flex flex-col justify-center items-center bg-green-300 p-7'
       >
         <div className='flex'>
@@ -88,7 +152,7 @@ export default function Flights() {
             required
             placeholder='Where are you from?'  
             onChange={handleChange}
-            // value={params.fly_from}
+            value={params.fly_from}
           />
           <label>To</label>
           <input 
@@ -98,7 +162,7 @@ export default function Flights() {
             required
             placeholder='Where do you want to go?'  
             onChange={handleChange}
-            // value={params.fly_to}
+            value={params.fly_to}
           />
           <label>Departure</label>
           <input 
@@ -108,7 +172,7 @@ export default function Flights() {
             min={today}
             required
             onChange={handleChange}
-            // value={params.date_from}
+            value={params.date_from}
           />
           <label>Return</label>
           <input 
@@ -116,9 +180,8 @@ export default function Flights() {
             type="date" 
             id='return_from'
             min={params.date_from}
-            required
             onChange={handleChange}
-            // value={params.return_from}
+            value={params.return_from}
           />
         </div>
         <div>
@@ -163,7 +226,7 @@ export default function Flights() {
             name="" 
             id="selected_cabins"
             onChange={handleChange}
-            // value={params.selected_cabins}
+            value={params.selected_cabins}
           >
             <option value="M" selected>Economy</option>
             <option value="W">Economy Premium</option>
