@@ -65,6 +65,11 @@ export default function Continent() {
                 </Link>
               ))  
           }
+          <Link
+            className="hover:cursor-pointer hover:underline"
+            to={`/destinations?type=country&sort=ASC&page=1&continent=${continentData.continent_name}`}
+          >See More
+          </Link>
         </div>
         
         <div>

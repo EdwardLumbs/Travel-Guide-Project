@@ -30,8 +30,7 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='login' element={<Login/>} />
           <Route path='sign-up' element={<SignUp/>} />
-          <Route path='destinations' element={<Destinations/>} />
-          {/* routing to be determined */}
+          <Route path='/destinations' element={<Destinations/>} />
           <Route path='/destinations/:continent' element={<Continent/>} />
           <Route path='/destinations/:continent/:countryName' element={<Country/>} />
           
