@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import useGetCountry from "../hooks/useGetCountry";
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ export default function Country() {
   const [iata, setIata] = useState()
   const [flightLoading, setFlightLoading] = useState(false)
   const [flightError, setFlightError] = useState(null)
+  const [filter, setFilter] = useState('')
   const inputValue = useRef('');
   const navigate = useNavigate()
 
@@ -40,7 +41,7 @@ export default function Country() {
 
     console.log(country.capital_iata)
     console.log(filterQuery)
-    console.log('clicked')
+    setFilter(filterQuery)
 
     try {
       setFlightLoading(true)
@@ -119,6 +120,11 @@ export default function Country() {
                 <div>
                   <p>Cheapest flight from your location is:</p>
                   <p>{flight.price}</p>
+                  <Link
+                    className="text-blue-900 hover:underline"
+                    to={`/flights?${filter}`}
+                  >Check it out
+                  </Link>
                 </div>
               :
                 <div>
