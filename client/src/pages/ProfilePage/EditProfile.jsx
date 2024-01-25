@@ -170,6 +170,7 @@ export default function EditProfile() {
             type="text" 
             placeholder='Enter the IATA code near you' 
             id="user_iata" 
+            maxLength="3"
             onChange={handleChange}
             defaultValue={currentUser.user_iata || ''}
           />
