@@ -15,6 +15,7 @@ export default function Flights() {
     from_params: '',
     to_params: ''
   })
+  console.log(inputText)
   const [maxInput, setMaxInput] = useState({
     adults: '11',
     children: '11',
@@ -39,8 +40,6 @@ export default function Flights() {
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
   const navigate = useNavigate()
-
-
 
   useEffect(() => {
     const getIataCodes = async () => {
@@ -67,6 +66,8 @@ export default function Flights() {
       [id]: e.target.value
     })
 
+    console.log(inputText)
+
     let filtered = iataCodes.filter((iataCode) => 
       iataCode.country.toLowerCase().includes(text)
     )
@@ -82,13 +83,14 @@ export default function Flights() {
   }
 
   const handleSuggestionClick = (e, name, suggestion) => {
-    console.log(e.target.name)
+    console.log(name)
+    console.log(suggestion)
     setInputText({
       ...inputText,
-      [e.target.id]: `${suggestion.country} (${suggestion.country_iata})`,
-      [name]: suggestion.country_iata
+      [e.target.id]: suggestion.country_iata,
+      [name]: suggestion.country
     })
-
+  
     if (e.target.id === 'to') {
       setFilteredSuggestionsTo([])
     } else if (e.target.id === 'from') {
@@ -148,8 +150,9 @@ export default function Flights() {
           selected_cabins: cabinsFromUrl || 'M'
         })
         setInputText({
-          from_params: flyFromUrl || "",
-          to_params: flyToUrl || "",
+          ...inputText,
+          from: flyFromUrl || "",
+          to: flyToUrl || "",
         })
       }
 
@@ -190,8 +193,8 @@ export default function Flights() {
     e.preventDefault()
     setLoading(true)
     const urlParams = new URLSearchParams()
-    urlParams.set('fly_from', inputText.from_params)
-    urlParams.set('fly_to', inputText.to_params)
+    urlParams.set('fly_from', inputText.from)
+    urlParams.set('fly_to', inputText.to)
     urlParams.set('date_from', params.date_from)
     urlParams.set('date_to', params.date_to)
     urlParams.set('return_from', params.return_from)
@@ -351,7 +354,8 @@ export default function Flights() {
         : flight ? 
         <div className='flex flex-col'>
           <p>
-            Check out the cheapest flight we found:
+            Check out the cheapest flight we found 
+            from {inputText.from_params} to {inputText.to_params}:
           </p>
           <p className='text-3xl font-semibold'>
             {flight.price}
