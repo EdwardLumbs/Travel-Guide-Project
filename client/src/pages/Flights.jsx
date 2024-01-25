@@ -5,6 +5,16 @@ export default function Flights() {
   const [flight, setFlight] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([])
+  const [filteredSuggestionsTo, setFilteredSuggestionsTo] = useState([])
+  console.log(filteredSuggestionsFrom)
+  const [iataCodes, setIataCodes] = useState([])
+  const [inputText, setInputText] = useState({
+    from: '',
+    to: '',
+    from_params: '',
+    to_params: ''
+  })
   const [maxInput, setMaxInput] = useState({
     adults: '11',
     children: '11',
@@ -29,6 +39,62 @@ export default function Flights() {
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
   const navigate = useNavigate()
+
+
+
+  useEffect(() => {
+    const getIataCodes = async () => {
+      try {
+        const res = await fetch('/api/flights/getIata')
+        const data = await res.json()
+        console.log(data)
+        if (data.success === false) {
+          console.log(data.message)
+        }
+        setIataCodes(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getIataCodes()
+  }, [])
+
+  const handleInputChange = (e) => {
+    const id = e.target.id
+    const text = e.target.value.toLowerCase()
+    setInputText({
+      ...inputText,
+      [id]: e.target.value
+    })
+
+    let filtered = iataCodes.filter((iataCode) => 
+      iataCode.country.toLowerCase().includes(text)
+    )
+    if (e.target.value === ''){
+      filtered = []
+    }
+
+    if (id === 'to') {
+      setFilteredSuggestionsTo(filtered)
+    } else if (id === 'from') {
+      setFilteredSuggestionsFrom(filtered)
+    }
+  }
+
+  const handleSuggestionClick = (e, name, suggestion) => {
+    console.log(e.target.name)
+    setInputText({
+      ...inputText,
+      [e.target.id]: `${suggestion.country} (${suggestion.country_iata})`,
+      [name]: suggestion.country_iata
+    })
+
+    if (e.target.id === 'to') {
+      setFilteredSuggestionsTo([])
+    } else if (e.target.id === 'from') {
+      setFilteredSuggestionsFrom([])
+    }
+  }
 
   const handleChange = (e) => {
     if (e.target.id === 'date_from') {
@@ -71,8 +137,6 @@ export default function Flights() {
       infantsFromUrl ||
       cabinsFromUrl) {
         setParams({
-          fly_from: flyFromUrl || "",
-          fly_to: flyToUrl || "",
           date_from: dateFromUrl || "",
           date_to: dateToUrl || "",
           return_from: returnFromUrl || "",
@@ -82,6 +146,10 @@ export default function Flights() {
           children: parseInt(childrenFromUrl) || 0,
           infants: parseInt(infantsFromUrl) || 0,
           selected_cabins: cabinsFromUrl || 'M'
+        })
+        setInputText({
+          from_params: flyFromUrl || "",
+          to_params: flyToUrl || "",
         })
       }
 
@@ -122,8 +190,8 @@ export default function Flights() {
     e.preventDefault()
     setLoading(true)
     const urlParams = new URLSearchParams()
-    urlParams.set('fly_from', params.fly_from)
-    urlParams.set('fly_to', params.fly_to)
+    urlParams.set('fly_from', inputText.from_params)
+    urlParams.set('fly_to', inputText.to_params)
     urlParams.set('date_from', params.date_from)
     urlParams.set('date_to', params.date_to)
     urlParams.set('return_from', params.return_from)
@@ -144,26 +212,62 @@ export default function Flights() {
         className='flex flex-col justify-center items-center bg-green-300 p-7'
       >
         <div className='flex'>
-          <label>From</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="text" 
-            id='fly_from'
-            required
-            placeholder='Where are you from?'  
-            onChange={handleChange}
-            value={params.fly_from}
-          />
-          <label>To</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="text" 
-            id='fly_to'
-            required
-            placeholder='Where do you want to go?'  
-            onChange={handleChange}
-            value={params.fly_to}
-          />
+          <div>
+            <label>From</label>
+            <input 
+              className='border border-black px-3 py-2 rounded-lg'
+              type="text" 
+              id='from'
+              required
+              placeholder='Where are you from?'  
+              onChange={handleInputChange}
+              value={inputText.from}
+            />
+            {filteredSuggestionsFrom.length > 0 && (
+              <ul
+                className='"absolute z-10 w-full bg-white border rounded mt-1"'
+              >
+                {filteredSuggestionsFrom.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    id='from'
+                    onClick={(e) => handleSuggestionClick(e, 'from_params', suggestion)}
+                    className="py-2 px-4 cursor-pointer hover:bg-gray-100"
+                  >
+                    {suggestion.country} ({suggestion.country_iata})
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div>
+            <label>To</label>
+            <input 
+              className='border border-black px-3 py-2 rounded-lg'
+              type="text" 
+              id='to'
+              required
+              placeholder='Where do you want to go?'  
+              onChange={handleInputChange}
+              value={inputText.to}
+            />
+            {filteredSuggestionsTo.length > 0 && (
+              <ul
+                className='"absolute z-10 w-full bg-white border rounded mt-1"'
+              >
+                {filteredSuggestionsTo.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    id='to'
+                    onClick={(e) => handleSuggestionClick(e, 'to_params', suggestion)}
+                    className="py-2 px-4 cursor-pointer hover:bg-gray-100"
+                  >
+                    {suggestion.country} ({suggestion.country_iata})
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <label>Departure</label>
           <input 
             className='border border-black px-3 py-2 rounded-lg'

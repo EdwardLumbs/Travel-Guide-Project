@@ -76,3 +76,6 @@ SELECT continent_name, continent_photo
 FROM continents
 WHERE continent_name ILIKE continents
 
+-- get IATA codes
+SELECT country_iata, country 
+FROM countries

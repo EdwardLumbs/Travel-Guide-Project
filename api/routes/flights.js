@@ -1,12 +1,13 @@
 import express from "express";
 import dotenv from 'dotenv';
+import pool from "../database/db.js";
 import { errorHandler } from '../utils/error.js';
 dotenv.config();
 
 const router = express.Router();
 
 router.get('/getFlight/:query', async (req, res, next) => {
-    const queryString = req.params.query
+    const queryString = req.params.query;
 
     const url = `https://api.tequila.kiwi.com/v2/search?${queryString}`
     try {
@@ -16,26 +17,41 @@ router.get('/getFlight/:query', async (req, res, next) => {
             'Content-Type': 'application/json', 
             'apikey': process.env.TEQUILA_API_KEY
           }
-        })
+        });
         const flight = await data.json()
-        console.log(flight) 
-        console.log(flight.status)
+        console.log(flight);
+        console.log(flight.status);
         if (flight.status == 'Unprocessable Entity') {   
-            return next(errorHandler(404, flight.error))
-        } 
+            return next(errorHandler(404, flight.error));
+        };
 
         if (flight.data.length === 0) {
             return next(errorHandler(404, 'No flights found for your specifications. Try with different options'))
-        }
+        };
 
-        const flightData = flight.data[0]
-        res.status(200).json(flightData)
+        const flightData = flight.data[0];
+        res.status(200).json(flightData);
         
 
     } catch (error) {
-      next(error)
+      next(error);
+    } 
+})
+
+router.get('/getIata', async (req, res, next) => {
+  try {
+    const data = await pool.query(`SELECT country_iata, country 
+    FROM countries`);
+
+    if (data.rows.length === 0) {
+      return next(errorHandler(404, 'Country not found'));
     }
-      
+
+    const iataCodes = data.rows;
+    res.status(200).json(iataCodes);
+  } catch (error) {
+    next(error);
+  }
 })
 
 export default router;

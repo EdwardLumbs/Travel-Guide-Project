@@ -24,12 +24,12 @@ export default function Country() {
   tomorrowDate.setDate(currentDate.getDate() + 1);
   const tomorrow = tomorrowDate.toISOString().split('T')[0];
 
-  console.log(country.capital_iata)
+  console.log(country.country_iata)
 
   const fetchFlightData = async () => {
     const urlParams = new URLSearchParams
     urlParams.set('fly_from', currentUser?.user_iata || iata || '')
-    urlParams.set('fly_to', country.capital_iata)
+    urlParams.set('fly_to', country.country_iata)
     urlParams.set('date_from', tomorrow)
     urlParams.set('date_to', tomorrow)
     urlParams.set('curr', 'PHP')
@@ -39,7 +39,7 @@ export default function Country() {
     urlParams.set('selected_cabins', 'M')
     const filterQuery = urlParams.toString();
 
-    console.log(country.capital_iata)
+    console.log(country.country_iata)
     console.log(filterQuery)
     setFilter(filterQuery)
 
