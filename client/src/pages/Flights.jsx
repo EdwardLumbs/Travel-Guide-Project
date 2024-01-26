@@ -5,25 +5,24 @@ import SearchFilterResults from '../components/SearchFilterResults'
 export default function Flights() {
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
-  const [flight, setFlight] = useState()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([])
-  const [filteredSuggestionsTo, setFilteredSuggestionsTo] = useState([])
-  console.log(filteredSuggestionsFrom)
-  const [iataCodes, setIataCodes] = useState([])
+  const [flight, setFlight] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([]);
+  const [filteredSuggestionsTo, setFilteredSuggestionsTo] = useState([]);
+  const [iataCodes, setIataCodes] = useState([]);
   const [inputText, setInputText] = useState({
     from: '',
     to: '',
     from_params: '',
     to_params: ''
-  })
+  });
   console.log(inputText)
   const [maxInput, setMaxInput] = useState({
     adults: '11',
     children: '11',
     infants: '11'
-  })
+  });
   const [params, setParams] = useState({
     fly_from: "",
     fly_to: "",
@@ -36,13 +35,13 @@ export default function Flights() {
     children: 0,
     infants: 0,
     selected_cabins: 'M',
-  })
+  });
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getIataCodes = async () => {
@@ -62,32 +61,32 @@ export default function Flights() {
   }, [])
 
   const handleInputChange = (e) => {
-    const id = e.target.id
-    const text = e.target.value.toLowerCase()
+    const id = e.target.id;
+    const text = e.target.value.toLowerCase();
     setInputText({
       ...inputText,
       [id]: e.target.value
-    })
+    });
 
-    console.log(inputText)
+    console.log(inputText);
 
     let filtered = iataCodes.filter((iataCode) => 
       iataCode.country.toLowerCase().includes(text)
-    )
+    );
     if (e.target.value === ''){
       filtered = []
-    }
+    };
 
     if (id === 'to') {
       setFilteredSuggestionsTo(filtered)
     } else if (id === 'from') {
       setFilteredSuggestionsFrom(filtered)
-    }
-  }
+    };
+  };
 
   // add an onclick on the input field or enter click
 
-  const handleSuggestionClick = (e, name, suggestion) => {
+  const handleSuggestionClick = (e, name = 'none', suggestion) => {
     console.log(name)
     console.log(suggestion)
     setInputText({
@@ -373,7 +372,7 @@ export default function Flights() {
         <div className='flex flex-col'>
           <p>
             Check out the cheapest flight we found 
-            from {inputText.from_params} to {inputText.to_params}:
+            from {inputText.from_params || inputText.from} to {inputText.to_params || inputText.to}:
           </p>
           <p className='text-3xl font-semibold'>
             {flight.price}
