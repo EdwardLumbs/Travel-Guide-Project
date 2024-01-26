@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import SearchFilterResults from '../components/SearchFilterResults'
 
 export default function Flights() {
+  const input1Ref = useRef(null);
+  const input2Ref = useRef(null);
   const [flight, setFlight] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -82,6 +85,8 @@ export default function Flights() {
     }
   }
 
+  // add an onclick on the input field or enter click
+
   const handleSuggestionClick = (e, name, suggestion) => {
     console.log(name)
     console.log(suggestion)
@@ -97,6 +102,19 @@ export default function Flights() {
       setFilteredSuggestionsFrom([])
     }
   }
+
+  const handleInputEnter = (e, nextInputRef) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setFilteredSuggestionsTo([])
+      setFilteredSuggestionsFrom([])
+      if (nextInputRef && nextInputRef.current) {
+        nextInputRef.current.focus();
+      } else {
+        e.target.blur();
+      }
+    }
+  };
 
   const handleChange = (e) => {
     if (e.target.id === 'date_from') {
@@ -159,7 +177,7 @@ export default function Flights() {
       const fetchFlightData = async () => {
         setLoading(true);
         try {
-          const res = await fetch(`/api/flights/getFlight/${filterQuery}`);
+          const res = await fetch(`/api/flights/getFlight/${filterQuery}/${flyFromUrl}/${flyToUrl}`);
           const flightData = await res.json();
           console.log(flightData)
           if (flightData.success === false) {
@@ -189,8 +207,30 @@ export default function Flights() {
     });
   }, [params.adults, params.children, params.infants]);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        input1Ref.current &&
+        !input1Ref.current.contains(e.target) &&
+        input2Ref.current &&
+        !input2Ref.current.contains(e.target)
+      ) {
+        setFilteredSuggestionsFrom([]);
+        setFilteredSuggestionsTo([]);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [input1Ref, input2Ref]);
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setFilteredSuggestionsTo([])
+    setFilteredSuggestionsFrom([])
     setLoading(true)
     const urlParams = new URLSearchParams()
     urlParams.set('fly_from', inputText.from)
@@ -217,58 +257,36 @@ export default function Flights() {
         <div className='flex'>
           <div>
             <label>From</label>
-            <input 
+            <input
               className='border border-black px-3 py-2 rounded-lg'
-              type="text" 
+              type="text"
               id='from'
               required
-              placeholder='Where are you from?'  
+              placeholder='Type a valid IATA code'
               onChange={handleInputChange}
               value={inputText.from}
+              onKeyDown={(e) => handleInputEnter(e, input2Ref)}
+              ref={input1Ref}
             />
-            {filteredSuggestionsFrom.length > 0 && (
-              <ul
-                className='"absolute z-10 w-full bg-white border rounded mt-1"'
-              >
-                {filteredSuggestionsFrom.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    id='from'
-                    onClick={(e) => handleSuggestionClick(e, 'from_params', suggestion)}
-                    className="py-2 px-4 cursor-pointer hover:bg-gray-100"
-                  >
-                    {suggestion.country} ({suggestion.country_iata})
-                  </li>
-                ))}
-              </ul>
-            )}
+            {filteredSuggestionsFrom.length > 0 && 
+              <SearchFilterResults name={'from_params'} id={'from'} filteredSuggestions={filteredSuggestionsFrom} handleSuggestionClick={handleSuggestionClick}/>
+            }
           </div>
           <div>
             <label>To</label>
-            <input 
+            <input
               className='border border-black px-3 py-2 rounded-lg'
-              type="text" 
+              type="text"
               id='to'
               required
-              placeholder='Where do you want to go?'  
+              placeholder='Type a valid IATA code'
               onChange={handleInputChange}
               value={inputText.to}
+              onKeyDown={(e) => handleInputEnter(e, null)}
+              ref={input2Ref}
             />
             {filteredSuggestionsTo.length > 0 && (
-              <ul
-                className='"absolute z-10 w-full bg-white border rounded mt-1"'
-              >
-                {filteredSuggestionsTo.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    id='to'
-                    onClick={(e) => handleSuggestionClick(e, 'to_params', suggestion)}
-                    className="py-2 px-4 cursor-pointer hover:bg-gray-100"
-                  >
-                    {suggestion.country} ({suggestion.country_iata})
-                  </li>
-                ))}
-              </ul>
+              <SearchFilterResults name={'to_params'} id={'to'} filteredSuggestions={filteredSuggestionsTo} handleSuggestionClick={handleSuggestionClick}/>
             )}
           </div>
           <label>Departure</label>
@@ -346,7 +364,7 @@ export default function Flights() {
       <div className='bg-red-200'>
         {loading ? 
         <p>
-          Loading...
+          Getting your flight for you...
         </p> : error ? 
         <p>
           {error}
