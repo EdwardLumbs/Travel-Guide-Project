@@ -10,6 +10,7 @@ export default function Flights() {
   const [error, setError] = useState(false);
   const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([]);
   const [filteredSuggestionsTo, setFilteredSuggestionsTo] = useState([]);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [iataCodes, setIataCodes] = useState([]);
   const [inputText, setInputText] = useState({
     from: '',
@@ -68,8 +69,6 @@ export default function Flights() {
       [id]: e.target.value
     });
 
-    console.log(inputText);
-
     let filtered = iataCodes.filter((iataCode) => 
       iataCode.country.toLowerCase().includes(text)
     );
@@ -78,40 +77,66 @@ export default function Flights() {
     };
 
     if (id === 'to') {
-      setFilteredSuggestionsTo(filtered)
+      setFilteredSuggestionsTo(filtered);
     } else if (id === 'from') {
-      setFilteredSuggestionsFrom(filtered)
+      setFilteredSuggestionsFrom(filtered);
     };
+    setHighlightedIndex(filtered.length > 0 ? 0 : -1);
   };
 
   // add an onclick on the input field or enter click
 
   const handleSuggestionClick = (e, name = 'none', suggestion) => {
-    console.log(name)
-    console.log(suggestion)
     setInputText({
       ...inputText,
       [e.target.id]: suggestion.country_iata,
       [name]: suggestion.country
-    })
+    });
   
     if (e.target.id === 'to') {
-      setFilteredSuggestionsTo([])
+      setFilteredSuggestionsTo([]);
+      setHighlightedIndex(-1);
     } else if (e.target.id === 'from') {
-      setFilteredSuggestionsFrom([])
-    }
-  }
+      setFilteredSuggestionsFrom([]);
+      setHighlightedIndex(-1);
+    };
+  };
+
+  // const handleInputEnter = (e, nextInputRef) => {
+  //   if (e.key === 'Enter') {
+  //     e.preventDefault();
+  //     setFilteredSuggestionsTo([])
+  //     setFilteredSuggestionsFrom([])
+  //     if (nextInputRef && nextInputRef.current) {
+  //       nextInputRef.current.focus();
+  //     } else {
+  //       e.target.blur();
+  //     }
+  //   }
+  // };
 
   const handleInputEnter = (e, nextInputRef) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setFilteredSuggestionsTo([])
-      setFilteredSuggestionsFrom([])
-      if (nextInputRef && nextInputRef.current) {
-        nextInputRef.current.focus();
+      if (highlightedIndex !== -1) {
+        const suggestions = e.target.id === 'from' ? filteredSuggestionsFrom : filteredSuggestionsTo;
+        const highlightedSuggestion = suggestions[highlightedIndex];
+        handleSuggestionClick(e, name='none', highlightedSuggestion);
       } else {
-        e.target.blur();
+        setFilteredSuggestionsTo([]);
+        setFilteredSuggestionsFrom([]);
+        if (nextInputRef && nextInputRef.current) {
+          nextInputRef.current.focus();
+        } else {
+          e.target.blur();
+        }
       }
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const direction = e.key === 'ArrowDown' ? 1 : -1;
+      const suggestions = e.target.id === 'from' ? filteredSuggestionsFrom : filteredSuggestionsTo;
+      const newIndex = Math.min(Math.max(highlightedIndex + direction, 0), suggestions.length - 1);
+      setHighlightedIndex(newIndex);
     }
   };
 
@@ -127,6 +152,25 @@ export default function Flights() {
       setParams({...params, [e.target.id]: e.target.value})
     }
   }
+
+  const handleArrowNavigation = (name, e) => {
+    let filteredSuggestions
+    if (name === 'from') {
+      filteredSuggestions = filteredSuggestionsFrom
+    } else {
+      filteredSuggestions = filteredSuggestionsTo
+    }
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const direction = e.key === 'ArrowDown' ? 1 : -1;
+      const newIndex = Math.min(
+        Math.max(highlightedIndex + direction, 0),
+        filteredSuggestions.length - 1
+      );
+      setHighlightedIndex(newIndex);
+    }
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search)
@@ -264,11 +308,20 @@ export default function Flights() {
               placeholder='Type a valid IATA code'
               onChange={handleInputChange}
               value={inputText.from}
-              onKeyDown={(e) => handleInputEnter(e, input2Ref)}
+              onKeyDown={(e) => {
+                handleInputEnter(e, input2Ref);
+                handleArrowNavigation('from', e);
+              }}
               ref={input1Ref}
             />
             {filteredSuggestionsFrom.length > 0 && 
-              <SearchFilterResults name={'from_params'} id={'from'} filteredSuggestions={filteredSuggestionsFrom} handleSuggestionClick={handleSuggestionClick}/>
+              <SearchFilterResults 
+                name={'from_params'} 
+                id={'from'} 
+                filteredSuggestions={filteredSuggestionsFrom} 
+                handleSuggestionClick={handleSuggestionClick}
+                highlightedIndex={highlightedIndex}
+              />
             }
           </div>
           <div>
@@ -281,11 +334,20 @@ export default function Flights() {
               placeholder='Type a valid IATA code'
               onChange={handleInputChange}
               value={inputText.to}
-              onKeyDown={(e) => handleInputEnter(e, null)}
+              onKeyDown={(e) => {
+                handleInputEnter(e, null);
+                handleArrowNavigation('to', e);
+              }}
               ref={input2Ref}
             />
             {filteredSuggestionsTo.length > 0 && (
-              <SearchFilterResults name={'to_params'} id={'to'} filteredSuggestions={filteredSuggestionsTo} handleSuggestionClick={handleSuggestionClick}/>
+              <SearchFilterResults 
+                name={'to_params'} 
+                id={'to'} 
+                filteredSuggestions={filteredSuggestionsTo} 
+                handleSuggestionClick={handleSuggestionClick}
+                highlightedIndex={highlightedIndex}
+              />
             )}
           </div>
           <label>Departure</label>
