@@ -4,7 +4,6 @@ import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Blogs from './pages/Blogs'
 import About from './pages/About'
-import Reviews from './pages/Reviews'
 import Profile from './pages/Profile'
 import Destinations from './pages/Destinations'
 import Explore from './pages/Explore'
@@ -12,7 +11,6 @@ import Flights from './pages/Flights'
 import EditProfile from './pages/ProfilePage/EditProfile'
 import UserPlans from './pages/ProfilePage/UserPlans'
 import UserBlogs from './pages/ProfilePage/UserBlogs'
-import UserReviews from './pages/ProfilePage/UserReviews'
 import Country from './pages/Country'
 import Continent from './pages/Continent'
 
@@ -41,7 +39,6 @@ function App() {
             <Route path='profile' element={<Profile/>}>
               <Route index element={<UserPlans/>} />
               <Route path='user-blogs' element={<UserBlogs/>} />
-              <Route path='user-reviews' element={<UserReviews/>} />
               <Route path='edit' element={<EditProfile/>} />
             </Route>
           </Route>

@@ -69,7 +69,7 @@ export default function Attractions({capital, countryName, continent}) {
     const handleSubmit = (e) => {
         e.preventDefault()
         const urlParams = new URLSearchParams()
-        urlParams.set('capital', capital)
+        urlParams.set('place', capital)
         urlParams.set('category', category)
         const searchQuery = urlParams.toString()
         navigate(`/destinations/${continent}/${countryName}?${searchQuery}`)
@@ -116,7 +116,7 @@ export default function Attractions({capital, countryName, continent}) {
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
         const categoryFromUrl = urlParams.get('category');
-        const capitalFromUrl = urlParams.get('capital');
+        const placeFromUrl = urlParams.get('place');
         const filterQuery = urlParams.toString();
 
         if (categoryFromUrl) {
@@ -125,7 +125,7 @@ export default function Attractions({capital, countryName, continent}) {
 
         const getAttractions = async () => {
             setLoading(true);
-            if (capitalFromUrl !== capital){
+            if (placeFromUrl !== capital){
                 setError("An error occurred");
                 return;
             }
@@ -198,7 +198,7 @@ export default function Attractions({capital, countryName, continent}) {
                     </p>
                     :
                     attractions.length > 0 && 
-                        <div className='flex'>
+                        <div className='flex flex-wrap'>
                             {`Showing Results for ${category}`}
                             {attractions.map((attraction, index) => (
                                 <Link 
@@ -209,6 +209,12 @@ export default function Attractions({capital, countryName, continent}) {
                                     <AttractionCard category={category} attraction={attraction} />
                                 </Link>
                             ))}
+                            <Link 
+                                className='hover:underline'
+                                to={`/explore?place=${capital}&category=${category}&limit=${20}`}
+                            >
+                                Show more
+                            </Link>
                         </div>
                     }
                 </div>

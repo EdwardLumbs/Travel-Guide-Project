@@ -8,12 +8,14 @@ const router = express.Router();
 
 router.get('/getAttractions', async (req, res, next) => {
     const apiKey = process.env.GEOAPIFY_API_KEY
-    const place = req.query.capital
+    const place = req.query.place
     const category = req.query.category
-    const limit = 4
-    console.log(req.query)
+    const limit = req.query.limit || 4
+    console.log(req.query.category)
 
-    const categories = await getCategories()
+    const data = await getCategories()
+    const categories = data.map((datum) => datum.category)
+    console.log(categories)
 
     if (!categories.includes(category)) {
         return next(errorHandler(404, 'Category not found'))

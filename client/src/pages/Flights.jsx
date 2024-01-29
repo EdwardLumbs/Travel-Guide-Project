@@ -102,19 +102,6 @@ export default function Flights() {
     };
   };
 
-  // const handleInputEnter = (e, nextInputRef) => {
-  //   if (e.key === 'Enter') {
-  //     e.preventDefault();
-  //     setFilteredSuggestionsTo([])
-  //     setFilteredSuggestionsFrom([])
-  //     if (nextInputRef && nextInputRef.current) {
-  //       nextInputRef.current.focus();
-  //     } else {
-  //       e.target.blur();
-  //     }
-  //   }
-  // };
-
   const handleInputEnter = (e, nextInputRef) => {
     if (e.key === 'Enter') {
       e.preventDefault();
