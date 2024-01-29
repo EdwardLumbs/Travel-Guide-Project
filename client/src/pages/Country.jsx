@@ -1,12 +1,13 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import useGetCountry from "../hooks/useGetCountry";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
 import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
+  const buttonRef = useRef(null);
   const { countryName } = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const { country, loading, countryError } = useGetCountry(countryName);
@@ -22,6 +23,7 @@ export default function Country() {
   const navigate = useNavigate();
   const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([]);
   const [iataCodes, setIataCodes] = useState([])
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const currentDate = new Date();
   const tomorrowDate = new Date();
@@ -52,29 +54,56 @@ export default function Country() {
       [e.target.id]: e.target.value
     });
 
-    console.log(inputValue.from);
-
     let filtered = iataCodes.filter((iataCode) => 
       iataCode.country.toLowerCase().includes(text)
     );
     if (e.target.value === ''){
       filtered = [];
-    } else {
-      setFilteredSuggestionsFrom(filtered);
-    };
+    }
+
+    setFilteredSuggestionsFrom(filtered);
+    setHighlightedIndex(filtered.length > 0 ? 0 : -1);
+    
   };
 
   const handleSuggestionClick = (e, name = 'none', suggestion) => {
-    console.log('clicked');
-    console.log(name);
-    console.log(suggestion);
     setInputValue({
       ...inputValue,
       [e.target.id]: suggestion.country_iata,
       name: suggestion.country
     });
     setFilteredSuggestionsFrom([]);
+    setHighlightedIndex(-1);
   }
+
+  const handleInputEnter = (e, buttonRef) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        if (highlightedIndex !== -1) {
+            const highlightedSuggestion = filteredSuggestionsFrom[highlightedIndex];
+            handleSuggestionClick(e, 'none', highlightedSuggestion);
+        } else {
+            setFilteredSuggestionsFrom([])
+            e.target.blur();
+            if (buttonRef && buttonRef.current) {
+              buttonRef.current.focus();
+              buttonRef.click()
+            }
+        }
+    };
+  }
+
+  const handleArrowNavigation = (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const direction = e.key === 'ArrowDown' ? 1 : -1;
+      const newIndex = Math.min(
+        Math.max(highlightedIndex + direction, 0),
+        filteredSuggestionsFrom.length - 1
+      );
+      setHighlightedIndex(newIndex);
+    }
+};
 
   const fetchFlightData = async () => {
     const urlParams = new URLSearchParams;
@@ -88,11 +117,6 @@ export default function Country() {
     urlParams.set('infants', 0);
     urlParams.set('selected_cabins', 'M');
     const filterQuery = urlParams.toString();
-    console.log('clicked')
-    console.log(filterQuery)
-
-    console.log(country.country_iata);
-    console.log(filterQuery);
     setFilter(filterQuery);
 
     try {
@@ -132,7 +156,6 @@ export default function Country() {
   }, [iata, country]);
 
   const handleSubmit = (e) => {
-    console.log('clicked')
     if (inputValue.from === country.country_iata) {
       setFlightError("Please enter a different location")
       return
@@ -221,12 +244,26 @@ export default function Country() {
                       placeholder='Where are you from?'  
                       value={inputValue.from}
                       onChange={handleInputChange}
+                      onKeyDown={(e) => {
+                        handleInputEnter(e, buttonRef);
+                        handleArrowNavigation(e);
+                      }}
                     />
                     {filteredSuggestionsFrom.length > 0 &&
-                      <SearchFilterResults id={'from'} filteredSuggestions={filteredSuggestionsFrom} handleSuggestionClick={handleSuggestionClick}/>  
+                      <SearchFilterResults 
+                        id={'from'} 
+                        filteredSuggestions={filteredSuggestionsFrom} 
+                        handleSuggestionClick={handleSuggestionClick}
+                        highlightedIndex={highlightedIndex}
+                      />  
                     }
                     {/* move search button down do you can still click when therere suggestions */}
-                    <button className='bg-green-200 px-5 py-2'>Search</button>
+                    <button 
+                      className='bg-green-200 px-5 py-2'
+                      ref={buttonRef}
+                    >
+                      Search
+                    </button>
                   </form>
                 </div>
               }
