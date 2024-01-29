@@ -3,6 +3,7 @@ import useGetCountry from "../hooks/useGetCountry";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import SearchFilterResults from "../components/SearchFilterResults";
+import Attractions from "../components/Attractions";
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
@@ -225,7 +226,6 @@ export default function Country() {
                       <SearchFilterResults id={'from'} filteredSuggestions={filteredSuggestionsFrom} handleSuggestionClick={handleSuggestionClick}/>  
                     }
                     {/* move search button down do you can still click when therere suggestions */}
-                    {/* ADD a feature that lets you clear the iata and add another country */}
                     <button className='bg-green-200 px-5 py-2'>Search</button>
                   </form>
                 </div>
@@ -235,7 +235,7 @@ export default function Country() {
         </div>
 
         <div>
-          Must See attractions. Add the notable places here
+          <Attractions capital={country.capital} countryName={country.country} continent={country.continent_name}/>
         </div>
 
         <div>
