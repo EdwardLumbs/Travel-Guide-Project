@@ -14,10 +14,6 @@ export default function Attractions({capital, countryName, continent}) {
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const navigate = useNavigate();
 
-    console.log(category)
-    console.log(filteredSuggestions)
-    console.log(attractions)
-
     const handleChange = (e) => {
         setCategory(e.target.value);
 

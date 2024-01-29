@@ -35,9 +35,6 @@ export default function Header() {
                 <Link to='/blogs'>
                     <li className='hover:underline'>BLOGS</li>
                 </Link>
-                <Link to='/reviews'>
-                    <li className='hover:underline'>REVIEWS</li>
-                </Link>
                 <Link to='/about'>
                     <li className='hover:underline'>ABOUT</li>
                 </Link>

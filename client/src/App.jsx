@@ -33,12 +33,10 @@ function App() {
           <Route path='/destinations' element={<Destinations/>} />
           <Route path='/destinations/:continent' element={<Continent/>} />
           <Route path='/destinations/:continent/:countryName' element={<Country/>} />
-          
           <Route path='explore' element={<Explore/>} />
           <Route path='flights' element={<Flights/>} />
           <Route path='blogs' element={<Blogs/>} />
           <Route path='about' element={<About/>} />
-          <Route path='reviews' element={<Reviews/>} />
           <Route element={<PrivateRoute/>}>
             <Route path='profile' element={<Profile/>}>
               <Route index element={<UserPlans/>} />
