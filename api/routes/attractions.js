@@ -12,6 +12,12 @@ router.get('/getAttractions', async (req, res, next) => {
     const category = req.query.category
     const limit = 4
     console.log(req.query)
+
+    const categories = await getCategories()
+
+    if (!categories.includes(category)) {
+        return next(errorHandler(404, 'Category not found'))
+    }
     
     const geoParams = new URLSearchParams()
     geoParams.set('text', place)
@@ -47,17 +53,25 @@ router.get('/getAttractions', async (req, res, next) => {
 
 router.get('/getCategories', async (req, res, next) => {
     try {
-        const keys = await pool.query(`SELECT category
-        FROM categories`)
-
-        if (keys.rows.length === 0) {
-            return next(errorHandler(404, 'Categories not found'));
-        }
-        const categories = keys.rows;
+        const categories = await getCategories();
         res.status(200).json(categories);
     } catch (error) {
         next(error)
     }
 })
+
+const getCategories = async () => {
+    try {
+      const keys = await pool.query(`SELECT category FROM categories`);
+  
+      if (keys.rows.length === 0) {
+        throw errorHandler(404, 'Categories not found');
+      }
+  
+      return keys.rows;
+    } catch (error) {
+      throw error;
+    }
+};
 
 export default router;
