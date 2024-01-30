@@ -13,7 +13,7 @@ export default function NewsCard({article}) {
             <p className='text-2xl font-semibold line-clamp-2'>
                 {article.title}
             </p>
-            <p className="text-sm text-gray-600 line-clamp-3">
+            <p className="text-sm text-gray-600 line-clamp-2">
                 {article.description}
             </p>
         </div>
