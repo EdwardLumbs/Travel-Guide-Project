@@ -2,6 +2,11 @@ import React from 'react'
 
 export default function CreateBlogPost() {
   return (
-    <div>CreateBlogPost</div>
+    <div>
+      <form action="">
+        <input type="text" />
+        <input type="text" name="" id="" />
+      </form>
+    </div>
   )
 }
