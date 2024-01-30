@@ -8,6 +8,7 @@ import destinationRouter from './routes/destination.js';
 import flightsRouter from './routes/flights.js'
 import attractionsRouter from './routes/attractions.js'
 import newsRouter from './routes/news.js'
+import blogRouter from './routes/blogs.js'
 import cors from 'cors'
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use("/api/destination", destinationRouter);
 app.use("/api/flights", flightsRouter);
 app.use("/api/attractions", attractionsRouter);
 app.use("/api/news", newsRouter);
+app.use("/api/blogs", blogRouter);
 
 app.get('/test', async (req, res) => {
     try {
