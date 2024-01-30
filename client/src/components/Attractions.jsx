@@ -82,13 +82,10 @@ export default function Attractions({capital, countryName, continent}) {
                 const data = await res.json()
 
                 if (data.success === false) {
-                    setLoading(false)
                     setError(data.message)
                 }
-                setLoading(false)
                 setCategories(data)
             } catch (error) {
-                setLoading(false)
                 setError(error)
                 console.log(error)
             }

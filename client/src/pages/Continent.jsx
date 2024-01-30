@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import useGetContinent from "../hooks/useGetContinent";
 import useGetContinentCountries from "../hooks/useGetContinentCountries";
 import DestinationCard from "../components/DestinationCard";
+import News from "../components/News";
 
 export default function Continent() {
   const { continent } = useParams();
@@ -77,7 +78,7 @@ export default function Continent() {
         </div>
 
         <div>
-          Check out user's reviews. Add reviews
+          <News place={continentData.continent_name}/>
         </div>
 
       </div>

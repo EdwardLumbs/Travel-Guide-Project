@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
 import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
+import News from "../components/News";
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
@@ -280,7 +281,7 @@ export default function Country() {
         </div>
 
         <div>
-          Check out user's reviews. Add reviews
+          <News place={country.country}/>
         </div>
 
       </div>

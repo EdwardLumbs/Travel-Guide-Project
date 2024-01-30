@@ -5,20 +5,26 @@ dotenv.config();
 
 const router = express.Router();
 
-router.get('/getNews/:country', async (req, res, next) => {
+router.get('/getNews/:place', async (req, res, next) => {
     const apiKey = process.env.NEWS_API_KEY
-    const keyword = `${req.params.country} tourism`
+    console.log(apiKey)
+    const keyword = `${req.params.place} tourism`
     const url = `https://newsapi.org/v2/everything?q=${keyword}&pageSize=4`
  
     try {
         const data = await fetch(url, {
             headers: {
-                'Authorization': `Bearer ${process.env.TEQUILA_API_KEY}`,
+                'Authorization': apiKey,
                 'Content-Type': 'application/json', 
             }
         })
         const news = await data.json()
-        console.log(news)
+        console.log(news.articles)
+        if (news?.articles.length === 0) {
+            return next(errorHandler(404, 'No relevant news found'))
+        }
+
+        res.status(200).json(news.articles)
         
     } catch (error) {
         next(error)
