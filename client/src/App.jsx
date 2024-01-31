@@ -13,7 +13,7 @@ import UserPlans from './pages/ProfilePage/UserPlans'
 import UserBlogs from './pages/ProfilePage/UserBlogs'
 import Country from './pages/Country'
 import Continent from './pages/Continent'
-import CreateBlogPost from './pages/CreateBlogPost'
+import CreateBlogPost from './pages//BlogsPage/CreateBlogPost'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
