@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { app } from '../../firebase.js';
 import { 
   updateUserStart, 
   updateUserSuccess, 
@@ -11,58 +9,17 @@ import {
   deleteUserFailure, 
   deleteUserSuccess, 
   deleteUserStart } from '../../redux/slices/userSlice.js';
-import { CiCirclePlus } from "react-icons/ci";
-import { v4 } from 'uuid'
 import { Link } from 'react-router-dom';
 import '../../App.css'
+import UploadPicture from '../../components/UploadPicture.jsx';
 
 export default function EditProfile() {
   const {currentUser, error} = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const fileRef = useRef(null);
-
   const [formData, setFormData] = useState({});
   const [disabled, setDisabled] = useState(false);
-  const [imageFile, setImageFile] = useState(undefined);
-  const [imageFilePercentage, setImageFilePercentage] = useState(0);
-  const [imageFileUploadError, setImageFileUploadError] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false)
-
-  console.log(formData)
-
-  useEffect(() => {
-    if (imageFile) {
-      handleFileUpload(imageFile);
-    }
-  }, [imageFile]);
-
-  const handleFileUpload = (imageFile) => {
-    const storage = getStorage(app)
-    const fileName = imageFile.name + v4()
-    const storageRef = ref(storage, `profile-picture/${fileName}`)
-    const uploadTask = uploadBytesResumable(storageRef, imageFile)
-
-    uploadTask.on('state_changed', 
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred /
-        snapshot.totalBytes) * 100
-        setImageFilePercentage(Math.round(progress))
-      },
-      (error) => {
-      setImageFileUploadError(true)
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(
-          (downloadURL) => {
-              setImageFileUploadError(false)
-              setFormData({...formData, photo: downloadURL})
-          }
-        )
-      }
-    )
-
-  }
 
   useEffect(() => {
     if (formData.newPassword != formData.confirmNewPassword){
@@ -118,6 +75,7 @@ export default function EditProfile() {
       })
     }
   }
+  
   const handleUserDelete = async (e) => {
     try {
       dispatch(deleteUserStart());
@@ -203,36 +161,11 @@ export default function EditProfile() {
             src={formData.photo || currentUser.photo}
             alt="Profile Picture" 
           />
-          {imageFileUploadError ? 
-            <span className='text-red-700'>
-              Error in Image Upload (image must be less than 2mb)
-            </span> :
-            imageFilePercentage > 0 && imageFilePercentage < 100 ? (
-              <span className='text-slate-700'>
-                {`Uploading ${imageFilePercentage}%`}
-              </span>
-            ) :
-            imageFilePercentage === 100 ? (
-              <span className='text-green-700'>
-                Upload Successful!
-              </span>
-            ) : ""
-          } 
-          <input 
-            onChange={(e) => setImageFile(e.target.files[0])}
-            type="file"
-            ref={fileRef}
-            hidden
-            accept='image/*' 
+          <UploadPicture
+            setCoverPhoto={null}
+            formData = {formData}
+            setFormData={setFormData}
           />
-          <button 
-            type='button'
-            onClick={() => fileRef.current.click()}
-            className='flex items-center gap-2 text-blue-400 hover:opacity-80 hover:underline'
-          >
-            <CiCirclePlus className='scale-150'/>
-            Upload New Profile Picture
-          </button>
 
           <div className='flex gap-2 mt-4'>
             <button 
