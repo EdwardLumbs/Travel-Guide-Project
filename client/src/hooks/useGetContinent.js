@@ -18,8 +18,15 @@ export default function useGetContinent (type='all') {
         const res = await fetch(sqlQuery);
         const destination = await res.json();
         console.log(destination);
-        setContinentData(destination);
-        setLoading(false);
+
+        if (type === 'all') {
+          const continentNames = destination.map((continent) => continent.continent_name)
+          setContinentData(continentNames);
+          setLoading(false);
+        } else {
+          setContinentData(destination);
+          setLoading(false);
+        }
       } catch (error) {
         setError(error.message);
         console.log(error);

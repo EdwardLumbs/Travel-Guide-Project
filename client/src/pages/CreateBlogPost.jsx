@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useSelector } from 'react-redux';
 import UploadPicture from '../components/UploadPicture.jsx';
+import BlogTagsComponent from '../components/BlogTagsComponent.jsx';
 
 const modules = {
   toolbar: [
@@ -28,12 +29,28 @@ export default function CreateBlogPost() {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [selected, setSelected] = useState([])
   const [coverPhoto, setCoverPhoto] = useState(null)
+  console.log(content)
+  console.log(currentUser)
+  console.log(selected)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      
+      const res = await fetch('/api/blogs/create-post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: currentUser.id,
+          title,
+          place_tag,
+          photo: coverPhoto,
+          content
+        }),
+      }) 
     } catch (error) {
       
     }
@@ -60,6 +77,10 @@ export default function CreateBlogPost() {
           setCoverPhoto={setCoverPhoto}
           formData={null}
           setFormData={null}
+        />
+        <BlogTagsComponent 
+          selected={selected}
+          setSelected={setSelected}
         />
         <ReactQuill 
           value={content} 

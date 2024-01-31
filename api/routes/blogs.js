@@ -9,7 +9,7 @@ dotenv.config();
 const router = express.Router();
 
 router.post('/create-post', verifyToken, (req, res, next) => {
-
+    
 })
 
 
