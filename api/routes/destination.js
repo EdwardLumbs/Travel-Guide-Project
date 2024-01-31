@@ -27,6 +27,22 @@ router.get('/getCountry/:name', async (req, res, next) => {
     }
 })
 
+router.get('/getCountryNames', async (req, res, next) => {
+    try {
+        const data = await pool.query(`SELECT country FROM countries`)
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Countries not found'));
+        }
+        
+        const countryNames = data.rows;
+        res.status(200).json(countryNames);
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.get('/getCountries', async (req, res, next) => {
     let { page, pageSize } = req.query;
     page = parseInt(page) || 1;
