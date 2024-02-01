@@ -7,3 +7,7 @@ CREATE TABLE blogs (
     photo TEXT NOT NULL,
     content TEXT NOT NULL
 )
+
+-- get blogs
+SELECT *
+FROM blogs

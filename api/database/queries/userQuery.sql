@@ -27,6 +27,6 @@ WHERE id = req.params.id;
 DELETE FROM users WHERE id = req.params.id
 
 -- get user
-SELECT username
+SELECT username, photo
 FROM users
 WHERE id = id
