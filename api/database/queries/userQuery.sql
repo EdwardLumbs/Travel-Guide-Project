@@ -25,3 +25,8 @@ WHERE id = req.params.id;
 
 -- delete user
 DELETE FROM users WHERE id = req.params.id
+
+-- get user
+SELECT username
+FROM users
+WHERE id = id

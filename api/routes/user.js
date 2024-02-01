@@ -54,4 +54,22 @@ router.delete('/delete/:id', verifyToken, async (req, res, next) => {
     }
 })
 
+router.get('/getUser/:id', async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const data = await pool.query(`SELECT username
+        FROM users
+        WHERE id = $1`, [id])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'User not found'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    } 
+})
+
 export default router;
