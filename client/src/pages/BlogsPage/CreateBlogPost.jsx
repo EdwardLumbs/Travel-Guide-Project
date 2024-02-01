@@ -77,6 +77,9 @@ export default function CreateBlogPost() {
       if (!tag || !coverPhoto || !title) {
         setLoading(false)
         setError("You left some fields blank")
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
         return
       }
 
@@ -98,6 +101,9 @@ export default function CreateBlogPost() {
       if (data.success === false) {
         setLoading(false)
         setError(data.message)
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
         return;
       }
 
@@ -107,6 +113,9 @@ export default function CreateBlogPost() {
 
     } catch (error) {
       setError(error.message)
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   }
   
