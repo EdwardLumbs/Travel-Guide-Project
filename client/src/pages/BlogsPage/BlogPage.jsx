@@ -9,6 +9,8 @@ export default function BlogPage() {
   const [error, setError] = useState(null);
   const [blog, setBlog] = useState({});
   const [user, setUser] = useState([]);
+  console.log(blog.user_id)
+  console.log(user)
 
   useEffect(() => {
     const getBlog = async () => {
@@ -27,21 +29,26 @@ export default function BlogPage() {
     }
     
     getBlog()
-  }, [])
+  }, [blogId])
 
   useEffect(() => {
+    console.log('clicked')
+    console.log(blog.user_id)
+
     const getUser = async () => {
         try {
             const res  = await fetch(`/api/user/getUser/${blog.user_id}`)
             const data = await res.json()
-            console.log(data)
             console.log(data)
             setUser(data[0])
           } catch (error) {
             console.log(error.message)
           }
     }
-    getUser()
+
+    if (Object.keys(blog).length > 0) {
+      getUser()
+    }
   }, [blog])
 
   return (
@@ -67,6 +74,7 @@ export default function BlogPage() {
                 {blog.title} 
               </p>
               <p className="text-2xl">
+                {/* add photo of user */}
                 Author: {user.username}
               </p>
               <div
