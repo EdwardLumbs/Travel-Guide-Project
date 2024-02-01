@@ -36,6 +36,23 @@ router.get('/get-blogs', async (req, res, next) => {
     }
 })
 
+router.get('/get-blog/:blogId', async (req, res, next) => {
+    const { blogId } = req.params
+    try {
+        const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
+        [blogId])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Blogs not found'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    }
+})
+
 
 
 export default router;

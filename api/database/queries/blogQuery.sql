@@ -11,3 +11,8 @@ CREATE TABLE blogs (
 -- get blogs
 SELECT *
 FROM blogs
+
+-- get Blog
+SELECT *
+FROM blogs
+WHERE id = id
