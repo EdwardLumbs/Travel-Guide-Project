@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 export default function Blogs() {
+  const {currentUser} = useSelector((state) => state.user);
+
+
   return (
     <div>
       <div>
@@ -11,7 +15,7 @@ export default function Blogs() {
         </form>
       </div>
       <div>
-        <Link to={'/blogs/create'}>
+        <Link to={currentUser ? '/blogs/create' : '/login'}>
           Post A Blog
         </Link>
       </div>

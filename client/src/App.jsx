@@ -35,9 +35,9 @@ function App() {
           <Route path='explore' element={<Explore/>} />
           <Route path='flights' element={<Flights/>} />
           <Route path='blogs' element={<Blogs/>} />
-          <Route path='blogs/create' element={<CreateBlogPost/>} />
           <Route path='about' element={<About/>} />
           <Route element={<PrivateRoute/>}>
+            <Route path='blogs/create' element={<CreateBlogPost/>} />
             <Route path='profile' element={<Profile/>}>
               <Route index element={<UserPlans/>} />
               <Route path='user-blogs' element={<UserBlogs/>} />

@@ -146,7 +146,7 @@ export default function CreateBlogPost() {
           onChange={(newValue) => handleChange(newValue)}
         />
         <p>
-          Word Count: {content.trim().split(/\s+/).length} / 1000
+          Word Count: {content.trim() ? content.trim().split(/\s+/).length : 0} / 1000
         </p>
 
         {
