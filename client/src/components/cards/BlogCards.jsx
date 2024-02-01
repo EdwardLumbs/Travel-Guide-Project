@@ -28,6 +28,7 @@ export default function BlogCards({blog}) {
                 alt="Cover Image" 
             />
             <p>
+                {/* add author photo */}
                 author: {user.username}
             </p>
             <p className='text-2xl font-semibold line-clamp-3'>
