@@ -32,20 +32,15 @@ export default function BlogPage() {
   }, [blogId])
 
   useEffect(() => {
-    console.log('clicked')
-    console.log(blog.user_id)
-
     const getUser = async () => {
         try {
             const res  = await fetch(`/api/user/getUser/${blog.user_id}`)
             const data = await res.json()
-            console.log(data)
             setUser(data[0])
           } catch (error) {
             console.log(error.message)
           }
     }
-
     if (Object.keys(blog).length > 0) {
       getUser()
     }
@@ -72,6 +67,9 @@ export default function BlogPage() {
           <div className="mt-9">
               <p className="text-6xl">
                 {blog.title} 
+              </p>
+              <p className="text-2xl">
+                {blog.created_at} 
               </p>
               <p className="text-2xl">
                 {/* add photo of user */}
