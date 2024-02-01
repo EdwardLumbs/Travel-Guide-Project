@@ -14,6 +14,7 @@ import UserBlogs from './pages/ProfilePage/UserBlogs'
 import Country from './pages/Country'
 import Continent from './pages/Continent'
 import CreateBlogPost from './pages//BlogsPage/CreateBlogPost'
+import BlogPage from './pages/BlogsPage/BlogPage'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
@@ -35,6 +36,7 @@ function App() {
           <Route path='explore' element={<Explore/>} />
           <Route path='flights' element={<Flights/>} />
           <Route path='blogs' element={<Blogs/>} />
+          <Route path='blogs/:id' element={<BlogPage/>} />
           <Route path='about' element={<About/>} />
           <Route element={<PrivateRoute/>}>
             <Route path='blogs/create' element={<CreateBlogPost/>} />
