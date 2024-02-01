@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import BlogCards from '../components/cards/BlogCards';
+import SearchFilter from '../components/SearchFilter';
 
 export default function Blogs() {
   const {currentUser} = useSelector((state) => state.user);
@@ -13,7 +14,7 @@ export default function Blogs() {
     const getBlogs = async () => {
       try {
         setLoading(true)
-        const res  = await fetch('/api/blogs/get-blogs')
+        const res  = await fetch('/api/blogs/getBlogs')
         const data = await res.json()
         console.log(data)
         setLoading(false)
@@ -30,11 +31,7 @@ export default function Blogs() {
   return (
     <div>
       <div>
-        <form action="">
-          <select name="" id="">
-            <option value="">Put countries</option>
-          </select>
-        </form>
+        <SearchFilter/>
       </div>
       <div>
         <Link to={currentUser ? '/blogs/create' : '/login'}>

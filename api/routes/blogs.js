@@ -8,7 +8,7 @@ dotenv.config();
 
 const router = express.Router();
 
-router.post('/create-post', verifyToken, async (req, res, next) => {
+router.post('/createPost', verifyToken, async (req, res, next) => {
     const { user_id, title, place_tag, photo, content } = req.body
 
     try {
@@ -21,7 +21,7 @@ router.post('/create-post', verifyToken, async (req, res, next) => {
     }
 })
 
-router.get('/get-blogs', async (req, res, next) => {
+router.get('/getBlogs', async (req, res, next) => {
     try {
         const data = await pool.query("SELECT * FROM blogs")
 
@@ -36,7 +36,7 @@ router.get('/get-blogs', async (req, res, next) => {
     }
 })
 
-router.get('/get-blog/:blogId', async (req, res, next) => {
+router.get('/getBlog/:blogId', async (req, res, next) => {
     const { blogId } = req.params
     try {
         const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
@@ -53,6 +53,22 @@ router.get('/get-blog/:blogId', async (req, res, next) => {
     }
 })
 
+router.get('/searchBlog/:blogId', async (req, res, next) => {
+    const { blogId } = req.params
+    try {
+        const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
+        [blogId])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Blogs not found'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    }
+})
 
 
 export default router;

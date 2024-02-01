@@ -16,7 +16,7 @@ export default function BlogPage() {
     const getBlog = async () => {
       try {
         setLoading(true)
-        const res  = await fetch(`/api/blogs/get-blog/${blogId}`)
+        const res  = await fetch(`/api/blogs/getBlog/${blogId}`)
         const data = await res.json()
         console.log(data)
         setLoading(false)

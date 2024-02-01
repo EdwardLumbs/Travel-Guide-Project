@@ -83,7 +83,7 @@ export default function CreateBlogPost() {
         return
       }
 
-      const res = await fetch('/api/blogs/create-post', {
+      const res = await fetch('/api/blogs/createPost', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
