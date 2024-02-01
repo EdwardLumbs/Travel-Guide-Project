@@ -21,6 +21,20 @@ router.post('/create-post', verifyToken, async (req, res, next) => {
     }
 })
 
+router.get('/get-blogs', async (req, res, next) => {
+    try {
+        const data = await pool.query("SELECT * FROM blogs")
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Blogs not found'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    }
+})
 
 
 
