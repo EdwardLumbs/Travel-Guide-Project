@@ -3,6 +3,13 @@ import { useSelector } from 'react-redux'
 
 export default function Header() {
     const { currentUser } = useSelector(state => state.user);
+    const navigate = useNavigate();
+
+    const handleBlogsClick = () => {
+        // Navigate to the current location to force a re-render
+        navigate('/blogs');
+        window.location.reload();
+      };
 
   return (
     // change background color to white for finished layout
@@ -32,9 +39,9 @@ export default function Header() {
                 <Link to='/flights'>
                     <li className='hover:underline'>FLIGHTS</li>
                 </Link>
-                <Link to='/blogs'>
-                    <li className='hover:underline'>BLOGS</li>
-                </Link>
+                
+                    <li className='hover:underline' onClick={handleBlogsClick}>BLOGS</li>
+                
                 <Link to='/about'>
                     <li className='hover:underline'>ABOUT</li>
                 </Link>

@@ -53,11 +53,13 @@ router.get('/getBlog/:blogId', async (req, res, next) => {
     }
 })
 
-router.get('/searchBlog/:blogId', async (req, res, next) => {
-    const { blogId } = req.params
+router.get('/searchBlogs/:title', async (req, res, next) => {
+    const { title } = req.params
     try {
-        const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
-        [blogId])
+        const data = await pool.query(`SELECT *
+        FROM blogs
+        WHERE title ILIKE $1`,
+        [`%${title}%`])
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
@@ -66,6 +68,28 @@ router.get('/searchBlog/:blogId', async (req, res, next) => {
         res.status(200).json(data.rows);
 
     } catch (error) {
+        next(error);
+    }
+})
+
+router.get('/filteredBlogs', async (req, res, next) => {
+    let {type, page} = req.query;
+
+    // page = parseInt(page) || 1;
+    // pageSize = parseInt(pageSize) || 8;
+    // const offset = (page - 1) * pageSize;
+
+    try {
+        let totalItems
+
+        const data = await pool.query(`SELECT *
+            FROM blogs
+            WHERE $1 ILIKE ANY(place_tag)`,
+            [type])
+        const blogs = data.rows
+
+        res.status(200).json(blogs);
+    } catch {
         next(error);
     }
 })

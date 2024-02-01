@@ -16,3 +16,13 @@ FROM blogs
 SELECT *
 FROM blogs
 WHERE id = id
+
+-- get Searched Blogs
+SELECT *
+FROM blogs
+WHERE title ILIKE title
+
+-- get filtered tags
+SELECT *
+FROM blogs
+WHERE tag ILIKE ANY(place_tag)

@@ -9,6 +9,10 @@ export default function Blogs() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  console.log(blogs)
+  const queryParams = new URLSearchParams(location.search);
+
+  console.log('clicked')
 
   useEffect(() => {
     const getBlogs = async () => {
@@ -25,13 +29,16 @@ export default function Blogs() {
         console.log(error.message)
       }
     }
-    getBlogs()
+    
+    if (queryParams.size === 0) {
+      getBlogs();
+    } 
   }, [])
 
   return (
     <div>
       <div>
-        <SearchFilter/>
+        <SearchFilter blog={true} destination={null} setDestinations={null} setBlogs={setBlogs}/>
       </div>
       <div>
         <Link to={currentUser ? '/blogs/create' : '/login'}>
@@ -50,9 +57,8 @@ export default function Blogs() {
             {error}
           </p>
           :
-          blogs.length > 0 && 
             <div className='flex gap-4 flex-wrap'>
-              {blogs.map((blog, index) => (
+              {blogs.length > 0 && blogs.map((blog, index) => (
                 <Link
                   key={index}
                   to={`/blogs/${blog.id}`}
