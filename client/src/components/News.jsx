@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import NewsCard from './NewsCard'
+import NewsCard from './cards/NewsCard'
 
 export default function News({place}) {
     const [news, setNews] = useState([])

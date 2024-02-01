@@ -8,11 +8,6 @@ export default function Continent() {
   const { continent } = useParams();
   const {continentData, continentLoading, continentError} = useGetContinent(continent);
   const {continentCountries, continentCountriesLoading, continentCountriesError} = useGetContinentCountries(continent);
-  console.log(continentData)
-  console.log(continentCountries);
-  console.log(continentCountriesLoading);
-  console.log(continentLoading);
-  console.log(continentCountriesError)
 
   return (
     <>

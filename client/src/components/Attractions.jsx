@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AttractionCard from './AttractionCard';
+import AttractionCard from './cards/AttractionCard';
 import SearchFilterResults from './SearchFilterResults';
 
 export default function Attractions({capital, countryName, continent}) {

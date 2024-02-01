@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import SearchFilterResults from '../components/SearchFilterResults';
-import AttractionCard from '../components/AttractionCard';
+import AttractionCard from '../components/cards/AttractionCard';
 
 export default function Explore() {
   const buttonRef = useRef(null);
