@@ -38,33 +38,33 @@ export default function SearchFilter({
         const pageFromUrl = urlParams.get('page');
         const continentFromUrl = urlParams.get('continent');
         
-        if (!searchTermFromUrl && !typeFromUrl && !sortFromUrl && destination) {
-            navigate(`/destinations?type=country&sort=ASC&page=1`)
-        } else {
-            const filterQuery = urlParams.toString();
-            console.log(filterQuery)
+        // if (!searchTermFromUrl && !typeFromUrl && !sortFromUrl && destination) {
+        //     navigate(`/destinations?type=country&sort=ASC&page=1`)
+        // } 
 
-            if (searchTermFromUrl) {
-                setSearchTerm(searchTermFromUrl || '');
-            } 
-          
-            if (typeFromUrl || sortFromUrl || pageFromUrl || continentFromUrl) {
-                if (destination) {
-                    setSelectedOption({
-                        type: typeFromUrl || 'country',
-                        sort: sortFromUrl || 'ASC',
-                        page: parseInt(pageFromUrl) || 1,
-                        continent: continentFromUrl || ''
-                    });
-                } else {
-                    setSelectedOption({
-                        type: typeFromUrl || '',
-                        page: parseInt(pageFromUrl) || 1,
-                    });
-                }
-            };
+        const filterQuery = urlParams.toString();
+        console.log(filterQuery)
+        if (searchTermFromUrl) {
+            setSearchTerm(searchTermFromUrl || '');
+        } 
         
-            const fetchSearchedLocation = async () => {
+        if (typeFromUrl || sortFromUrl || pageFromUrl || continentFromUrl) {
+            if (destination) {
+                setSelectedOption({
+                    type: typeFromUrl || 'country',
+                    sort: sortFromUrl || 'ASC',
+                    page: parseInt(pageFromUrl) || 1,
+                    continent: continentFromUrl || ''
+                });
+            } else {
+                setSelectedOption({
+                    type: typeFromUrl || '',
+                    page: parseInt(pageFromUrl) || 1,
+                });
+            }
+        };
+    
+        const fetchSearchedLocation = async () => {
                 setLoading(true);
                 setPages(null)
 
@@ -85,9 +85,8 @@ export default function SearchFilter({
                     setError(error.message);
                     setLoading(false);
                 }
-            } 
-
-            const fetchFilteredLocations = async (filterQuery) => {
+        } 
+        const fetchFilteredLocations = async (filterQuery) => {
                 setLoading(true);
                 if (typeFromUrl === 'country' && continentFromUrl) {
                     try {
@@ -129,9 +128,8 @@ export default function SearchFilter({
                     setLoading(false);
                   };
                 }
-            }
-
-            const fetchSearchedBlogs = async () => {
+        }
+        const fetchSearchedBlogs = async () => {
                 setLoading(true);
                 try {
                     const res = await fetch(`/api/blogs/searchBlogs?${filterQuery}`);
@@ -151,9 +149,8 @@ export default function SearchFilter({
                     setError(error.message);
                     setLoading(false);
                 }
-            }
-
-            const fetchFilteredBlogs = async (filterQuery) => {
+        }
+        const fetchFilteredBlogs = async (filterQuery) => {
                 setLoading(true);
                 try {
                     const res = await fetch(`/api/blogs/filteredBlogs?${filterQuery}`)
@@ -172,25 +169,24 @@ export default function SearchFilter({
                     setError(error.message);
                     setLoading(false);
                 }
-            }
-
-            if (searchTermFromUrl && blog) {
-                fetchSearchedBlogs();
-            }
-          
-            if (typeFromUrl && blog) {
-                console.log('clicked')
-                fetchFilteredBlogs(filterQuery);
-            } 
-          
-            if (searchTermFromUrl && destination) {
-                fetchSearchedLocation();
-            }
-          
-            if ((typeFromUrl || sortFromUrl) && destination) {
-                fetchFilteredLocations(filterQuery);
-            } 
         }
+        if (searchTermFromUrl && blog) {
+            fetchSearchedBlogs();
+        }
+        
+        if (typeFromUrl && blog) {
+            console.log('clicked')
+            fetchFilteredBlogs(filterQuery);
+        } 
+        
+        if (searchTermFromUrl && destination) {
+            fetchSearchedLocation();
+        }
+        
+        if ((typeFromUrl || sortFromUrl) && destination) {
+            fetchFilteredLocations(filterQuery);
+        } 
+        
     }, [location.search]);
 
     const getUrlParams = () => {

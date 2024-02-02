@@ -11,6 +11,8 @@ CREATE TABLE blogs (
 -- get blogs
 SELECT *
 FROM blogs
+LIMIT pageSize
+OFFSET offset
 
 -- get Blog
 SELECT *
