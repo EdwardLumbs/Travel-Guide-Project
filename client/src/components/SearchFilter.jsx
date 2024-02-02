@@ -8,19 +8,14 @@ export default function SearchFilter({
         blog, 
         destination, 
         setBlogs, 
-        setDestinations}) 
+        setDestinations,
+        setLoading, 
+        setError,
+        setPages,
+        selectedOption,
+        setSelectedOption}) 
     {
-
-    const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedOption, setSelectedOption] = useState({
-        type: '',
-        sort: '',
-        page: 1,
-        continent: ''
-    });
-    const [error, setError] = useState('');
-    const [pages, setPages] = useState()
     const [tags, setTags] = useState([]);
     const pageSize = 8
   
@@ -91,6 +86,7 @@ export default function SearchFilter({
                     setLoading(false);
                 }
             } 
+
             const fetchFilteredLocations = async (filterQuery) => {
                 setLoading(true);
                 if (typeFromUrl === 'country' && continentFromUrl) {
@@ -105,7 +101,6 @@ export default function SearchFilter({
                             setError(null);
                             setDestinations(destination.location);
                             setPages(destination.totalItems / pageSize)
-                            // setPages(destination.totalItems / pageSize)
                         }
                     } catch (error) {
                         console.log(error);
@@ -139,9 +134,9 @@ export default function SearchFilter({
             const fetchSearchedBlogs = async () => {
                 setLoading(true);
                 setPages(null)
-                console.log(searchTermFromUrl)
+                console.log(filterQuery)
                 try {
-                    const res = await fetch(`/api/blogs/searchBlogs/${searchTermFromUrl}`);
+                    const res = await fetch(`/api/blogs/searchBlogs?${filterQuery}`);
                     const searchedBlogs = await res.json();
                     console.log(searchedBlogs)
                     if (searchedBlogs.success === false) {
@@ -166,14 +161,16 @@ export default function SearchFilter({
                     const blogs = await res.json()
                     console.log(filterQuery)
                     console.log(blogs)
+                    console.log(blogs.blogs)
+                    console.log(blogs.totalItems)
                     if (blogs.success === false) {
                         setLoading(false);
                         setError(blogs.message);
                     } else {
                         setLoading(false);
                         setError(null);
-                        setBlogs(blogs);
-                        // setPages(destination.totalItems / pageSize)
+                        setBlogs(blogs.blogs);
+                        setPages(blogs.totalItems / pageSize)
                     }
                 } catch (error) {
                     console.log(error);
@@ -200,26 +197,6 @@ export default function SearchFilter({
             } 
         }
     }, [location.search]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const getUrlParams = () => {
         const urlParams = new URLSearchParams(location.search);
@@ -250,7 +227,11 @@ export default function SearchFilter({
         urlParams.set('searchTerm', searchTerm);
         urlParams.delete('type');
         urlParams.delete('sort');
-        urlParams.delete('page');
+        if (blog) {
+            urlParams.set('page', 1);
+        } else {
+            urlParams.delete('page');
+        }
         urlParams.delete('continent');
         const searchQuery = urlParams.toString();
         navigate(blog ?
