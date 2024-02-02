@@ -16,29 +16,49 @@ export default function Blogs() {
     page: 1,
     continent: ''
   });
+  const pageSize = 8
+
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
 
   console.log(blogs)
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const pageFromUrl = urlParams.get('page');
+
+    if (pageFromUrl) {
+      setSelectedOption({
+        page: parseInt(pageFromUrl) || 1
+      })
+    }
+
     const getBlogs = async () => {
       try {
         setLoading(true)
-        const res  = await fetch('/api/blogs/getBlogs')
-        const data = await res.json()
-        setLoading(false)
-        setBlogs(data)
+        urlParams.set('page', selectedOption.page)
+        const searchQuery = urlParams.toString();
+        const res  = await fetch(`/api/blogs/getBlogs?${searchQuery}`)
+        const blogs = await res.json()
+        if (blogs.success === false) {
+          setLoading(false);
+          setError(blogs.message);
+        } else {
+          setLoading(false)
+          console.log(blogs)
+          setBlogs(blogs.blogs);
+          setPages(blogs.totalItems / pageSize)
+        }
       } catch (error) {
         setError(error.message)
         setLoading(false)
       }
     }
     
-    if (queryParams.size === 0) {
+    if (queryParams.size <= 1) {
       getBlogs();
     } 
-  }, [])
+  }, [selectedOption.page])
 
   const handlePageChange = (newPage) => {
     setSelectedOption((prevState) => ({

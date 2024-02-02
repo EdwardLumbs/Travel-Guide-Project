@@ -133,8 +133,6 @@ export default function SearchFilter({
 
             const fetchSearchedBlogs = async () => {
                 setLoading(true);
-                setPages(null)
-                console.log(filterQuery)
                 try {
                     const res = await fetch(`/api/blogs/searchBlogs?${filterQuery}`);
                     const searchedBlogs = await res.json();
@@ -145,7 +143,8 @@ export default function SearchFilter({
                     } else {
                         setLoading(false);
                         setError(null);
-                        setBlogs(searchedBlogs);
+                        setBlogs(searchedBlogs.blogs);
+                        setPages(searchedBlogs.totalItems / pageSize)
                     }
                 } catch (error) {
                     console.log(error);
@@ -155,14 +154,10 @@ export default function SearchFilter({
             }
 
             const fetchFilteredBlogs = async (filterQuery) => {
-                console.log('clicked')
+                setLoading(true);
                 try {
                     const res = await fetch(`/api/blogs/filteredBlogs?${filterQuery}`)
                     const blogs = await res.json()
-                    console.log(filterQuery)
-                    console.log(blogs)
-                    console.log(blogs.blogs)
-                    console.log(blogs.totalItems)
                     if (blogs.success === false) {
                         setLoading(false);
                         setError(blogs.message);
@@ -245,6 +240,7 @@ export default function SearchFilter({
         e.preventDefault();
         const urlParams = getUrlParams();
         setSearchTerm('');
+        urlParams.delete('page');
         urlParams.delete('searchTerm');
         urlParams.set('type', selectedOption.type);
         if (destination) {

@@ -22,14 +22,30 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
 })
 
 router.get('/getBlogs', async (req, res, next) => {
-    try {
-        const data = await pool.query("SELECT * FROM blogs")
+    let { page } = req.query
+    console.log(req.query)
 
-        if (data.rows.length === 0) {
+    page = parseInt(page) || 1;
+    const pageSize = 8;
+    const offset = (page - 1) * pageSize;
+
+    try {
+        let totalItems;
+
+        const countData = await pool.query(`SELECT COUNT(*)
+            FROM blogs`);
+        totalItems = countData.rows[0].count;
+
+        const data = await pool.query(`SELECT * FROM blogs
+        LIMIT ${pageSize}
+        OFFSET ${offset}`)
+        const blogs = data.rows
+
+        if (blogs.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
         }
 
-        res.status(200).json(data.rows);
+        res.status(200).json({blogs, totalItems});
 
     } catch (error) {
         next(error);
@@ -54,20 +70,35 @@ router.get('/getBlog/:blogId', async (req, res, next) => {
 })
 
 router.get('/searchBlogs', async (req, res, next) => {
-    let { searchTerm, page } = req.query
-    console.log(req.query)
-    try {
-        const data = await pool.query(`SELECT *
-        FROM blogs
-        WHERE title ILIKE $1`,
-        [`%${searchTerm}%`])
+    let { searchTerm, page, pageSize } = req.query
 
-        if (data.rows.length === 0) {
+    page = parseInt(page) || 1;
+    pageSize = parseInt(pageSize) || 8;
+    const offset = (page - 1) * pageSize;
+    
+    try {
+        let totalItems;
+
+        const countData = await pool.query(`SELECT COUNT(*)
+            FROM blogs
+            WHERE title ILIKE $1`,
+            [`%${searchTerm}%`]);
+        totalItems = countData.rows[0].count;
+
+        const data = await pool.query(`SELECT *
+            FROM blogs
+            WHERE title ILIKE $1
+            LIMIT ${pageSize}
+            OFFSET ${offset}`,
+            [`%${searchTerm}%`])
+
+        const blogs = data.rows
+
+        if (blogs.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
         }
 
-        res.status(200).json(data.rows);
-
+        res.status(200).json({blogs, totalItems});
     } catch (error) {
         next(error);
     }
