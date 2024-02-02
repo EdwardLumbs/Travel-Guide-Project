@@ -18,6 +18,7 @@ import BlogPage from './pages/BlogsPage/BlogPage'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
+import PublicRoute from './components/PublicRoute'
 
 import LocalHostClear from './utils/LocalHostClear'
 
@@ -28,8 +29,10 @@ function App() {
       <Routes>
         <Route element={<LocalHostClear/>}>
           <Route path='/' element={<Home/>} />
-          <Route path='login' element={<Login/>} />
-          <Route path='sign-up' element={<SignUp/>} />
+          <Route element={<PublicRoute/>}>
+            <Route path='login' element={<Login/>} />
+            <Route path='sign-up' element={<SignUp/>} />
+          </Route>
           <Route path='/destinations' element={<Destinations/>} />
           <Route path='/destinations/:continent' element={<Continent/>} />
           <Route path='/destinations/:continent/:countryName' element={<Country/>} />

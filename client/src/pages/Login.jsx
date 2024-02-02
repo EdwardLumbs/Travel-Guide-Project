@@ -2,14 +2,20 @@ import { Link, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { signInStart, signInSuccess, signInFailure } from '../redux/slices/userSlice.js'
 import OAuth from "../components/OAuth"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Login() {
   const [formData, setFormData] = useState({});
-  const {loading, error} = useSelector((state) => state.user);
+  const {currentUser, loading, error} = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     navigate('/')
+  //   }
+  // }, [])
 
   const handleChange = (e) => {
     setFormData({
