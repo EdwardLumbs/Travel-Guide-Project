@@ -5,9 +5,9 @@ export default function Header() {
     const { currentUser } = useSelector(state => state.user);
     const navigate = useNavigate();
 
-    const handleBlogsClick = () => {
+    const handleClick = (e) => {
         // Navigate to the current location to force a re-render
-        navigate('/blogs');
+        navigate(`/${e.target.id}`);
         window.location.reload();
       };
 
@@ -30,21 +30,42 @@ export default function Header() {
             </Link>
         
             <ul className='flex gap-4'>
-                <Link to='/destinations'>
-                    <li className='hover:underline'>DESTINATIONS</li>
-                </Link>
-                <Link to='/explore'>
-                    <li className='hover:underline'>EXPLORE</li>
-                </Link>
-                <Link to='/flights'>
-                    <li className='hover:underline'>FLIGHTS</li>
-                </Link>
+                <li 
+                    className='hover:underline cursor-pointer' 
+                    id='destinations' 
+                    onClick={handleClick}
+                >
+                    DESTINATIONS
+                </li>
+                <li 
+                    className='hover:underline cursor-pointer' 
+                    id='explore' 
+                    onClick={handleClick}
+                >
+                    EXPLORE
+                </li>
+                <li 
+                    className='hover:underline cursor-pointer' 
+                    id='flights' 
+                    onClick={handleClick}
+                >
+                    FLIGHTS
+                </li>
+                <li 
+                    className='hover:underline cursor-pointer' 
+                    id='blogs' 
+                    onClick={handleClick}
+                >
+                    BLOGS
+                </li>
+                <li 
+                    className='hover:underline cursor-pointer' 
+                    id='about' 
+                    onClick={handleClick}
+                >
+                    ABOUT
+                </li>
                 
-                    <li className='hover:underline' onClick={handleBlogsClick}>BLOGS</li>
-                
-                <Link to='/about'>
-                    <li className='hover:underline'>ABOUT</li>
-                </Link>
             </ul>
 
             <Link to='/profile'>
