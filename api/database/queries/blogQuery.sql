@@ -20,7 +20,9 @@ WHERE id = id
 -- get Searched Blogs
 SELECT *
 FROM blogs
-WHERE title ILIKE title
+WHERE title ILIKE '%title%'
+LIMIT pageSize
+OFFSET offset
 
 -- get filtered tags
 SELECT *
@@ -36,3 +38,8 @@ SELECT COUNT(*) FROM blogs
 SELECT COUNT(*)
 FROM blogs
 WHERE tag ILIKE ANY(place_tag)
+
+-- get searched blogs count
+SELECT COUNT(*)
+FROM blogs
+WHERE title ILIKE '%title%'
