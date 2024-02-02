@@ -26,3 +26,13 @@ WHERE title ILIKE title
 SELECT *
 FROM blogs
 WHERE tag ILIKE ANY(place_tag)
+LIMIT limit
+OFFSET offset
+
+-- get blogs count
+SELECT COUNT(*) FROM blogs
+
+-- get filtered blog count
+SELECT COUNT(*)
+FROM blogs
+WHERE tag ILIKE ANY(place_tag)

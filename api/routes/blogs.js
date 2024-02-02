@@ -53,13 +53,14 @@ router.get('/getBlog/:blogId', async (req, res, next) => {
     }
 })
 
-router.get('/searchBlogs/:title', async (req, res, next) => {
-    const { title } = req.params
+router.get('/searchBlogs', async (req, res, next) => {
+    let { searchTerm, page } = req.query
+    console.log(req.query)
     try {
         const data = await pool.query(`SELECT *
         FROM blogs
         WHERE title ILIKE $1`,
-        [`%${title}%`])
+        [`%${searchTerm}%`])
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
@@ -73,22 +74,34 @@ router.get('/searchBlogs/:title', async (req, res, next) => {
 })
 
 router.get('/filteredBlogs', async (req, res, next) => {
-    let {type, page} = req.query;
+    let {type, page, pageSize} = req.query;
 
-    // page = parseInt(page) || 1;
-    // pageSize = parseInt(pageSize) || 8;
-    // const offset = (page - 1) * pageSize;
+    page = parseInt(page) || 1;
+    pageSize = parseInt(pageSize) || 8;
+    const offset = (page - 1) * pageSize;
 
     try {
-        let totalItems
+        let totalItems;
+
+        const countData = await pool.query(`SELECT COUNT(*)
+            FROM blogs
+            WHERE $1 ILIKE ANY(place_tag)`,
+            [type]);
+        totalItems = countData.rows[0].count;
 
         const data = await pool.query(`SELECT *
             FROM blogs
-            WHERE $1 ILIKE ANY(place_tag)`,
+            WHERE $1 ILIKE ANY(place_tag)
+            LIMIT ${pageSize}
+            OFFSET ${offset}`,
             [type])
         const blogs = data.rows
 
-        res.status(200).json(blogs);
+        if (blogs.length === 0) {
+            return next(errorHandler(404, 'No blogs found'));
+        }
+
+        res.status(200).json({blogs, totalItems});
     } catch {
         next(error);
     }

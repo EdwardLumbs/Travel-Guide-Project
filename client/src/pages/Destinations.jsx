@@ -112,7 +112,6 @@ export default function Destinations() {
           try {
             const res = await fetch(`/api/destination/filterCountries?${filterQuery}`);
             const destination = await res.json();
-
             if (destination.success === false) {
               setLoading(false);
               setError(destination.message);
@@ -120,6 +119,8 @@ export default function Destinations() {
               setLoading(false);
               setError(null);
               setDestinations(destination.location);
+              console.log(destination.totalItems)
+              console.log(pageSize)
               setPages(destination.totalItems / pageSize)
             }
           } catch (error) {
