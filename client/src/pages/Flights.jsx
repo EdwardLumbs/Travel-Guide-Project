@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import SearchFilterResults from '../components/SearchFilterResults'
 
 export default function Flights() {
@@ -43,6 +43,8 @@ export default function Flights() {
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
   const navigate = useNavigate();
+  const location = useLocation()
+  const search = location.state?.search || ""
 
   useEffect(() => {
     const getIataCodes = async () => {
@@ -280,6 +282,14 @@ export default function Flights() {
 
   return (
     <div className='flex flex-col'>
+      {location.state && 
+      <Link
+        to={`${search}`}
+        relative="path"
+        className="hover-underline"
+        >&larr; <span>Back to Last Page</span></Link>
+      }
+
       <form 
         onSubmit={handleSubmit}
         className='flex flex-col justify-center items-center bg-green-300 p-7'

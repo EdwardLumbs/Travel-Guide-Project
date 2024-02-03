@@ -1,4 +1,4 @@
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import useGetCountry from "../hooks/useGetCountry";
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
@@ -9,11 +9,12 @@ import News from "../components/News";
 export default function Country() {
   // add a function where if continent and country arent validate, return error
   const buttonRef = useRef(null);
-  const { countryName } = useParams();
+  const params = useParams();
+  console.log(params)
+  const { countryName, continent } = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const { country, loading, countryError } = useGetCountry(countryName);
   const [flight, setFlight] = useState();
-  const [iata, setIata] = useState('');
   const [flightLoading, setFlightLoading] = useState(false);
   const [flightError, setFlightError] = useState(null);
   const [filter, setFilter] = useState('');
@@ -25,18 +26,27 @@ export default function Country() {
   const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([]);
   const [iataCodes, setIataCodes] = useState([])
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [currentUserIata, setCurrentUserIata] = useState(null)
 
   const currentDate = new Date();
   const tomorrowDate = new Date();
   tomorrowDate.setDate(currentDate.getDate() + 1);
   const tomorrow = tomorrowDate.toISOString().split('T')[0];
 
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search);
+  const iataQuery = urlParams.toString()
+
+  console.log(country.continent_name)
+  console.log(continent)
+
   useEffect(() => {
+    setCurrentUserIata(currentUser?.user_iata)
+
     const getIataCodes = async () => {
       try {
         const res = await fetch('/api/flights/getIata');
         const data = await res.json();
-        console.log(data);
         if (data.success === false) {
           console.log(data.message);
         }
@@ -64,7 +74,6 @@ export default function Country() {
 
     setFilteredSuggestionsFrom(filtered);
     setHighlightedIndex(filtered.length > 0 ? 0 : -1);
-    
   };
 
   const handleSuggestionClick = (e, name = 'none', suggestion) => {
@@ -104,11 +113,11 @@ export default function Country() {
       );
       setHighlightedIndex(newIndex);
     }
-};
+  };
 
   const fetchFlightData = async () => {
     const urlParams = new URLSearchParams;
-    urlParams.set('fly_from', currentUser?.user_iata || iata || '');
+    urlParams.set('fly_from', currentUserIata || inputValue.from || '');
     urlParams.set('fly_to', country.country_iata);
     urlParams.set('date_from', tomorrow);
     urlParams.set('date_to', tomorrow);
@@ -122,11 +131,8 @@ export default function Country() {
 
     try {
       setFlightLoading(true);
-      const res = await fetch(`/api/flights/getFlight/${filterQuery}/${currentUser?.user_iata || iata}/${country.country_iata}`);
+      const res = await fetch(`/api/flights/getFlight/${filterQuery}/${currentUserIata || inputValue.from}/${country.country_iata}`);
       const flightData = await res.json();
-      console.log(res);
-
-      console.log(flightData);
 
       if (flightData.success === false) {
         setFlightError(flightData.message);
@@ -143,33 +149,49 @@ export default function Country() {
     }
   }
 
+
   useEffect(() => {
-    console.log('clicked')
-    console.log(iata)
-    console.log(currentUser?.user_iata)
-    if (currentUser?.user_iata) {
+    const urlParams = new URLSearchParams(location.search);
+    const iataFromUrl = urlParams.get('iata')
+
+    if (iataFromUrl) {
+      setInputValue({
+        ...inputValue,
+        from: iataFromUrl
+      })
+    }
+
+    if (currentUserIata || inputValue.from) {
       fetchFlightData();
     }
 
-    if (iata) {
-      fetchFlightData();
+    // add error 404 page
+    if (country && country.continent_name && continent && country.continent_name.toLowerCase() !== continent.toLowerCase()) {
+      console.log('error 404')
     }
-  }, [iata, country]);
+
+  }, [country, location.search]);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (inputValue.from === country.country_iata) {
       setFlightError("Please enter a different location")
       return
     }
-    e.preventDefault();
-    setIata(inputValue.from);
+    const urlParams = new URLSearchParams();
+    urlParams.set('iata', inputValue.from);
+    const flightQuery = urlParams.toString();
+    navigate(`${location.pathname}?${flightQuery}`)
   }
 
   const handleNewEntry = () => {
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.delete('iata');
+    setCurrentUserIata(null)
     setFlightError(null)
-    setIata('')
     setInputValue({})
     setFlight('')
+    navigate(`${location.pathname}`)
   }
 
   return (
@@ -217,12 +239,13 @@ export default function Country() {
               </div> :
               flight ? 
                 <div>
-                  <p>{`Cheapest flight from ${inputValue.name || inputValue.from} is:`}</p>
+                  <p>{`Cheapest flight from ${inputValue.name || inputValue.from || currentUser.user_iata} is:`}</p>
                   {/* specify where is their location */}
                   <p>{flight.price}</p>
                   <Link
                     className="text-blue-900 hover:underline"
                     to={`/flights?${filter}`}
+                    state={{search: `${location.pathname}?${iataQuery}`}}
                   >Check it out
                   </Link>
                   <button
