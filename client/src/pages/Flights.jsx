@@ -302,6 +302,7 @@ export default function Flights() {
               type="text"
               id='from'
               required
+              autoComplete='off'
               placeholder='Type a valid IATA code'
               onChange={handleInputChange}
               value={inputText.from}
@@ -328,6 +329,7 @@ export default function Flights() {
               type="text"
               id='to'
               required
+              autoComplete='off'
               placeholder='Type a valid IATA code'
               onChange={handleInputChange}
               value={inputText.to}
