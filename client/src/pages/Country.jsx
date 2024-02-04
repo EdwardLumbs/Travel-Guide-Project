@@ -279,6 +279,8 @@ export default function Country() {
                         filteredSuggestions={filteredSuggestionsFrom} 
                         handleSuggestionClick={handleSuggestionClick}
                         highlightedIndex={highlightedIndex}
+                        countryPage={true}
+                        userTrip={null}
                       />  
                     }
                     {/* move search button down do you can still click when therere suggestions */}
@@ -296,7 +298,15 @@ export default function Country() {
         </div>
 
         <div>
-          <Attractions capital={country.capital} countryName={country.country} continent={country.continent_name}/>
+          <Attractions 
+            capital={country.capital} 
+            countryName={country.country} 
+            continent={country.continent_name}
+            countryPage={true}
+            userTrip={null}
+            tripData={null}
+            setTripData={null}
+          />
         </div>
 
         <div>

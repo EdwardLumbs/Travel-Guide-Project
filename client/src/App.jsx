@@ -51,7 +51,6 @@ function App() {
               <Route path='edit' element={<EditProfile/>} />
             </Route>
           </Route>
-          {/* Add the Search Page and Flight Page Soon */}
         </Route>
       </Routes>
     </BrowserRouter>

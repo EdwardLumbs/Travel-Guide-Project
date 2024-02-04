@@ -11,8 +11,6 @@ router.get('/getFlight/:query/:flyFrom/:flyTo', async (req, res, next) => {
     const flyFromUrl = req.params.flyFrom;
     const flyToUrl = req.params.flyTo;
 
-    console.log(flyFromUrl)
-
     if (flyFromUrl.length > 3 || flyToUrl.length > 3) {
       return next(errorHandler(406, 'Invalid IATA codes'));
     } 
@@ -27,8 +25,7 @@ router.get('/getFlight/:query/:flyFrom/:flyTo', async (req, res, next) => {
           }
         });
         const flight = await data.json()
-        console.log(flight);
-        console.log(flight.status);
+
         if (flight.status == 'Unprocessable Entity') {   
             return next(errorHandler(404, flight.error));
         };
