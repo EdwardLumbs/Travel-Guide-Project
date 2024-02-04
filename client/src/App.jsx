@@ -9,12 +9,13 @@ import Destinations from './pages/Destinations'
 import Explore from './pages/Explore'
 import Flights from './pages/Flights'
 import EditProfile from './pages/ProfilePage/EditProfile'
-import UserPlans from './pages/ProfilePage/UserPlans'
+import ProfileSummary from './pages/ProfilePage/ProfileSummary'
 import UserBlogs from './pages/ProfilePage/UserBlogs'
 import Country from './pages/Country'
 import Continent from './pages/Continent'
 import CreateBlogPost from './pages//BlogsPage/CreateBlogPost'
 import BlogPage from './pages/BlogsPage/BlogPage'
+import UserTrips from './pages/ProfilePage/UserTrips'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
@@ -44,7 +45,8 @@ function App() {
           <Route element={<PrivateRoute/>}>
             <Route path='blogs/create' element={<CreateBlogPost/>} />
             <Route path='profile' element={<Profile/>}>
-              <Route index element={<UserPlans/>} />
+              <Route index element={<ProfileSummary/>} />
+              <Route path='user-trips' element={<UserTrips/>} />
               <Route path='user-blogs' element={<UserBlogs/>} />
               <Route path='edit' element={<EditProfile/>} />
             </Route>
