@@ -8,6 +8,10 @@ CREATE TABLE blogs (
     content TEXT NOT NULL
 )
 
+-- create blogs
+INSERT INTO blogs (user_id, title, place_tag, photo, content) 
+VALUES (user_id, title, place_tag, photo, content)
+
 -- get blogs
 SELECT *
 FROM blogs
