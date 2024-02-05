@@ -9,3 +9,6 @@ CREATE TABLE trips (
 -- create trip
 INSERT INTO trips (title, destination, note) 
 VALUES (title, destination, note)
+
+-- get trip
+SELECT * FROM trips WHERE id = $1

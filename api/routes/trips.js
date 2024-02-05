@@ -24,13 +24,13 @@ router.post('/createTrip', verifyToken, async(req, res, next) => {
 })
 
 router.get('/getTrip/:TripId', verifyToken, async (req, res, next) => {
-    const { blogId } = req.params
+    const { TripId } = req.params
     try {
         const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
-        [blogId])
+        [TripId])
 
         if (data.rows.length === 0) {
-            return next(errorHandler(404, 'Blogs not found'));
+            return next(errorHandler(404, 'Trip not found'));
         }
 
         res.status(200).json(data.rows);
