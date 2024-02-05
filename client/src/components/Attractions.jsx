@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AttractionCard from './cards/AttractionCard';
 import SearchFilterResults from './SearchFilterResults';
 
-export default function Attractions({
-    capital, countryName, continent, countryPage, tripData, setTripData}) {
+export default function Attractions({capital, countryName, continent}) {
     const buttonRef = useRef(null);
     const [category, setCategory] = useState();
     const [categories, setCategories] = useState([]);
@@ -14,8 +13,6 @@ export default function Attractions({
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const navigate = useNavigate();
-
-    console.log(attractions)
 
     const handleChange = (e) => {
         setCategory(e.target.value);
@@ -75,12 +72,7 @@ export default function Attractions({
         urlParams.set('place', capital)
         urlParams.set('category', category)
         const searchQuery = urlParams.toString()
-        navigate(
-            countryPage ?
-                `/destinations/${continent}/${countryName}?${searchQuery}`
-            :
-                `/profile/user-trips/?${searchQuery}`
-        )
+        navigate(`/destinations/${continent}/${countryName}?${searchQuery}`)
     }
 
     useEffect(() => {
@@ -157,15 +149,13 @@ export default function Attractions({
         }
     }, [location.search])
 
-    const handleClick = (attraction) => {
-        console.log(attraction)
-        setTripData({
-            ...tripData,
-            attractions : [...attractions, attraction]
-        })
-    }
-
-    console.log(tripData.attractions)
+    // const handleClick = (attraction) => {
+    //     console.log(attraction)
+    //     setTripData({
+    //         ...tripData,
+    //         attractions : [...attractions, attraction]
+    //     })
+    // }
 
   return (
     <div className='flex flex-col'>
@@ -216,7 +206,6 @@ export default function Attractions({
                         <div className='flex flex-wrap'>
                             {`Showing Results for ${category}`}
                             {attractions.map((attraction, index) => (
-                                countryPage ?
                                 <Link 
                                     key={index} 
                                     to={attraction.properties.datasource.raw.website || `https://www.google.com/search?q=${encodeURIComponent(attraction.properties.name)}`}
@@ -224,26 +213,15 @@ export default function Attractions({
                                 >
                                     <AttractionCard category={category} attraction={attraction} />
                                 </Link>
-                                :
-                                (
-                                <div key={index} onClick={() => handleClick(attraction)}>
-                                    <AttractionCard 
-                                        category={category} 
-                                        attraction={attraction} 
-                                    />
-                                </div>
-                                )
                             ))}
                             {
-                            countryPage &&
-                                <Link 
-                                    className='hover:underline'
-                                    to={`/explore?place=${capital}&category=${category}&limit=${20}`}
-                                >
-                                    Show more
-                                </Link>
+                            <Link 
+                                className='hover:underline'
+                                to={`/explore?place=${capital}&category=${category}&limit=${20}`}
+                            >
+                                Show more
+                            </Link>
                             }
-                            
                         </div>
                     }
                 </div>
