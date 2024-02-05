@@ -9,6 +9,7 @@ import flightsRouter from './routes/flights.js'
 import attractionsRouter from './routes/attractions.js'
 import newsRouter from './routes/news.js'
 import blogRouter from './routes/blogs.js'
+import tripsRouter from './routes/trips.js'
 import cors from 'cors'
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use("/api/flights", flightsRouter);
 app.use("/api/attractions", attractionsRouter);
 app.use("/api/news", newsRouter);
 app.use("/api/blogs", blogRouter);
+app.use("/api/trips", tripsRouter);
 
 app.get('/test', async (req, res) => {
     try {
