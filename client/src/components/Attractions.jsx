@@ -4,7 +4,7 @@ import AttractionCard from './cards/AttractionCard';
 import SearchFilterResults from './SearchFilterResults';
 
 export default function Attractions({
-    capital, countryName, continent, userTrip, countryPage, tripData, setTripData}) {
+    capital, countryName, continent, countryPage, tripData, setTripData}) {
     const buttonRef = useRef(null);
     const [category, setCategory] = useState();
     const [categories, setCategories] = useState([]);

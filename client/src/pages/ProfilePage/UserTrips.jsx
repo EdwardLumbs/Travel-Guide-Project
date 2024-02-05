@@ -8,22 +8,27 @@ import Attractions from '../../components/Attractions'
 export default function UserTrips() {
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
+  const input3Ref = useRef(null);
+  const buttonRef = useRef(null);
   const [isCountry, setIsCountry] = useState(false)
   const [selectedCountry, setSelectedCountry] = useState(false)
   const [isClicked, setIsClicked] = useState(false)
   const [suggestions, setSuggestions] = useState([])
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [tripData, setTripData] = useState({
     title: '',
     destination: '',
-    attractions: []
+    note: ''
   })
   const navigate = useNavigate();
   const { country } = useGetCountry('all')
   const { continentData } = useGetContinent('all')
 
-  console.log(tripData.attractions)
+  console.log(tripData)
+  console.log(error)
 
   useEffect(() => {
     if (Array.isArray(continentData) && Array.isArray(country)) {
@@ -56,7 +61,6 @@ export default function UserTrips() {
   }, [input1Ref, input2Ref]);
 
   useEffect(() => {
-    console.log('clicked')
     const fetchCountry = async () => {
       try {
         const res = await fetch(`/api/destination/getCountry/${tripData.destination}`);
@@ -131,8 +135,38 @@ export default function UserTrips() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/trips/createTrip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tripData)
+      })
+      const data = await res.json()
+
+      if (data.success === false) {
+        setLoading(false)
+        setError(data.message)
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
+        return;
+      }
+      setLoading(false)
+      navigate('/profile/user-trips')
+
+    } catch (error) {
+      setError(error.message)
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
+    }
+
     setIsClicked(false)
   }
 
@@ -158,6 +192,7 @@ export default function UserTrips() {
             value={tripData.title}
             onChange={handleChange}
             placeholder='Enter title'
+            required
             onKeyDown={(e) => {
               handleInputEnter(e, input2Ref);
             }}
@@ -171,8 +206,9 @@ export default function UserTrips() {
             onChange={handleDestinationChange}
             value={tripData.destination}
             placeholder='Search destination'
+            required
             onKeyDown={(e) => {
-              handleInputEnter(e, null);
+              handleInputEnter(e, input3Ref);
             }}
           />
           {filteredSuggestions.length > 0 && 
@@ -184,7 +220,7 @@ export default function UserTrips() {
               highlightedIndex={highlightedIndex}
             />
           }
-          {isCountry && 
+          {/* {isCountry && 
             <Attractions
               capital={selectedCountry.capital} 
               countryName={selectedCountry.country} 
@@ -194,10 +230,36 @@ export default function UserTrips() {
               tripData={tripData}
               setTripData={setTripData}
             />
+          } */}
+          <label for='title'>Notes</label>
+          <input 
+            type="text" 
+            id='note'
+            ref={input3Ref}
+            autoComplete='off'
+            onChange={handleChange}
+            value={tripData.note}
+            placeholder='Travel Notes'
+            required
+            onKeyDown={(e) => {
+              handleInputEnter(e, buttonRef);
+            }}
+          />
+          { loading ?
+            <p>
+              Loading...
+            </p>
+            :
+            error ?
+            <p>
+              {error}
+            </p>
+            :
+            <button onClick={handleSubmit}>
+              Create trip
+            </button>
           }
-          <button onClick={handleSubmit}>
-            Create trip
-          </button>
+
         </div>
       }
     </div>

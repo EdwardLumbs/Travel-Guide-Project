@@ -303,7 +303,6 @@ export default function Country() {
             countryName={country.country} 
             continent={country.continent_name}
             countryPage={true}
-            userTrip={null}
             tripData={null}
             setTripData={null}
           />
