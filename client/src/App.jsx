@@ -16,6 +16,7 @@ import Continent from './pages/Continent'
 import CreateBlogPost from './pages//BlogsPage/CreateBlogPost'
 import BlogPage from './pages/BlogsPage/BlogPage'
 import UserTrips from './pages/ProfilePage/UserTrips'
+import Trip from './pages/Trip'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
@@ -44,6 +45,7 @@ function App() {
           <Route path='about' element={<About/>} />
           <Route element={<PrivateRoute/>}>
             <Route path='blogs/create' element={<CreateBlogPost/>} />
+            <Route path='profile/trips/:id' element={<Trip/>}/>
             <Route path='profile' element={<Profile/>}>
               <Route index element={<ProfileSummary/>} />
               <Route path='user-trips' element={<UserTrips/>} />

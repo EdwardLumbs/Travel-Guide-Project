@@ -11,7 +11,7 @@ export default function Country() {
   // add a function where if continent and country arent validate, return error
   const buttonRef = useRef(null);
   const params = useParams();
-  console.log(params)
+
   const { countryName, continent } = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const { country, loading, countryError } = useGetCountry(countryName);
@@ -225,17 +225,23 @@ export default function Country() {
               <p className="mt-9">
                 {country.description}
               </p>
-              <p 
-                className="hover:underline hover:cursor-pointer text-blue-600"
-                onClick={openModal}
-              >
-                Start a plan
-              </p>
-              <TripModal  
-                isOpen={isModalOpen}
-                onClose={closeModal}
-                currentDestination={country.country}
-              />
+              {
+                currentUser &&
+                <>
+                  <p 
+                    className="hover:underline hover:cursor-pointer text-blue-600"
+                    onClick={openModal}  
+                  >
+                    Start a plan
+                  </p>
+                  <TripModal  
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    currentDestination={country.country}
+                    user_id={currentUser.id}
+                  />
+                </>
+              }
             </div>
             <div>
               { flightLoading ? 

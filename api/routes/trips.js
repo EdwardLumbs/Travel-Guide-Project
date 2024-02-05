@@ -8,15 +8,14 @@ dotenv.config();
 const router = express.Router();
 
 router.post('/createTrip', verifyToken, async(req, res, next) => {
-    const { title, destination, note } = req.body
+    const { title, destination, note, user_id } = req.body
     console.log(title)
     console.log(destination)
     console.log(note)
 
-
     try {
-        await pool.query("INSERT INTO trips (title, destination, note) VALUES ($1, $2, $3)",
-        [title, destination, note])
+        await pool.query("INSERT INTO trips (title, user_id, destination, note) VALUES ($1, $2, $3, $4)",
+        [title, user_id, destination, note])
         res.status(201).json("Trip Posted Successfully");
 
     } catch (error) {
@@ -24,5 +23,21 @@ router.post('/createTrip', verifyToken, async(req, res, next) => {
     }
 })
 
+router.get('/getTrip/:TripId', verifyToken, async (req, res, next) => {
+    const { blogId } = req.params
+    try {
+        const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
+        [blogId])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Blogs not found'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    }
+})
 
 export default router;

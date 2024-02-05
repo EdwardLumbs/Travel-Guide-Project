@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import SearchFilterResults from './SearchFilterResults';
 import useGetContinent from '../hooks/useGetContinent';
 import useGetCountry from '../hooks/useGetCountry';
-import { Link, useNavigate } from 'react-router-dom';
 
-export default function TripModal({ isOpen, onClose, currentDestination }) {
+export default function TripModal({ isOpen, onClose, currentDestination, user_id }) {
     if (!isOpen) return null;
+    console.log(currentDestination)
 
     const input1Ref = useRef(null);
     const input2Ref = useRef(null);
@@ -22,11 +22,14 @@ export default function TripModal({ isOpen, onClose, currentDestination }) {
     const [tripData, setTripData] = useState({
       title: '',
       destination: '',
+      user_id: '',
       note: ''
     })
-    const navigate = useNavigate();
     const { country } = useGetCountry('all')
     const { continentData } = useGetContinent('all')
+    console.log(tripData)
+    console.log(currentDestination)
+    console.log(user_id)
 
     useEffect(() => {
         if (Array.isArray(continentData) && Array.isArray(country)) {
@@ -35,13 +38,15 @@ export default function TripModal({ isOpen, onClose, currentDestination }) {
     }, [continentData, country]);
     
     useEffect(() => {
-        if (currentDestination) {
+        if (currentDestination || user_id) {
           setTripData({
             ...tripData,
-            destination: currentDestination
+            destination: currentDestination,
+            user_id: user_id
           })
         }
-    }, [currentDestination]);
+
+    }, [currentDestination, user_id]);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -82,8 +87,6 @@ export default function TripModal({ isOpen, onClose, currentDestination }) {
     }
 
     const handleSuggestionClick = (e, name = 'none', suggestion) => {
-        console.log('clicked')
-        console.log(suggestion)
         setTripData({
           ...tripData,
           destination: suggestion
@@ -206,17 +209,6 @@ export default function TripModal({ isOpen, onClose, currentDestination }) {
                   highlightedIndex={highlightedIndex}
                 />
             }
-            {/* {isCountry && 
-              <Attractions
-                capital={selectedCountry.capital} 
-                countryName={selectedCountry.country} 
-                continent={selectedCountry.continent_name}
-                countryPage={null}
-                userTrip={true}
-                tripData={tripData}
-                setTripData={setTripData}
-              />
-            } */}
             <label for='title'>Notes</label>
             <input 
                 type="text" 

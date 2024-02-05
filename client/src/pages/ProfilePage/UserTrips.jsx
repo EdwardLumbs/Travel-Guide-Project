@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import TripModal from '../../components/TripModal';
+import { useSelector } from 'react-redux';
 
 export default function UserTrips() {
+  const {currentUser} = useSelector((state) => state.user);
   const [isModalOpen, setModalOpen] = useState(false);
 
+  console.log(currentUser)
   const openModal = () => {
     setModalOpen(true);
   };
@@ -23,6 +26,7 @@ export default function UserTrips() {
         isOpen={isModalOpen}
         onClose={closeModal}
         currentDestination={null}
+        user_id={currentUser.id}
       />
       <div>
         Show your plans here
