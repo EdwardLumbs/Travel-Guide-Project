@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
 import News from "../components/News";
+import TripModal from "../components/TripModal";
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
@@ -27,6 +28,15 @@ export default function Country() {
   const [iataCodes, setIataCodes] = useState([])
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [currentUserIata, setCurrentUserIata] = useState(null)
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const currentDate = new Date();
   const tomorrowDate = new Date();
@@ -36,9 +46,6 @@ export default function Country() {
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search);
   const iataQuery = urlParams.toString()
-
-  console.log(country.continent_name)
-  console.log(continent)
 
   useEffect(() => {
     setCurrentUserIata(currentUser?.user_iata)
@@ -218,9 +225,17 @@ export default function Country() {
               <p className="mt-9">
                 {country.description}
               </p>
-              <p className="hover:underline hover:cursor-pointer text-blue-600">
+              <p 
+                className="hover:underline hover:cursor-pointer text-blue-600"
+                onClick={openModal}
+              >
                 Start a plan
               </p>
+              <TripModal  
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                currentDestination={country.country}
+              />
             </div>
             <div>
               { flightLoading ? 

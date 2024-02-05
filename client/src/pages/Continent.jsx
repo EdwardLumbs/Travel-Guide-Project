@@ -3,11 +3,22 @@ import useGetContinent from "../hooks/useGetContinent";
 import useGetContinentCountries from "../hooks/useGetContinentCountries";
 import DestinationCard from "../components/DestinationCard";
 import News from "../components/News";
+import { useState } from "react";
+import TripModal from "../components/TripModal";
 
 export default function Continent() {
   const { continent } = useParams();
   const {continentData, continentLoading, continentError} = useGetContinent(continent);
   const {continentCountries, continentCountriesLoading, continentCountriesError} = useGetContinentCountries(continent);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -35,10 +46,17 @@ export default function Continent() {
               <p className="mt-9">
                 {continentData.continent_description}
               </p>
-              <p className="hover:underline hover:cursor-pointer text-blue-600">
+              <p 
+                className="hover:underline hover:cursor-pointer text-blue-600"
+                onClick={openModal}  
+              >
                 Start a plan
               </p>
-            
+              <TripModal  
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                currentDestination={continentData.continent_name}
+              />
           </div>
         </div>
 

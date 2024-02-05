@@ -4,7 +4,7 @@ import useGetContinent from '../hooks/useGetContinent';
 import useGetCountry from '../hooks/useGetCountry';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function TripModal({ isOpen, onClose }) {
+export default function TripModal({ isOpen, onClose, currentDestination }) {
     if (!isOpen) return null;
 
     const input1Ref = useRef(null);
@@ -35,11 +35,13 @@ export default function TripModal({ isOpen, onClose }) {
     }, [continentData, country]);
     
     useEffect(() => {
-        if (country.length > 0) {
-            let isCountryMatch = country.includes(tripData.destination);
-            setIsCountry(isCountryMatch);
+        if (currentDestination) {
+          setTripData({
+            ...tripData,
+            destination: currentDestination
+          })
         }
-    }, [tripData.destination]);
+    }, [currentDestination]);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -57,21 +59,6 @@ export default function TripModal({ isOpen, onClose }) {
             document.removeEventListener('click', handleClickOutside);
         };
     }, [input1Ref, input2Ref]);
-
-    useEffect(() => {
-        const fetchCountry = async () => {
-            try {
-                const res = await fetch(`/api/destination/getCountry/${tripData.destination}`);
-                const destination = await res.json();
-                setSelectedCountry(destination);
-            } catch (error) {
-                console.log(error);
-            };
-        }
-        if (tripData.destination) {
-            fetchCountry()
-        }
-    }, [tripData.destination]);
 
     const handleChange = (e) => {
         setTripData({
@@ -182,6 +169,7 @@ export default function TripModal({ isOpen, onClose }) {
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
         <div className="bg-white p-8 rounded-md flex flex-col">
+            <p onClick={onClose}>Make this an X symbol</p>
             <label for='title'>Trip Title</label>
             <input 
                 type="text" 

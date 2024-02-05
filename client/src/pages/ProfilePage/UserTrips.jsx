@@ -1,14 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import useGetCountry from '../../hooks/useGetCountry'
-import useGetContinent from '../../hooks/useGetContinent'
-import SearchFilterResults from '../../components/SearchFilterResults';
-import Attractions from '../../components/Attractions'
+import { useState } from 'react'
 import TripModal from '../../components/TripModal';
 
 export default function UserTrips() {
   const [isModalOpen, setModalOpen] = useState(false);
-
 
   const openModal = () => {
     setModalOpen(true);
@@ -28,6 +22,7 @@ export default function UserTrips() {
       <TripModal  
         isOpen={isModalOpen}
         onClose={closeModal}
+        currentDestination={null}
       />
       <div>
         Show your plans here
