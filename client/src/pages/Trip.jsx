@@ -3,10 +3,12 @@ import React, { useEffect } from 'react'
 export default function Trip() {
 
   useEffect(() => {
-    try {
-      
-    } catch (error) {
-      
+    const getTrip = async() => {
+      try {
+        const res = await fetch('/api/getTrip')
+      } catch (error) {
+        
+      }
     }
   }, [])
 
