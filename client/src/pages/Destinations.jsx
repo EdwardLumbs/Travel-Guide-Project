@@ -3,6 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchFilter from '../components/SearchFilter';
+import Hero from '../components/Hero';
 
 export default function Destinations() {
   const [loading, setLoading] = useState(false);
@@ -52,15 +53,16 @@ export default function Destinations() {
       ...prevState,
       page: newPage
     }))
-    const urlParams = getUrlParams();
+    const urlParams = new URLSearchParams(location.search);
     urlParams.set('page', newPage);
     const searchQuery = urlParams.toString();
     navigate(`/destinations?${searchQuery}`);
   }
 
   return (
-    <div className='p-9 flex justify-center'>
-      <div className=''>
+    <div className=''>
+      <Hero/>
+      <div className='container flex flex-col items-center mx-auto px-4'>
         <div>
           <SearchFilter 
             blog={null} 
@@ -83,7 +85,8 @@ export default function Destinations() {
         <p className='text-3xl font-semibold'>
           {error}
         </p> :
-          <div className='flex flex-wrap gap-4'>
+        <div className='flex justify-center'>
+          <div className='flex justify-center flex-wrap gap-4 w-auto'>
             {destinations.length > 0 && destinations.map((destination) => (
                 <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : 
                 `${destination.continent_name}`}>
@@ -92,6 +95,7 @@ export default function Destinations() {
               ))
             }
           </div>
+        </div>
         }
 
         {pages &&
