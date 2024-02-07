@@ -11,6 +11,7 @@ const router = express.Router();
 router.post('/updateUser/:id', verifyToken, async (req, res, next) => {
     const { username, description, photo, user_iata } = req.body;
 
+    console.log(username)
     if (req.user.id != req.params.id)
         return next(errorHandler(401, 'Not your account'));
 

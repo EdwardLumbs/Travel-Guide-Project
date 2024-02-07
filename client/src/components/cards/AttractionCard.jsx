@@ -169,7 +169,7 @@ export default function AttractionCard({category, attraction}) {
 
     return (
       <div className='bg-white shadow-md hover:shadow-lg 
-      transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
+      transition-shadow overflow-hidden rounded-lg w-full sm:w-[300px]'>
         {getCategoryIcon()}
         <p>
           {attraction.properties.formatted}

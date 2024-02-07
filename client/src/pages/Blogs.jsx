@@ -90,8 +90,8 @@ export default function Blogs() {
             setSelectedOption={setSelectedOption}
           />
         </div>
-        <div className='ml-auto border py-2 px-3 rounded-lg flex items-center gap-1 text-white bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white duration-200 '>
-          <FaPlus className=''/>
+        <div className='ml-auto mb-4 border py-2 px-3 rounded-lg flex items-center gap-1 text-white bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white duration-200 '>
+          <FaPlus/>
           <Link to={currentUser ? '/blogs/create' : '/login'}>
             Post A Blog
           </Link>
