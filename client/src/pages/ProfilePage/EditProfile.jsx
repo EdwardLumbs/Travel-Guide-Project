@@ -17,9 +17,16 @@ export default function EditProfile() {
   const {currentUser, error} = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    username: '',
+    description: '',
+    photo: '',
+    user_iata: ''
+  });
   const [disabled, setDisabled] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false)
+
+  console.log(formData)
 
   useEffect(() => {
     if (formData.newPassword != formData.confirmNewPassword){
@@ -47,6 +54,9 @@ export default function EditProfile() {
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
+        setTimeout(() => {
+          dispatch(updateUserStart());
+        }, 2000);
         return
       }
       
@@ -59,6 +69,9 @@ export default function EditProfile() {
 
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+      setTimeout(() => {
+        dispatch(updateUserStart());
+      }, 2000);
     }
   }
 
@@ -109,7 +122,7 @@ export default function EditProfile() {
             className='border border-black px-3 py-2 rounded-lg'
             type="text" 
             placeholder='Name' 
-            id="from" 
+            id="username" 
             onChange={handleChange}
             defaultValue={currentUser.username}
           />
