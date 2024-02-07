@@ -255,32 +255,39 @@ export default function SearchFilter({
     }
 
   return (
-    <div className='flex gap-6 mb-7'>
-        <form onSubmit={handleSearchSubmit}>
+    <div className='lg:flex lg:flex-col lg:gap-6 mb-7 mt-2 w-full'>
+        <form 
+            className='relative items-center lg:mb-1 mb-5'
+            onSubmit={handleSearchSubmit}
+        >
             <input 
-                className='border rounded-lg p-3 w-60'
+                className='border rounded-full p-2 pl-10 w-full lg:w-96 box-border'
                 type="text" 
                 id='searchTerm'
-                placeholder='Search'
+                placeholder='Search for a destination'
                 value={searchTerm}
                 onChange={handleSearchChange}
                 required
             />
             <button 
                 type='submit'
+                className='absolute left-3 top-1/2 transform -translate-y-1/2 scale-125 lg:top-5'
             >
                 <FaSearch />
             </button>
         </form>
-        <form onSubmit={handleOptionSubmit}>
-          <div className='flex'>
+        <form 
+            className=''
+            onSubmit={handleOptionSubmit}
+        >
+          <div className='lg:flex lg:gap-6'>
             <div>
               <label className='flex items-center'>
-                Filter by type of Place:
+                Filter by type of Place
               </label>
               <select 
                 value={selectedOption.type}
-                className='border rounded-lg w-40'
+                className='border rounded-full my-2 p-2 w-96 lg:w-60'
                 id="type" 
                 onChange={handleOptionChange}
                 required
@@ -300,17 +307,16 @@ export default function SearchFilter({
                     </>
                 )
                 }
-
               </select>
             </div>
             { destination && selectedOption.type === 'country' && 
               <div>
                 <label className='flex items-center'>
-                  Filter by Continent:
+                  Filter by Continent
                 </label>
                 <select 
                   value={selectedOption.continent}
-                  className='border rounded-lg w-40'
+                  className='border rounded-full my-2 p-2 w-96 lg:w-60'
                   id="continent" 
                   onChange={handleOptionChange}
                 >
@@ -324,16 +330,15 @@ export default function SearchFilter({
                 </select>
               </div>
             }
-          </div>
-
+          
           {!blog &&
-              <>
+              <div>
                   <label className='flex items-center'>
-                      Sort places by:
+                      Sort places by
                   </label>
                   <select 
                       value={selectedOption.sort}
-                      className='border rounded-lg w-40'
+                      className='border rounded-full mt-2 mb-4 p-2 w-96 lg:w-60'
                       id="sort" 
                       onChange={handleOptionChange}
                       required
@@ -342,14 +347,16 @@ export default function SearchFilter({
                       <option value="ASC">A-Z</option>
                       <option value="DESC">Z-A</option>
                   </select>
-              </>
+              </div>
           }
-
+          </div>
           <button
             type='submit'
+            className='border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800'
           >
             Filter
           </button>
+          
         </form>
       
     </div>
