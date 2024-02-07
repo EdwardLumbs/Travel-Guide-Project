@@ -261,7 +261,7 @@ export default function SearchFilter({
             onSubmit={handleSearchSubmit}
         >
             <input 
-                className='border rounded-full p-2 pl-10 w-full lg:w-96 box-border'
+                className='border hover:border-slate-600 duration-200  rounded-full p-2 pl-10 w-full lg:w-96 box-border'
                 type="text" 
                 id='searchTerm'
                 placeholder='Search for a destination'
@@ -287,7 +287,7 @@ export default function SearchFilter({
               </label>
               <select 
                 value={selectedOption.type}
-                className='border rounded-full my-2 p-2 w-96 lg:w-60'
+                className='border hover:border-slate-600 duration-200 hover:cursor-pointer rounded-full my-2 p-2 w-full md:w-96 lg:w-60'
                 id="type" 
                 onChange={handleOptionChange}
                 required
@@ -316,7 +316,7 @@ export default function SearchFilter({
                 </label>
                 <select 
                   value={selectedOption.continent}
-                  className='border rounded-full my-2 p-2 w-96 lg:w-60'
+                  className='border hover:border-slate-600 duration-200 hover:cursor-pointer rounded-full my-2 p-2 w-full md:w-96 lg:w-60'
                   id="continent" 
                   onChange={handleOptionChange}
                 >
@@ -338,7 +338,7 @@ export default function SearchFilter({
                   </label>
                   <select 
                       value={selectedOption.sort}
-                      className='border rounded-full mt-2 mb-4 p-2 w-96 lg:w-60'
+                      className='border hover:border-slate-600 duration-200 hover:cursor-pointer rounded-full mt-2 mb-4 p-2 w-full md:w-96 lg:w-60'
                       id="sort" 
                       onChange={handleOptionChange}
                       required
