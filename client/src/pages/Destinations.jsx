@@ -1,4 +1,4 @@
-import DestinationCard from '../components/DestinationCard'
+import DestinationCard from '../components/cards/DestinationCard'
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -61,9 +61,9 @@ export default function Destinations() {
 
   return (
     <div className=''>
-      <Hero/>
-      <div className='container flex flex-col items-center mx-auto px-4'>
-        <div>
+      <Hero image={"photos/destination.jpg"}/>
+      <div className='mt-5 container flex flex-col items-center mx-auto px-4'>
+        <div className='w-full'>
           <SearchFilter 
             blog={null} 
             destination={true} 
@@ -86,7 +86,7 @@ export default function Destinations() {
           {error}
         </p> :
         <div className='flex justify-center'>
-          <div className='flex justify-center flex-wrap gap-4 w-auto'>
+          <div className='flex flex-wrap gap-4 w-auto'>
             {destinations.length > 0 && destinations.map((destination) => (
                 <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : 
                 `${destination.continent_name}`}>

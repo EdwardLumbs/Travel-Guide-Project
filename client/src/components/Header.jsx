@@ -29,49 +29,52 @@ export default function Header() {
             <nav className= 'py-5'>
                 <div className='flex items-center justify-between px-4 '>
                     <Link to='/'>
-                    <div className="text-xl font-logo text-green-700">
-                        <span className="font-extrabold">Edward's</span>TravelGuide
-                    </div>
+                        <div className="text-xl font-logo text-green-700">
+                            <span className="font-extrabold">Edward's</span>TravelGuide
+                        </div>
                     </Link>
 
-                    <ul className={`hidden md:flex md:visible px-2 py-3 rounded-md md:bg-transparent flex-row gap-4`}>
+                    <ul 
+                        className='hidden text-white font-semibold
+                        lg:flex lg:visible px-2 py-3 rounded-md flex-row gap-4'
+                    >
                         <li 
-                            className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                            className='px-2 rounded transition-opacity duration-100 hover:opacity-70 hover:cursor-pointer' 
                             id='destinations' 
                             onClick={handleClick}
                         >
                             DESTINATIONS
                         </li>
                         <li 
-                            className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                            className='px-2 rounded transition-opacity duration-100 hover:opacity-70 hover:cursor-pointer' 
                             id='explore' 
                             onClick={handleClick}
                         >
                             EXPLORE
                         </li>
                         <li 
-                            className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                            className='px-2 rounded transition-opacity duration-100 hover:opacity-70 hover:cursor-pointer' 
                             id='flights' 
                             onClick={handleClick}
                         >
                             FLIGHTS
                         </li>
                         <li 
-                            className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                            className='px-2 rounded transition-opacity duration-100 hover:opacity-70 hover:cursor-pointer' 
                             id='blogs' 
                             onClick={handleClick}
                         >
                             BLOGS
                         </li>
                         <li 
-                            className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                            className='px-2 rounded transition-opacity duration-100 hover:opacity-70 hover:cursor-pointer' 
                             id='about' 
                             onClick={handleClick}
                         >
                             ABOUT
                         </li>
-    
                     </ul>
+
                     
                     <div className='flex items-center gap-4'>
                         <Link to='/profile'>
@@ -86,7 +89,7 @@ export default function Header() {
                                     </p>
                             }
                         </Link>
-                        <div className='md:hidden scale-150'>
+                        <div className='lg:hidden scale-150'>
                             { toggled ?
                                 <MdOutlineClose onClick={handleToggle} />
                             :
@@ -96,37 +99,37 @@ export default function Header() {
                     </div>
                 </div>
                 
-                <ul className={`${!toggled && 'hidden'} md:hiddenpx-2 py-3 rounded-md bg-white bg-opacity-10 backdrop-blur-md md:bg-transparent flex flex-col md:flex-row gap-1 md:gap-4`}>
+                <ul className={`${!toggled && 'hidden'} lg:hiddenpx-2 py-3 rounded-md bg-white bg-opacity-10 backdrop-blur-md lg:bg-transparent flex flex-col lg:flex-row gap-1 lg:gap-4`}>
                     <li 
-                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 
                         id='destinations' 
                         onClick={handleClick}
                     >
                         DESTINATIONS
                     </li>
                     <li 
-                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 
                         id='explore' 
                         onClick={handleClick}
                     >
                         EXPLORE
                     </li>
                     <li 
-                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 
                         id='flights' 
                         onClick={handleClick}
                     >
                         FLIGHTS
                     </li>
                     <li 
-                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 
                         id='blogs' 
                         onClick={handleClick}
                     >
                         BLOGS
                     </li>
                     <li 
-                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold md:hover:underline cursor-pointer' 
+                        className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 
                         id='about' 
                         onClick={handleClick}
                     >

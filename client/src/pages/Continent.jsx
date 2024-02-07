@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import useGetContinent from "../hooks/useGetContinent";
 import useGetContinentCountries from "../hooks/useGetContinentCountries";
-import DestinationCard from "../components/DestinationCard";
+import DestinationCard from "../components/cards/DestinationCard";
 import News from "../components/News";
 import { useState } from "react";
 import TripModal from "../components/TripModal";
