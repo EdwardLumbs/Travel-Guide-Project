@@ -38,7 +38,11 @@ export default function UploadPicture ({setCoverPhoto, formData, setFormData}) {
             },
             (error) => {
                 console.log(error)
-            setImageFileUploadError(true)
+                setImageFileUploadError(true)
+                setTimeout(() => {
+                    setImageFileUploadError(false)
+                    setImageFilePercentage(0)
+                  }, 2000);
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then(
