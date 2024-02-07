@@ -9,11 +9,11 @@ export default function DestinationCard({destination}) {
         alt="Cover Image" 
       />
       {destination.country && 
-        <p>
+        <p className='text-lg px-4 pt-2 font-semibold'>
           {destination.continent_name}
         </p>
       }
-      <p className='text-2xl font-semibold'>
+      <p className={`${destination.country ? 'pb-2' : 'py-2'} text-2xl font-bold px-4`}>
         {destination.country || destination.continent_name}
       </p>
     </div>

@@ -287,7 +287,7 @@ export default function SearchFilter({
               </label>
               <select 
                 value={selectedOption.type}
-                className='border hover:border-slate-600 duration-200 hover:cursor-pointer rounded-full my-2 p-2 w-full md:w-96 lg:w-60'
+                className={`border hover:border-slate-600 duration-200 hover:cursor-pointer rounded-full ${blog ? 'mb-4' : 'my-2'} p-2 w-full md:w-96 lg:w-60`}
                 id="type" 
                 onChange={handleOptionChange}
                 required
