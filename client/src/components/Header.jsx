@@ -1,23 +1,37 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { MdMenu, MdOutlineClose } from "react-icons/md";
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 
 export default function Header() {
     const { currentUser } = useSelector(state => state.user);
     const navigate = useNavigate();
     const [toggled, setToggled] = useState(false)
+    const dropdownRef = useRef(null);
 
     const handleClick = (e) => {
         // Navigate to the current location to force a re-render
         navigate(`/${e.target.id}`);
         window.location.reload();
-      };
+    };
 
     const handleToggle = () => {
-        setToggled(!toggled)
+        setToggled(!toggled);
     }
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setToggled(false);
+            }
+        };
+
+        window.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            window.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
   return (
     // change background color to white for finished layout
@@ -99,7 +113,10 @@ export default function Header() {
                     </div>
                 </div>
                 
-                <ul className={`${!toggled && 'hidden'} lg:hiddenpx-2 py-3 rounded-md bg-white bg-opacity-10 backdrop-blur-md lg:bg-transparent flex flex-col lg:flex-row gap-1 lg:gap-4`}>
+                <ul 
+                    ref={dropdownRef}
+                    className={`${!toggled && 'hidden'} lg:hiddenpx-2 py-3 rounded-md bg-white bg-opacity-10 backdrop-blur-md lg:bg-transparent flex flex-col lg:flex-row gap-1 lg:gap-4 mt-3`}
+                >
                     <li 
                         className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 
                         id='destinations' 
