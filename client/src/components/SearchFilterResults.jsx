@@ -9,7 +9,7 @@ export default function SearchFilterResults({
   console.log(filteredSuggestions)
   return (
     <div
-      className='absolute z-10 w-3/12 bg-white border rounded mt-1 overflow-y-scroll'
+      className='absolute z-10 w-3/12 bg-white border rounded mt-1 overflow-y-scroll max-h-96'
     >
       {filteredSuggestions.map((suggestion, index) => (
         <div

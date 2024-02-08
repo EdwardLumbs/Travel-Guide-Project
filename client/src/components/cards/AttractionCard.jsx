@@ -158,7 +158,7 @@ export default function AttractionCard({category, attraction}) {
     }
   
     return (
-      <div className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'>
+      <div className='pt-2 h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'>
         <div className='text-9xl flex justify-center items-center pt-7'>
           {icon}
         </div>
@@ -171,10 +171,10 @@ export default function AttractionCard({category, attraction}) {
       <div className='bg-white shadow-md hover:shadow-lg 
       transition-shadow overflow-hidden rounded-lg w-full sm:w-[300px]'>
         {getCategoryIcon()}
-        <p>
+        <p className="font-semibold px-3 text-sm line-clamp-2">
           {attraction.properties.formatted}
         </p>
-        <p className='text-2xl font-semibold'>
+        <p className='text-2xl font-bold mb-2 px-3 line-clamp-1'>
           {attraction.properties.name}
         </p>
       </div>

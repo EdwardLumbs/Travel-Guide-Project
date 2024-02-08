@@ -283,7 +283,7 @@ export default function SearchFilter({
         >
           <div className='lg:flex lg:gap-6'>
             <div>
-              <label className='flex items-center'>
+              <label className={`${blog ? 'mb-2' : ''} flex items-center`}>
                 Filter by type of Place
               </label>
               <select 

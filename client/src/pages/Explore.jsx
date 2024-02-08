@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import SearchFilterResults from '../components/SearchFilterResults';
 import AttractionCard from '../components/cards/AttractionCard';
+import Hero from '../components/Hero';
 
 export default function Explore() {
   const buttonRef = useRef(null);
@@ -22,6 +23,7 @@ export default function Explore() {
 
 
   const handleChange = (e) => {
+    const text = e.target.value
     setInputText({
       ...inputText,
       [e.target.id]: e.target.value
@@ -29,7 +31,7 @@ export default function Explore() {
 
     if (e.target.id === 'category') {
       let filtered = categories.filter((data) => 
-        data.category.includes(e.target.value)
+        data.category.includes(text.toLowerCase())
       );
 
       if (e.target.value === ''){
@@ -178,88 +180,102 @@ export default function Explore() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Where do you want to go?</label>
-          <input
-            className='border border-black px-3 py-2 rounded-lg'
-            type="text"
-            id='place'
-            required
-            placeholder='Type a place'
-            onChange={handleChange}
-            value={inputText.place}
-            onKeyDown={(e) => {
-              handleInputEnter(e, input2Ref);
-            }}
-            ref={input1Ref}
-          />
-        </div>
+      <Hero image={"photos/explore.jpg"}/>
+      <div className='mt-5 container flex flex-col mx-auto px-4'>
+        <form 
+          onSubmit={handleSubmit}
+          className='flex flex-col gap-4'
+        >
+          <div className='flex flex-col lg:flex-row gap-4'>
+            <div className='flex flex-col gap-2'>
+              <label>Where do you want to go?</label>
+              <input
+                className='border hover:border-slate-600 duration-200 rounded-full p-2 w-full lg:w-96 box-border'
+                type="text"
+                id='place'
+                required
+                placeholder='Type a place'
+                onChange={handleChange}
+                value={inputText.place}
+                onKeyDown={(e) => {
+                  handleInputEnter(e, input2Ref);
+                }}
+                ref={input1Ref}
+              />
+            </div>
 
-        <div>
-          <label>Search for places</label>
-          <input
-            className='border border-black px-3 py-2 rounded-lg'
-            type="text"
-            id='category'
-            required
-            placeholder='Type a place'
-            onChange={handleChange}
-            value={inputText.category}
-            onKeyDown={(e) => {
-              handleInputEnter(e, input2Ref);
-              handleArrowNavigation(e);
-            }}
-            ref={input2Ref}
-          />
-          {filteredSuggestions.length > 0 && 
-            <SearchFilterResults 
-              name={'category'} 
-              id={'category'} 
-              filteredSuggestions={filteredSuggestions} 
-              handleSuggestionClick={handleSuggestionClick}
-              highlightedIndex={highlightedIndex}
-            />
+            <div className='relative flex flex-col gap-2'>
+              <label>Search for places</label>
+              <input
+                className='border hover:border-slate-600 duration-200 rounded-full p-2 w-full lg:w-96 box-border'
+                type="text"
+                id='category'
+                required
+                autoComplete='off'
+                placeholder='Type a place'
+                onChange={handleChange}
+                value={inputText.category}
+                onKeyDown={(e) => {
+                  handleInputEnter(e, input2Ref);
+                  handleArrowNavigation(e);
+                }}
+                ref={input2Ref}
+              />
+              {filteredSuggestions.length > 0 && 
+                <div className="absolute top-full left-0 w-[1500px]">
+                  <SearchFilterResults 
+                    name={'category'} 
+                    id={'category'} 
+                    filteredSuggestions={filteredSuggestions} 
+                    handleSuggestionClick={handleSuggestionClick}
+                    highlightedIndex={highlightedIndex}
+                  />
+                </div>
+              }
+            </div>
+          </div>
+          <button
+            className='lg:w-40 mb-6 border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800'
+            ref={buttonRef}
+          >
+            Explore
+          </button>
+        </form>
+        <div className=''>
+          {attractions && 
+            <div>
+              {loading ? 
+              <p>
+                  Loading...
+              </p>
+              : 
+              error ?
+              <p>
+                  {error}
+              </p>
+              :
+              attractions.length > 0 && 
+                <div className='flex flex-col'>
+                  <p className='font-semibold mb-6'>
+                    {`Showing Results for ${inputText.category} in ${inputText.place}`}
+                  </p>
+                    <div className='flex flex-wrap gap-4'>
+                      {attractions.map((attraction, index) => (                   
+                          <Link 
+                            key={index} 
+                            to={attraction.properties.datasource.raw.website || `https://www.google.com/search?q=${encodeURIComponent(attraction.properties.name)}`}
+                            target='_blank'
+                          >
+                            <AttractionCard category={inputText.category} attraction={attraction} />
+                          </Link>
+                      ))}
+                    </div>
+                </div>
+              }
+            </div>
           }
         </div>
-        <button
-          className=''
-          ref={buttonRef}
-        >
-          Submit
-        </button>
-      </form>
-      <div className=''>
-        {attractions && 
-          <div>
-            {loading ? 
-            <p>
-                Loading...
-            </p>
-            : 
-            error ?
-            <p>
-                {error}
-            </p>
-            :
-            attractions.length > 0 && 
-              <div className='flex flex-wrap'>
-                {`Showing Results for ${inputText.category} in ${inputText.place}`}
-                {attractions.map((attraction, index) => (
-                  <Link 
-                    key={index} 
-                    to={attraction.properties.datasource.raw.website || `https://www.google.com/search?q=${encodeURIComponent(attraction.properties.name)}`}
-                    target='_blank'
-                  >
-                    <AttractionCard category={inputText.category} attraction={attraction} />
-                  </Link>
-                ))}
-              </div>
-            }
-          </div>
-        }
-        </div>
-
+      </div>
     </div>
   )
 }
