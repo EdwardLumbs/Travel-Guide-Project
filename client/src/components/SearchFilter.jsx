@@ -268,6 +268,7 @@ export default function SearchFilter({
                 value={searchTerm}
                 onChange={handleSearchChange}
                 required
+                autoComplete='off'
             />
             <button 
                 type='submit'

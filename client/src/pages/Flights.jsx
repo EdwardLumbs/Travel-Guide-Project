@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
-import { useNavigate, useLocation, Link } from 'react-router-dom'
-import SearchFilterResults from '../components/SearchFilterResults'
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import SearchFilterResults from '../components/SearchFilterResults';
+import Hero from '../components/Hero';
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 export default function Flights() {
   const input1Ref = useRef(null);
@@ -43,25 +45,24 @@ export default function Flights() {
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
   const navigate = useNavigate();
-  const location = useLocation()
-  const search = location.state?.search || ""
+  const location = useLocation();
+  const search = location.state?.search || "";
 
   useEffect(() => {
     const getIataCodes = async () => {
       try {
-        const res = await fetch('/api/flights/getIata')
-        const data = await res.json()
-        console.log(data)
+        const res = await fetch('/api/flights/getIata');
+        const data = await res.json();
         if (data.success === false) {
-          console.log(data.message)
-        }
-        setIataCodes(data)
+          console.log(data.message);
+        };
+        setIataCodes(data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-    getIataCodes()
-  }, [])
+    getIataCodes();
+  }, []);
 
   const handleInputChange = (e) => {
     const id = e.target.id;
@@ -119,35 +120,35 @@ export default function Flights() {
         } else {
           e.target.blur();
         }
-      }
+      };
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
       const direction = e.key === 'ArrowDown' ? 1 : -1;
       const suggestions = e.target.id === 'from' ? filteredSuggestionsFrom : filteredSuggestionsTo;
       const newIndex = Math.min(Math.max(highlightedIndex + direction, 0), suggestions.length - 1);
       setHighlightedIndex(newIndex);
-    }
+    };
   };
 
   const handleChange = (e) => {
     if (e.target.id === 'date_from') {
-      setParams({...params, date_from: e.target.value, date_to: e.target.value})
+      setParams({...params, date_from: e.target.value, date_to: e.target.value});
     } else if (e.target.id === 'return_from') {
-      setParams({...params, return_from: e.target.value, return_to: e.target.value})
+      setParams({...params, return_from: e.target.value, return_to: e.target.value});
     } else if (['adults', 'children', 'infants'].includes(e.target.id)) { 
       let value = parseInt(e.target.value, 10) || 0;
       setParams({ ...params, [e.target.id]: value });
     } else {
-      setParams({...params, [e.target.id]: e.target.value})
-    }
-  }
+      setParams({...params, [e.target.id]: e.target.value});
+    };
+  };
 
   const handleArrowNavigation = (name, e) => {
-    let filteredSuggestions
+    let filteredSuggestions;
     if (name === 'from') {
-      filteredSuggestions = filteredSuggestionsFrom
+      filteredSuggestions = filteredSuggestionsFrom;
     } else {
-      filteredSuggestions = filteredSuggestionsTo
+      filteredSuggestions = filteredSuggestionsTo;
     }
 
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -158,12 +159,12 @@ export default function Flights() {
         filteredSuggestions.length - 1
       );
       setHighlightedIndex(newIndex);
-    }
+    };
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search)
-    console.log(urlParams)
+    const urlParams = new URLSearchParams(location.search);
+    console.log(urlParams);
     const flyFromUrl = urlParams.get('fly_from');
     const flyToUrl = urlParams.get('fly_to');
     const dateFromUrl = urlParams.get('date_from');
@@ -211,24 +212,23 @@ export default function Flights() {
         try {
           const res = await fetch(`/api/flights/getFlight/${filterQuery}/${flyFromUrl}/${flyToUrl}`);
           const flightData = await res.json();
-          console.log(flightData)
           if (flightData.success === false) {
-            setLoading(false)
-            setError(flightData.message)
+            setLoading(false);
+            setError(flightData.message);
           }
-          setLoading(false)
-          setFlight(flightData)
+          setLoading(false);
+          setFlight(flightData);
         } catch (error) {
-          setLoading(false)
-          setError(error)
-          console.log(error)
+          setLoading(false);
+          setError(error);
+          console.log(error);
         }
       }
 
       if (filterQuery){
-        fetchFlightData()
-      } 
-  }, [location.search])
+        fetchFlightData();
+      } ;
+  }, [location.search]);
 
   useEffect(() => {
     const totalPassengers = params.adults + params.children + params.infants;
@@ -249,7 +249,7 @@ export default function Flights() {
       ) {
         setFilteredSuggestionsFrom([]);
         setFilteredSuggestionsTo([]);
-      }
+      };
     };
 
     document.addEventListener('click', handleClickOutside);
@@ -260,198 +260,300 @@ export default function Flights() {
   }, [input1Ref, input2Ref]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setFilteredSuggestionsTo([])
-    setFilteredSuggestionsFrom([])
-    setLoading(true)
-    const urlParams = new URLSearchParams()
-    urlParams.set('fly_from', inputText.from)
-    urlParams.set('fly_to', inputText.to)
-    urlParams.set('date_from', params.date_from)
-    urlParams.set('date_to', params.date_to)
-    urlParams.set('return_from', params.return_from)
-    urlParams.set('return_to', params.return_to)
-    urlParams.set('curr', params.curr)
-    urlParams.set('adults', params.adults)
-    urlParams.set('children', params.children)
-    urlParams.set('infants', params.infants)
-    urlParams.set('selected_cabins', params.selected_cabins)
-    const searchQuery = urlParams.toString()
-    navigate(`/flights?${searchQuery}`)
-  }
+    e.preventDefault();
+    setFilteredSuggestionsTo([]);
+    setFilteredSuggestionsFrom([]);
+    setLoading(true);
+    const urlParams = new URLSearchParams();
+    urlParams.set('fly_from', inputText.from);
+    urlParams.set('fly_to', inputText.to);
+    urlParams.set('date_from', params.date_from);
+    urlParams.set('date_to', params.date_to);
+    urlParams.set('return_from', params.return_from);
+    urlParams.set('return_to', params.return_to);
+    urlParams.set('curr', params.curr);
+    urlParams.set('adults', params.adults);
+    urlParams.set('children', params.children);
+    urlParams.set('infants', params.infants);
+    urlParams.set('selected_cabins', params.selected_cabins);
+    const searchQuery = urlParams.toString();
+    navigate(`/flights?${searchQuery}`);
+  };
 
   return (
-    <div className='flex flex-col'>
-      {location.state && 
-      <Link
-        to={`${search}`}
-        relative="path"
-        className="hover-underline"
-        >&larr; <span>Back to Last Page</span></Link>
-      }
+    // change accent colors
+    <div>
+      <Hero image={"photos/airplane.jpg"}/>
+      <div className="container absolute top-[570px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        {location.state && 
+        <Link
+          to={`${search}`}
+          relative="path"
+          className="hover-underline"
+          >&larr; <span>Back to Last Page</span></Link>
+        }
 
-      <form 
-        onSubmit={handleSubmit}
-        className='flex flex-col justify-center items-center bg-green-300 p-7'
-      >
+        <form 
+          onSubmit={handleSubmit}
+          className='bg-white shadow-lg rounded-xl flex flex-col justify-center items-center p-7 relative gap-4 mb-8'
+        >
+          <div className='flex flex-col lg:flex-row gap-4 w-full justify-center flex-grow'>
+            <div className='relative flex-grow'>
+              <label htmlFor="from" className="absolute top-7 left-7 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">From</label>
+              <input
+                className='border border-black px-3 py-2 rounded-md pt-8 w-full lg:flex-grow'
+                type="text"
+                id='from'
+                required
+                autoComplete='off'
+                placeholder='Type a valid IATA code'
+                onChange={handleInputChange}
+                value={inputText.from}
+                onKeyDown={(e) => {
+                  handleInputEnter(e, input2Ref);
+                  handleArrowNavigation('from', e);
+                }}
+                ref={input1Ref}
+              />
+              <div className="absolute top-full left-0 w-[1300px] lg:w-[825px]">
+                {filteredSuggestionsFrom.length > 0 && 
+                  <SearchFilterResults 
+                    name={'from_params'} 
+                    id={'from'} 
+                    filteredSuggestions={filteredSuggestionsFrom} 
+                    handleSuggestionClick={handleSuggestionClick}
+                    highlightedIndex={highlightedIndex}
+                  />
+                }
+              </div>
+            </div>
+            <div className='relative flex-grow'>
+              <label htmlFor="to" className="absolute top-7 left-5 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">To</label>
+              <input
+                className='border border-black px-3 py-2 rounded-lg pt-8 w-full lg:flex-grow'
+                type="text"
+                id='to'
+                required
+                autoComplete='off'
+                placeholder='Type a valid IATA code'
+                onChange={handleInputChange}
+                value={inputText.to}
+                onKeyDown={(e) => {
+                  handleInputEnter(e, null);
+                  handleArrowNavigation('to', e);
+                }}
+                ref={input2Ref}
+              />
+              <div className="absolute top-full left-0 w-[1300px] lg:w-[825px]">
+                {filteredSuggestionsTo.length > 0 && (
+                  <SearchFilterResults 
+                    name={'to_params'} 
+                    id={'to'} 
+                    filteredSuggestions={filteredSuggestionsTo} 
+                    handleSuggestionClick={handleSuggestionClick}
+                    highlightedIndex={highlightedIndex}
+                  />
+                )}
+              </div>
+            </div>
+            <div className='border border-black px-3 rounded-lg flex justify-evenly lg:flex-grow'>
+              <div className='relative'>
+                <label htmlFor="departure" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Departure</label>
+                <input 
+                  className='pt-8'
+                  type="date" 
+                  id='date_from'
+                  min={today}
+                  required
+                  onChange={handleChange}
+                  value={params.date_from}
+                />
+              </div>
+              <div className='relative'>
+                <label htmlFor="return" className="absolute top-7 left-5 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Return</label>
+                <input 
+                  className='pt-8'
+                  type="date" 
+                  id='return_from'
+                  min={params.date_from}
+                  onChange={handleChange}
+                  value={params.return_from}
+                />
+              </div>
+            </div>
+            
+          </div>
+          <div className='flex flex-col lg:flex-row gap-4 w-full justify-center flex-grow'>
+            {/* for smaller screen */}
+            <div className='lg:hidden flex gap-4 justify-between'>
+              <div className='relative flex-grow w-full'>
+                <label htmlFor="adults" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
+                <input 
+                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  type="number" 
+                  id='adults'
+                  min = "0"
+                  max={maxInput.adults}
+                  placeholder='No. of adults'
+                  onChange={handleChange}
+                  value={params.adults}
+                />
+              </div>
+              <div className='relative flex-grow w-full'>
+                <label htmlFor="children" className="absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
+                <input 
+                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  type="number" 
+                  id='children'
+                  min = "0"
+                  max={maxInput.children}
+                  placeholder='No. of children'
+                  onChange={handleChange}
+                  value={params.children}
+                />
+              </div>
+              <div className='relative flex-grow w-full'>
+                <label htmlFor="infants" className="absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
+                <input 
+                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  type="number" 
+                  id='infants'
+                  min = "0"
+                  max={maxInput.infants}
+                  placeholder='No. of infants'
+                  onChange={handleChange}
+                  value={params.infants}
+                />
+              </div>
+            </div>
+            {/* end for smaller screen */}
+            <div className='hidden lg:flex gap-4 w-full'>
+              <div className='relative flex-grow w-full'>
+                <label htmlFor="adults" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
+                <input 
+                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  type="number" 
+                  id='adults'
+                  min = "0"
+                  max={maxInput.adults}
+                  placeholder='No. of adults'
+                  onChange={handleChange}
+                  value={params.adults}
+                />
+              </div>
+              <div className='relative flex-grow w-full'>
+                <label htmlFor="children" className="absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
+                <input 
+                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  type="number" 
+                  id='children'
+                  min = "0"
+                  max={maxInput.children}
+                  placeholder='No. of children'
+                  onChange={handleChange}
+                  value={params.children}
+                />
+              </div>
+              <div className='relative flex-grow w-full'>
+                <label htmlFor="infants" className="absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
+                <input 
+                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  type="number" 
+                  id='infants'
+                  min = "0"
+                  max={maxInput.infants}
+                  placeholder='No. of infants'
+                  onChange={handleChange}
+                  value={params.infants}
+                />
+              </div>
+            </div>
+            <div className='relative w-full'>
+              <label htmlFor="class" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Class</label>
+              <select 
+                className='border border-black px-3 py-2 rounded-md pt-8 w-full'
+                name="cabin" 
+                id="selected_cabins"
+                onChange={handleChange}
+                value={params.selected_cabins}
+              >
+                <option value="M" selected>Economy</option>
+                <option value="W">Economy Premium</option>
+                <option value="C">Business</option>
+                <option value="F">First Class</option>
+              </select>
+            </div>
+            <button className='bg-blue-500 rounded-md text-white font-semibold px-5 py-2 w-full'>
+              Search for the Cheapest Flight
+            </button>
+          </div>
+        </form>
+        
+
         <div className='flex'>
           <div>
-            <label>From</label>
-            <input
-              className='border border-black px-3 py-2 rounded-lg'
-              type="text"
-              id='from'
-              required
-              autoComplete='off'
-              placeholder='Type a valid IATA code'
-              onChange={handleInputChange}
-              value={inputText.from}
-              onKeyDown={(e) => {
-                handleInputEnter(e, input2Ref);
-                handleArrowNavigation('from', e);
-              }}
-              ref={input1Ref}
-            />
-            {filteredSuggestionsFrom.length > 0 && 
-              <SearchFilterResults 
-                name={'from_params'} 
-                id={'from'} 
-                filteredSuggestions={filteredSuggestionsFrom} 
-                handleSuggestionClick={handleSuggestionClick}
-                highlightedIndex={highlightedIndex}
-              />
+            {loading ? 
+            <p>
+              {/* change loading animation */}
+              Getting your flight for you...
+            </p> 
+            : error ? 
+            <p>
+              {error}
+            </p>
+            : !flight ?
+            // default display
+            <div className='w-full'>
+              <h1 className='text-3xl font-extrabold'>
+                Discover the Best Deals! 
+              </h1>
+              <p className='tex'>
+                Explore our innovative flight search webpage, designed to find you the cheapest airfares effortlessly. 
+              </p>
+              <p>
+                <span className='text-3xl font-bold'>1</span> Simply input your departure and destination cities          
+              </p>
+              <p className='ml-auto'>
+                <span className='text-3xl font-bold'>2</span> Select your travel dates 
+              </p>
+              <p>
+                <span className='text-3xl font-bold'>3</span> Let our powerful search engine do the rest. 
+              </p>
+              <p>
+                Find unbeatable prices and book your next adventure with ease!
+              </p>
+            </div>
+            : flight &&
+            <div className='flex flex-col'>
+            <p>
+              Check out the cheapest flight we found 
+              from {inputText.from_params || inputText.from} to {inputText.to_params || inputText.to}:
+            </p>
+          </div>
             }
           </div>
-          <div>
-            <label>To</label>
-            <input
-              className='border border-black px-3 py-2 rounded-lg'
-              type="text"
-              id='to'
-              required
-              autoComplete='off'
-              placeholder='Type a valid IATA code'
-              onChange={handleInputChange}
-              value={inputText.to}
-              onKeyDown={(e) => {
-                handleInputEnter(e, null);
-                handleArrowNavigation('to', e);
-              }}
-              ref={input2Ref}
-            />
-            {filteredSuggestionsTo.length > 0 && (
-              <SearchFilterResults 
-                name={'to_params'} 
-                id={'to'} 
-                filteredSuggestions={filteredSuggestionsTo} 
-                handleSuggestionClick={handleSuggestionClick}
-                highlightedIndex={highlightedIndex}
-              />
-            )}
+            {
+              flight ?
+                <div>
+                  <p className='text-3xl font-semibold'>
+                    {flight.price}
+                  </p>
+                  <a 
+                    className='text-blue-900 font-semibold underline'
+                    href={flight.deep_link}
+                    target="_blank"
+                  >
+                    Check out the details
+                  </a>
+                </div>
+              :
+                <p>
+                  Search for a Flight!
+                </p>
+            }
           </div>
-          <label>Departure</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="date" 
-            id='date_from'
-            min={today}
-            required
-            onChange={handleChange}
-            value={params.date_from}
-          />
-          <label>Return</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="date" 
-            id='return_from'
-            min={params.date_from}
-            onChange={handleChange}
-            value={params.return_from}
-          />
+          
         </div>
-        <div>
-          <label>Adults (Over 11)</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="number" 
-            id='adults'
-            min = "0"
-            max={maxInput.adults}
-            placeholder='No. of adults'
-            onChange={handleChange}
-            value={params.adults}
-          />
-          <label>Children (2-11)</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="number" 
-            id='children'
-            min = "0"
-            max={maxInput.children}
-            placeholder='No. of children'
-            onChange={handleChange}
-            value={params.children}
-          />
-          <label>Infants (Under 2)</label>
-          <input 
-            className='border border-black px-3 py-2 rounded-lg'
-            type="number" 
-            id='infants'
-            min = "0"
-            max={maxInput.infants}
-            placeholder='No. of infants'
-            onChange={handleChange}
-            value={params.infants}
-          />
-        </div>
-        <div>
-          <label>Infants (Under 2)</label>
-          <select 
-            className='border border-black px-3 py-2 rounded-lg'
-            name="" 
-            id="selected_cabins"
-            onChange={handleChange}
-            value={params.selected_cabins}
-          >
-            <option value="M" selected>Economy</option>
-            <option value="W">Economy Premium</option>
-            <option value="C">Business</option>
-            <option value="F">First Class</option>
-          </select>
-        </div>
-        <button className='bg-white px-5 py-2'>Search</button>
-      </form>
-      <div className='bg-red-200'>
-        {loading ? 
-        <p>
-          Getting your flight for you...
-        </p> : error ? 
-        <p>
-          {error}
-        </p>
-        : flight ? 
-        <div className='flex flex-col'>
-          <p>
-            Check out the cheapest flight we found 
-            from {inputText.from_params || inputText.from} to {inputText.to_params || inputText.to}:
-          </p>
-          <p className='text-3xl font-semibold'>
-            {flight.price}
-          </p>
-          <a 
-            className='text-blue-900 font-semibold underline'
-            href={flight.deep_link}
-            target="_blank"
-          >Check out the details</a>
-        </div>
-        :
-        <div className='flex'>
-          <p>
-            Look for the cheapest Flights:
-          </p>
-        </div>
-        }
-      </div>
     </div>
   )
 }
