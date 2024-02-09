@@ -24,20 +24,22 @@ export default function BlogCards({blog}) {
                 src={blog.photo} 
                 alt="Cover Image" 
             />
-            <div className="flex items-center mt-2 px-4">
-                <img 
-                    className='h-9 w-9 object-cover rounded-full mr-2'
-                    src={user.photo} 
-                    alt="User Image" 
-                />
-                <p className="text-sm pt-2 font-semibold">
-                    {/* add author photo */}
-                    By: {user.username}
+            <div className="flex flex-col gap-2 py-2">
+                <div className="flex items-center mt-2 px-4">
+                    <img 
+                        className='h-9 w-9 object-cover rounded-full mr-2'
+                        src={user.photo} 
+                        alt="User Image" 
+                    />
+                    <p className="text-sm pt-2 font-semibold">
+                        {/* add author photo */}
+                        By: {user.username}
+                    </p>
+                </div>
+                <p className='px-4 text-2xl font-bold line-clamp-3 mb-2'>
+                    {blog.title}
                 </p>
             </div>
-            <p className='px-4 text-2xl font-bold line-clamp-3 mb-2'>
-                {blog.title}
-            </p>
         </div>
     )
 }
