@@ -55,12 +55,15 @@ export default function Continent() {
                   >
                     Start a plan
                   </p>
-                  <TripModal  
-                    isOpen={isModalOpen}
-                    onClose={closeModal}
-                    currentDestination={continentData.continent_name}
-                    user_id={currentUser.id}
-                  />
+                  <div className="">
+                    <TripModal  
+                      isOpen={isModalOpen}
+                      onClose={closeModal}
+                      currentDestination={continentData.continent_name}
+                      user_id={currentUser.id}
+                    />
+                  </div>
+                  
                 </>
               }
 

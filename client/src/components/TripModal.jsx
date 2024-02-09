@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import SearchFilterResults from './SearchFilterResults';
 import useGetContinent from '../hooks/useGetContinent';
 import useGetCountry from '../hooks/useGetCountry';
+import { MdOutlineClose } from "react-icons/md";
 
 export default function TripModal({ isOpen, onClose, currentDestination, user_id }) {
     if (!isOpen) return null;
@@ -11,9 +12,6 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
     const input2Ref = useRef(null);
     const input3Ref = useRef(null);
     const buttonRef = useRef(null);
-    const [isCountry, setIsCountry] = useState(false)
-    const [selectedCountry, setSelectedCountry] = useState(false)
-    const [isClicked, setIsClicked] = useState(false)
     const [suggestions, setSuggestions] = useState([])
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -27,9 +25,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
     })
     const { country } = useGetCountry('all')
     const { continentData } = useGetContinent('all')
-    console.log(tripData)
-    console.log(currentDestination)
-    console.log(user_id)
+
 
     useEffect(() => {
         if (Array.isArray(continentData) && Array.isArray(country)) {
@@ -171,72 +167,93 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
 
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-        <div className="bg-white p-8 rounded-md flex flex-col">
-            <p onClick={onClose}>Make this an X symbol</p>
-            <label for='title'>Trip Title</label>
-            <input 
-                type="text" 
-                id='title'
-                ref={input1Ref}
-                value={tripData.title}
-                onChange={handleChange}
-                placeholder='Enter title'
-                required
-                onKeyDown={(e) => {
-                  handleInputEnter(e, input2Ref);
-                }}
+        <div className="bg-white w-[1000px] mx-4 lg:mx-0 p-8 rounded-md flex flex-col items-center">
+            <MdOutlineClose 
+              onClick={onClose}
+              className='ml-auto scale-150 hover:cursor-pointer text-slate-600 hover:text-black'
             />
-            <label for='title'>Destination</label>
-            <input 
-                type="text" 
-                id='destination'
-                ref={input2Ref}
-                autoComplete='off'
-                onChange={handleDestinationChange}
-                value={tripData.destination}
-                placeholder='Search destination'
-                required
-                onKeyDown={(e) => {
-                  handleInputEnter(e, input3Ref);
-                }}
-            />
-            {filteredSuggestions.length > 0 && 
-                <SearchFilterResults 
-                  name={'trips'} 
-                  id={'trip'} 
-                  filteredSuggestions={filteredSuggestions} 
-                  handleSuggestionClick={handleSuggestionClick}
-                  highlightedIndex={highlightedIndex}
-                />
-            }
-            <label for='title'>Notes</label>
-            <input 
-                type="text" 
-                id='note'
-                ref={input3Ref}
-                autoComplete='off'
-                onChange={handleChange}
-                value={tripData.note}
-                placeholder='Travel Notes'
-                required
-                onKeyDown={(e) => {
-                  handleInputEnter(e, buttonRef);
-                }}
-            />
-            { loading ?
-                <p>
-                  Loading...
-                </p>
-                :
-                error ?
-                <p>
-                  {error}
-                </p>
-                :
-                <button onClick={handleSubmit}>
-                  Create trip
-                </button>
-            }
+            <p className='font-bold text-2xl mb-2'>
+              Plan Your Adventure: Trip Details           
+            </p>
+            <div className='w-full flex flex-col gap-1 mb-4'>
+              <label className='font-semibold' for='title'>Trip Title</label>
+              <input 
+                  className='border hover:border-slate-600 duration-200 rounded-full 
+                    p-2 w-full box-border'
+                  type="text" 
+                  id='title'
+                  ref={input1Ref}
+                  value={tripData.title}
+                  onChange={handleChange}
+                  placeholder='Enter title'
+                  required
+                  onKeyDown={(e) => {
+                    handleInputEnter(e, input2Ref);
+                  }}
+              />
+            </div>
+            
+            <div className='w-full flex flex-col gap-1 mb-4'>
+              <label className='font-semibold' for='title'>Destination</label>
+              <input 
+                  className='border hover:border-slate-600 duration-200 rounded-full p-2 w-full box-border'
+                  type="text" 
+                  id='destination'
+                  ref={input2Ref}
+                  autoComplete='off'
+                  onChange={handleDestinationChange}
+                  value={tripData.destination}
+                  placeholder='Search destination'
+                  required
+                  onKeyDown={(e) => {
+                    handleInputEnter(e, input3Ref);
+                  }}
+              />
+              {filteredSuggestions.length > 0 && 
+                  <SearchFilterResults 
+                    name={'trips'} 
+                    id={'trip'} 
+                    filteredSuggestions={filteredSuggestions} 
+                    handleSuggestionClick={handleSuggestionClick}
+                    highlightedIndex={highlightedIndex}
+                  />
+              }
+            </div>
+
+            <div className='w-full flex flex-col gap-1 mb-4'>
+              <label className='font-semibold' for='title'>Notes</label>
+              <textarea 
+                  className='border hover:border-slate-600 duration-200 rounded-md p-2 w-full box-border'
+                  type="text" 
+                  id='note'
+                  ref={input3Ref}
+                  autoComplete='off'
+                  onChange={handleChange}
+                  value={tripData.note}
+                  placeholder='Travel Notes'
+                  required
+                  onKeyDown={(e) => {
+                    handleInputEnter(e, buttonRef);
+                  }}
+              />
+              { loading ?
+                  <p>
+                    Loading...
+                  </p>
+                  :
+                  error ?
+                  <p>
+                    {error}
+                  </p>
+                  :
+                  <button 
+                    onClick={handleSubmit}
+                    className='border mt-4 px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800'
+                  >
+                    Create trip
+                  </button>
+              }
+            </div>
         </div>
     </div>
   )
