@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import SearchFilterResults from '../components/SearchFilterResults';
-import Hero from '../components/Hero';
+import Hero from '../components/heroComponent/Hero';
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 export default function Flights() {

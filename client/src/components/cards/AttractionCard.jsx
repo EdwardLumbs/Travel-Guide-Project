@@ -43,6 +43,7 @@ import {
 
 
 export default function AttractionCard({category, attraction}) {
+  console.log(category)
 
   const getCategoryIcon = () => {
     let icon;

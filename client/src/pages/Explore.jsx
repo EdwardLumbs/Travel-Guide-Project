@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import SearchFilterResults from '../components/SearchFilterResults';
 import AttractionCard from '../components/cards/AttractionCard';
-import Hero from '../components/Hero';
+import Hero from '../components/heroComponent/Hero';
 
 export default function Explore() {
   const buttonRef = useRef(null);

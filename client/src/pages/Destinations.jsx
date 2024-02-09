@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchFilter from '../components/SearchFilter';
-import Hero from '../components/Hero';
+import Hero from '../components/heroComponent/Hero';
 
 export default function Destinations() {
   const [loading, setLoading] = useState(false);

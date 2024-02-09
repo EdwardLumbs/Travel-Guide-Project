@@ -12,7 +12,7 @@ router.get('/getFlight/:query/:flyFrom/:flyTo', async (req, res, next) => {
     const flyToUrl = req.params.flyTo;
 
     if (flyFromUrl.length > 3 || flyToUrl.length > 3) {
-      return next(errorHandler(406, 'Invalid IATA codes'));
+      return next(errorHandler(406, 'Invalid IATA Code'));
     } 
 
     const url = `https://api.tequila.kiwi.com/v2/search?${queryString}`

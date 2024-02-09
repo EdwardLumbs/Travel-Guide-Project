@@ -6,6 +6,7 @@ import SearchFilterResults from './SearchFilterResults';
 export default function Attractions({capital, countryName, continent}) {
     const buttonRef = useRef(null);
     const [category, setCategory] = useState();
+    const [chosenCategory, setChosenCategory] = useState();
     const [categories, setCategories] = useState([]);
     const [attractions, setAttractions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -14,11 +15,14 @@ export default function Attractions({capital, countryName, continent}) {
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const navigate = useNavigate();
 
+    console.log(chosenCategory)
+
     const handleChange = (e) => {
-        setCategory(e.target.value);
+        const text = e.target.value.toLowerCase()
+        setCategory(text);
 
         let filtered = categories.filter((data) => 
-            data.category.includes(e.target.value)
+            data.category.includes(text)
         );
 
         if (e.target.value === ''){
@@ -71,6 +75,7 @@ export default function Attractions({capital, countryName, continent}) {
         const urlParams = new URLSearchParams()
         urlParams.set('place', capital)
         urlParams.set('category', category)
+        setChosenCategory(category)
         const searchQuery = urlParams.toString()
         navigate(`/destinations/${continent}/${countryName}?${searchQuery}`)
     }
@@ -149,41 +154,46 @@ export default function Attractions({capital, countryName, continent}) {
         }
     }, [location.search])
 
-    // const handleClick = (attraction) => {
-    //     console.log(attraction)
-    //     setTripData({
-    //         ...tripData,
-    //         attractions : [...attractions, attraction]
-    //     })
-    // }
-
   return (
-    <div className='flex flex-col'>
-        <p>Look for the best attractions</p>
-        <div className='flex flex-col'>
-            <label>Choose categories to search</label>
-            <form onSubmit={handleSubmit}>
+    <div className=''>
+        <p className='text-3xl font-bold mb-4'>Look for the best attractions</p>
+        <div className='flex flex-col relative'>
+            <p className='mb-4 text-justify'>
+                Discover local gems effortlessly! Explore nearby attractions with our 
+                intuitive search feature. Simply enter what place you want to go to, and 
+                we'll unveil the hidden treasures waiting to be explored. Start your adventure now!
+            </p>
+            <form 
+                className='flex flex-col lg:flex-row relative'
+                onSubmit={handleSubmit}
+            >
                 <input 
-                    className=''
+                    className='border lg:mb-0 mb-4 hover:border-slate-600 duration-200 rounded-full 
+                        p-2 w-full md:w-96 box-border'
                     type="text" 
                     onChange={handleChange}
                     value={category}
+                    disabled={loading}
                     placeholder='Choose a category'
                     onKeyDown={(e) => {
                         handleInputEnter(e, buttonRef);
                         handleArrowNavigation(e);
                     }}
                 />
-                {filteredSuggestions.length > 0 && 
-                    <SearchFilterResults 
-                        filteredSuggestions={filteredSuggestions} 
-                        handleSuggestionClick={handleSuggestionClick}
-                        highlightedIndex={highlightedIndex}
-                    />
-                }
+                <div className="absolute bg-white w-[1500px] mt-11 z-10">
+                    {filteredSuggestions.length > 0 && 
+                        <SearchFilterResults 
+                            filteredSuggestions={filteredSuggestions} 
+                            handleSuggestionClick={handleSuggestionClick}
+                            highlightedIndex={highlightedIndex}
+                        /> 
+                    }
+                </div>
                 <button
-                    className=''
+                    className='lg:ml-4 w-full md:w-40 border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
+                        text-white font-semibold hover:bg-white duration-300 hover:text-blue-800'
                     ref={buttonRef}
+                    disabled={loading}
                 >
                     Submit
                 </button>
@@ -191,9 +201,10 @@ export default function Attractions({capital, countryName, continent}) {
         </div>
         <div>
             {attractions && 
-                <div>
+                <div className='mt-4'>
                     {loading ? 
-                    <p>
+                    <p className=''>
+                        {/* loading animation */}
                         Loading...
                     </p>
                     : 
@@ -203,25 +214,31 @@ export default function Attractions({capital, countryName, continent}) {
                     </p>
                     :
                     attractions.length > 0 && 
-                        <div className='flex flex-wrap'>
-                            {`Showing Results for ${category}`}
-                            {attractions.map((attraction, index) => (
-                                <Link 
-                                    key={index} 
-                                    to={attraction.properties.datasource.raw.website || `https://www.google.com/search?q=${encodeURIComponent(attraction.properties.name)}`}
-                                    target='_blank'
-                                >
-                                    <AttractionCard category={category} attraction={attraction} />
-                                </Link>
-                            ))}
-                            {
-                            <Link 
-                                className='hover:underline'
-                                to={`/explore?place=${capital}&category=${category}&limit=${20}`}
-                            >
-                                Show more
-                            </Link>
-                            }
+                        <div className='flex flex-col flex-wrap gap-4'>
+                            <div className='text-3xl font-bold'>
+                                {`Showing Results for ${category} ${capital && `at ${capital}`}`}
+                            </div>
+                            <div className='flex flex-wrap gap-4'>
+                                {attractions.map((attraction, index) => (
+                                    <Link 
+                                        key={index} 
+                                        to={attraction.properties.datasource.raw.website || `https://www.google.com/search?q=${encodeURIComponent(attraction.properties.name)}`}
+                                        target='_blank'
+                                    >
+                                        <AttractionCard category={chosenCategory} attraction={attraction} />
+                                    </Link>
+                                ))}
+                                {
+                                    <Link 
+                                        className='hover:underline'
+                                        to={`/explore?place=${capital}&category=${category}&limit=${20}`}
+                                    >
+                                        {/* make this beautiful */}
+                                        Show more
+                                    </Link>
+                                }
+                            </div>
+                            
                         </div>
                     }
                 </div>

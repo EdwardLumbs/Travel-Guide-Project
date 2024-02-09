@@ -6,6 +6,7 @@ import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
 import News from "../components/News";
 import TripModal from "../components/TripModal";
+import DestinationHero from '../components/heroComponent/DestinationHero'
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
@@ -67,10 +68,17 @@ export default function Country() {
 
   const handleInputChange = (e) => {
     const text = e.target.value.toLowerCase();
-    setInputValue({
-      ...inputValue,
-      [e.target.id]: e.target.value
-    });
+    if (e.target.id === 'from') {
+      setInputValue({
+        ...inputValue,
+        from: e.target.value.toUpperCase()
+      });
+    } else {
+      setInputValue({
+        ...inputValue,
+        [e.target.id]: e.target.value
+      });
+    }
 
     let filtered = iataCodes.filter((iataCode) => 
       iataCode.country.toLowerCase().includes(text)
@@ -179,6 +187,23 @@ export default function Country() {
 
   }, [country, location.search]);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setFilteredSuggestionsFrom([]);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [buttonRef]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.from === country.country_iata) {
@@ -209,20 +234,16 @@ export default function Country() {
     : loading ? <p className="text-3xl">
       Loading...
     </p> :
-      <div className="flex items-center flex-col gap-5">
+      <div className="">
         <div className="">
-          <img 
-            className="object-cover rounded-2xl w-[960px]"
-            src={country.photo} 
-            alt="cover photo" 
-          />
-          <div className="flex mt-9">
+          <DestinationHero image={country.photo} />
+          <div className="mt-4 container flex mx-auto px-4 h-[300px]">
             <div>
-              <p className="text-6xl">
+              <p className="text-6xl font-bold">
                 {country.country}
                   <span className="text-2xl"> {country.continent_name}</span>
               </p>
-              <p className="mt-9">
+              <p className="mt-4 text-justify">
                 {country.description}
               </p>
               {
@@ -243,49 +264,83 @@ export default function Country() {
                 </>
               }
             </div>
-            <div>
-              { flightLoading ? 
-              <div>
-                  Finding the cheapest flights for you....
-              </div> :
-              flightError ?
-              <div>
-                  {flightError}
+          </div>
+        </div>
+
+              {/* flight div */}
+        <div className="bg-violet-300 py-7 mx-0 md:mx-2 
+          md:px-4 md:rounded-3xl h-[220px] lg:h-[200px] flex items-center">
+          <div className="container flex mx-auto px-4 h-full">
+            <div className="flex w-full justify-between h-full">
+              {/* left */}
+              <div className="w-full md:w-2/3 md:border-r md:border-violet-500 h-full flex items-center">
+                { flightLoading ? 
+                  <div className="text-2xl font-semibold">
+                    Finding the cheapest flights for you....
+                  </div> :
+                flightError ?
+                <div className="flex flex-col gap-4">
+                  <div className="text-3xl font-bold text-red-900">
+                    {flightError}
+                  </div>
                   <button
-                    className="text-blue-900 hover:underline"
+                    className="w-max border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
                     onClick={handleNewEntry}
                   >
                     Enter a different location
                   </button>
-              </div> :
-              flight ? 
-                <div>
-                  <p>{`Cheapest flight from ${inputValue.name || inputValue.from || currentUser.user_iata} is:`}</p>
-                  {/* specify where is their location */}
-                  <p>{flight.price}</p>
-                  <Link
-                    className="text-blue-900 hover:underline"
-                    to={`/flights?${filter}`}
-                    state={{search: `${location.pathname}?${iataQuery}`}}
-                  >Check it out
-                  </Link>
-                  <button
-                    className="text-blue-900 hover:underline"
-                    onClick={handleNewEntry}
+                </div> :
+                flight ? 
+                  <div className="flex flex-col gap-4">
+                    <p className="text-3xl font-bold">
+                      {`Cheapest flight from ${inputValue.name || inputValue.from || currentUser.user_iata} is:`}
+                    </p>
+                    {/* specify where is their location */}
+                    <div className="flex flex-col gap-4 md:hidden">
+                      <p className="text-3xl font-bold">
+                        {flight.price}
+                      </p>
+                      <div className="flex gap-4">
+                        <Link
+                          className="w-max items-center border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
+                            text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
+                          to={`/flights?${filter}`}
+                          state={{search: `${location.pathname}?${iataQuery}`}}
+                        >Check it out
+                        </Link>
+                        <button
+                          className="w-max border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
+                          onClick={handleNewEntry}
+                        >
+                          Enter a different location
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <button
+                      className="hidden md:flex w-max border px-6 py-2 rounded-full 
+                       border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white 
+                        duration-300 hover:text-blue-800"
+                      onClick={handleNewEntry}
+                    >
+                      Enter a different location
+                    </button>
+                  </div>
+                :
+                <div className="flex flex-col gap-4 mr-2 lg:mr-0">
+                  <p className="text-3xl font-bold">
+                    {`Check out the cheapest flights for ${country.country}`}
+                  </p>
+                  <form 
+                    onSubmit={handleSubmit}
                   >
-                    Enter a different location
-                  </button>
-                </div>
-              :
-                <div>
-                  <p>Check out the cheapest flights</p>
-                  <form onSubmit={handleSubmit}>
-                    <label>From</label>
                     <input 
-                      className='border border-black px-3 py-2 rounded-lg'
+                      className='border lg:mb-0 mb-4 hover:border-slate-600 duration-200 
+                        rounded-full p-2 w-full md:w-96 box-border'
                       type="text" 
                       required
                       id='from'
+                      autoComplete="off"
                       placeholder='Where are you from?'  
                       value={inputValue.from}
                       onChange={handleInputChange}
@@ -294,49 +349,102 @@ export default function Country() {
                         handleArrowNavigation(e);
                       }}
                     />
-                    {filteredSuggestionsFrom.length > 0 &&
-                      <SearchFilterResults 
-                        id={'from'} 
-                        filteredSuggestions={filteredSuggestionsFrom} 
-                        handleSuggestionClick={handleSuggestionClick}
-                        highlightedIndex={highlightedIndex}
-                        countryPage={true}
-                        userTrip={null}
-                      />  
-                    }
+                    <div className="absolute bg-white w-[1500px] z-10">                
+                      {filteredSuggestionsFrom.length > 0 &&
+                          <SearchFilterResults 
+                            id={'from'} 
+                            filteredSuggestions={filteredSuggestionsFrom} 
+                            handleSuggestionClick={handleSuggestionClick}
+                            highlightedIndex={highlightedIndex}
+                          />  
+                      }
+                    </div>
                     {/* move search button down do you can still click when therere suggestions */}
                     <button 
-                      className='bg-green-200 px-5 py-2'
+                      // make the button style better
+                      className='lg:ml-4 w-full md:w-40 border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
+                        text-white font-semibold hover:bg-white duration-300 hover:text-blue-800'
                       ref={buttonRef}
                     >
                       Search
                     </button>
+              
                   </form>
                 </div>
-              }
+                }
+              </div>
+              {/* right */}
+              <div className="md:flex hidden w-1/3 ml-5 h-full items-center">
+                { flightLoading ? 
+                    <div>
+                      Loading....
+                      {/* loading animation */}
+                    </div> 
+                  :
+                  flightError ?
+                  <div>
+                    Error
+                    {/* error animation */}
+                  </div>
+                  :
+                  flight ? 
+                  <div className="flex flex-col gap-4">
+                    <p className="text-3xl font-bold">
+                      {flight.price}
+                    </p>
+                    <Link
+                      className="w-max items-center border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
+                        text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
+                      to={`/flights?${filter}`}
+                      state={{search: `${location.pathname}?${iataQuery}`}}
+                    >Check it out
+                    </Link>
+                  </div>
+                  :
+                  <p>
+                    default display
+                  </p>
+                }
+              </div>
             </div>
+          
           </div>
         </div>
 
-        <div>
-          <Attractions 
-            capital={country.capital} 
-            countryName={country.country} 
-            continent={country.continent_name}
-            countryPage={true}
-            tripData={null}
-            setTripData={null}
-          />
+                {/* attractions div */}
+        <div className="mt-7 py-7 bg-orange-300 mx-0 
+          md:mx-2 md:px-4 md:rounded-3xl h-full flex items-center">
+            {/* h-[300px] lg:h-[200px] */}
+          <div className="container flex mx-auto px-4">
+            <Attractions 
+              capital={country.capital} 
+              countryName={country.country} 
+              continent={country.continent_name}
+              countryPage={true}
+              tripData={null}
+              setTripData={null}
+            />
+          </div>
         </div>
 
-        <div>
+        <div className="py-7 gap-4 mx-auto px-4">
           Must Read blogs. Add related blogs here
         </div>
 
-        <div>
-          <News place={country.country}/>
+        <div className="mt-7 py-4 bg-blue-300 mx-0 
+          md:mx-2 md:px-4 md:rounded-3xl h-full">
+          <div className="mt-4 container px-4 mx-auto flex flex-col gap-4">
+            <p className="text-3xl font-bold">
+                {`Check out the Latest News from ${country.country}`} 
+            </p>
+            <p className="text-justify">
+              {`Stay updated with the latest news from ${country.country}! Explore breaking headlines, 
+              trending stories, and insightful articles covering diverse topics. Dive into 
+              the heartbeat of [Country] with our curated news section.`}
+            </p>
+            <News place={country.country}/>
+          </div>
         </div>
-
       </div>
       }
     </>

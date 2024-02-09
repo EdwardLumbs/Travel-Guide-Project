@@ -44,9 +44,9 @@ router.get('/getAttractions', async (req, res, next) => {
 
         if (features.length === 0) {
             return next(errorHandler(404, 'No attractions found'))
+        } else {
+            res.status(200).json(features)
         }
-
-        res.status(200).json(features)
 
     } catch (error) {
         next(error)

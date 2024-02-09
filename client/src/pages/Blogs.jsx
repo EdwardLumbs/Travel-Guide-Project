@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import BlogCards from '../components/cards/BlogCards';
 import SearchFilter from '../components/SearchFilter';
-import Hero from '../components/Hero';
+import Hero from '../components/heroComponent/Hero';
 import { FaPlus } from "react-icons/fa";
 
 
