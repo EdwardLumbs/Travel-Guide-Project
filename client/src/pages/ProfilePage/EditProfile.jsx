@@ -18,10 +18,6 @@ export default function EditProfile() {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    username: '',
-    description: '',
-    photo: '',
-    user_iata: ''
   });
   const [disabled, setDisabled] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false)
