@@ -5,7 +5,8 @@ import 'react-quill/dist/quill.snow.css';
 import { useSelector } from 'react-redux';
 import UploadPicture from '../../components/UploadPicture';
 import BlogTagsComponent from '../../components/BlogTagsComponent';
-import Hero from '../../components/heroComponent/Hero'
+import Hero from '../../components/heroComponent/Hero';
+import wordsCount from 'words-count';
 
 const modules = {
   toolbar: [
@@ -33,6 +34,7 @@ export default function CreateBlogPost() {
   const [content, setContent] = useState('')
   const [selected, setSelected] = useState([])
   const [tag, setTag] = useState([])
+  const [count, setCount] = useState(0)
   const [coverPhoto, setCoverPhoto] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -52,19 +54,21 @@ export default function CreateBlogPost() {
     const textContent = tempDiv.textContent || tempDiv.innerText;
 
     const words = textContent.trim().split(/\s+/);
-    console.log(words.length)
+    const wordsCountResult = wordsCount(words, {punctuationAsBreaker: true});
+    console.log(wordsCountResult)
+    setCount(wordsCountResult)
 
-    if (words.length < max || words.length > min) {
+    if (wordsCountResult < max || wordsCountResult > min) {
       setError(null)
     }
 
-    if (words.length > max) {
+    if (wordsCountResult > max) {
       setError('You exceeded the maximum number of words')
       const trimmedWords = words.slice(0, maxWords);
       value = trimmedWords.join(' ');
     }
 
-    if (words.length < min) {
+    if (wordsCountResult < min && wordsCountResult !== 0) {
       setError('Write at least 100 words')
     }
 
@@ -212,7 +216,7 @@ export default function CreateBlogPost() {
                 }
               </div>
               <p className='font-semibold text-sm text-gray-400'>
-                Word Count: {content.trim() ? content.trim().split(/\s+/).length : 0} / 1000
+                Word Count: {count} / 1000
               </p>
             </div>
             
