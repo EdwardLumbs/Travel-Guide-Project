@@ -57,6 +57,7 @@ router.delete('/delete/:id', verifyToken, async (req, res, next) => {
 
 router.get('/getUser/:id', async (req, res, next) => {
     const { id } = req.params
+    console.log(id)
     try {
         const data = await pool.query(`SELECT username, photo
         FROM users

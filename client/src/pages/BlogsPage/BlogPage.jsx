@@ -9,8 +9,6 @@ export default function BlogPage() {
   const [error, setError] = useState(null);
   const [blog, setBlog] = useState({});
   const [user, setUser] = useState([]);
-  console.log(blog.user_id)
-  console.log(user)
 
   useEffect(() => {
     const getBlog = async () => {
@@ -18,13 +16,11 @@ export default function BlogPage() {
         setLoading(true)
         const res  = await fetch(`/api/blogs/getBlog/${blogId}`)
         const data = await res.json()
-        console.log(data)
         setLoading(false)
-        setBlog(data[0])
         const options = { month: 'long', day: 'numeric', year: 'numeric' }
         const formattedTimestamp = new Date(data[0].created_at).toLocaleString('en-US', options)
         setBlog({
-          ...blog,
+          ...data[0],
           created_at: formattedTimestamp
         })
 
@@ -42,7 +38,9 @@ export default function BlogPage() {
     const getUser = async () => {
         try {
             const res  = await fetch(`/api/user/getUser/${blog.user_id}`)
+            console.log(blog.user_id)
             const data = await res.json()
+            console.log(data)
             setUser(data[0])
           } catch (error) {
             console.log(error.message)
@@ -87,7 +85,7 @@ export default function BlogPage() {
                 </div>
               </div>
               <div
-                className="text-justify text-lg"
+                className="text-justify text-lg mt-6"
                 dangerouslySetInnerHTML={{__html:blog.content}}
               />
           </div>
