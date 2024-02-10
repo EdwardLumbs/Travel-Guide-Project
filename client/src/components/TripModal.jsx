@@ -172,7 +172,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
               onClick={onClose}
               className='ml-auto scale-150 hover:cursor-pointer text-slate-600 hover:text-black'
             />
-            <p className='font-bold text-2xl mb-2'>
+            <p className='font-bold text-2xl my-6 lg:my-2'>
               Plan Your Adventure: Trip Details           
             </p>
             <div className='w-full flex flex-col gap-1 mb-4'>
