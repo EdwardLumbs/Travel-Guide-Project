@@ -6,7 +6,7 @@ import News from "../components/News";
 import { useState } from "react";
 import TripModal from "../components/TripModal";
 import { useSelector } from 'react-redux';
-import DestinationHero from "../components/heroComponent/DestinationHero";
+import ImageHero from "../components/heroComponent/ImageHero";
 
 
 export default function Continent() {
@@ -38,7 +38,7 @@ export default function Continent() {
       :
       <div className="">
         <div className="">
-          <DestinationHero image={continentData.continent_photo} />
+          <ImageHero image={continentData.continent_photo} />
           <div className="mt-4 container flex flex-col mx-auto px-4 h-[300px]">
               <p className="text-6xl">
                 {continentData.continent_name} 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import ImageHero from '../../components/heroComponent/ImageHero';
 
 export default function BlogPage() {
   const { blogId } = useParams()
@@ -21,6 +21,13 @@ export default function BlogPage() {
         console.log(data)
         setLoading(false)
         setBlog(data[0])
+        const options = { month: 'long', day: 'numeric', year: 'numeric' }
+        const formattedTimestamp = new Date(data[0].created_at).toLocaleString('en-US', options)
+        setBlog({
+          ...blog,
+          created_at: formattedTimestamp
+        })
+
       } catch (error) {
         setError(error.message)
         setLoading(false)
@@ -57,26 +64,30 @@ export default function BlogPage() {
         Loading...
       </p>
     :
-      <div className="flex items-center flex-col gap-5">
+      <div className="">
         <div className="">
-          <img 
-            className="object-cover rounded-2xl w-[960px]"
-            src={blog.photo} 
-            alt="cover photo" 
-          />
-          <div className="mt-9">
-              <p className="text-6xl">
+          <ImageHero image={blog.photo} />
+          <div className="mt-4 container mx-auto px-4">
+              <p className="text-6xl font-semibold">
                 {blog.title} 
               </p>
-              <p className="text-2xl">
-                {blog.created_at} 
-              </p>
-              <p className="text-2xl">
-                {/* add photo of user */}
-                Author: {user.username}
-              </p>
+              <div className="flex mt-6 items-center gap-2 pb-6 border-b">
+                <img 
+                  className='h-9 w-9 object-cover rounded-full mr-2'
+                  src={user.photo} 
+                  alt="Cover Image" 
+                />
+                <div className='font-semibold'>
+                  <p>
+                    Author: {user.username}
+                  </p>
+                  <p>
+                    Created at: {blog.created_at} 
+                  </p>
+                </div>
+              </div>
               <div
-                className="mt-9"
+                className="text-justify text-lg"
                 dangerouslySetInnerHTML={{__html:blog.content}}
               />
           </div>

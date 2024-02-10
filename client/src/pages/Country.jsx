@@ -6,7 +6,7 @@ import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
 import News from "../components/News";
 import TripModal from "../components/TripModal";
-import DestinationHero from '../components/heroComponent/DestinationHero'
+import ImageHero from '../components/heroComponent/ImageHero'
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
@@ -236,7 +236,7 @@ export default function Country() {
     </p> :
       <div className="">
         <div className="">
-          <DestinationHero image={country.photo} />
+          <ImageHero image={country.photo} />
           <div className="mt-4 container flex mx-auto px-4 h-[300px]">
             <div>
               <p className="text-6xl font-bold">

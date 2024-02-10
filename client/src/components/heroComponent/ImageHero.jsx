@@ -1,4 +1,4 @@
-export default function DestinationHero({image}) {
+export default function ImageHero({image}) {
   return (
     <div 
       className='relative bg-cover h-[600px] lg:shadow-lg
