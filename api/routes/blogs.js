@@ -49,6 +49,7 @@ router.delete('/deleteBlog/:blogId', verifyToken, async (req, res, next) => {
 // make it get the most recent
 router.get('/getBlogs', async (req, res, next) => {
     let { page, limit, tag1, tag2 } = req.query;
+    console.log(req.query)
 
     page = parseInt(page) || 1;
     const pageSize = 8;
@@ -64,7 +65,7 @@ router.get('/getBlogs', async (req, res, next) => {
                 WHERE $1 ILIKE ANY(place_tag)
                 ORDER BY created_at DESC
                 LIMIT ${limit}`, 
-            [tag1]);
+                [tag1]);
         } else if (tag1 && tag2) {
             data = await pool.query(`SELECT *
                 FROM blogs
@@ -72,7 +73,18 @@ router.get('/getBlogs', async (req, res, next) => {
                 AND $2 ILIKE ANY(place_tag)
                 ORDER BY created_at DESC
                 LIMIT 4;`, 
-            [tag1, tag2]);
+                [tag1, tag2]);
+
+
+            if (data.rows.length === 0) {
+                data = await pool.query(`SELECT *
+                FROM blogs
+                WHERE $1 ILIKE ANY(place_tag)
+                ORDER BY created_at DESC
+                LIMIT ${limit}`, 
+                [tag2]);
+            }
+
         } else {
             const countData = await pool.query('SELECT COUNT(*) FROM blogs');
             const totalItems = countData.rows[0].count;

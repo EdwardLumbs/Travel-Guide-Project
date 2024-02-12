@@ -6,7 +6,6 @@ import SearchFilter from '../components/SearchFilter';
 import Hero from '../components/heroComponent/Hero';
 import { FaPlus } from "react-icons/fa";
 
-
 export default function Blogs() {
   const {currentUser} = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
