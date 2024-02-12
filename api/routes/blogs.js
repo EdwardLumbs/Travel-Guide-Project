@@ -21,35 +21,61 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
 })
 
 router.get('/getBlogs', async (req, res, next) => {
-    let { page } = req.query
-    console.log(req.query)
+    let { page, limit, tag1, tag2 } = req.query;
+    console.log(req.query);
 
     page = parseInt(page) || 1;
     const pageSize = 8;
     const offset = (page - 1) * pageSize;
 
     try {
-        let totalItems;
+        let data;
+        let blogs;
 
-        const countData = await pool.query(`SELECT COUNT(*)
-            FROM blogs`);
-        totalItems = countData.rows[0].count;
+        if (tag1 && !tag2) {
+            data = await pool.query(`SELECT *
+                FROM blogs
+                WHERE $1 ILIKE ANY(place_tag)
+                LIMIT ${limit}`, 
+            [tag1]);
+        } else if (tag1 && tag2) {
+            data = await pool.query(`SELECT *
+                FROM blogs
+                WHERE $1 ILIKE ANY(place_tag)
+                AND $2 ILIKE ANY(place_tag)
+                LIMIT 4;`, 
+            [tag1, tag2]);
+        } else {
+            const countData = await pool.query('SELECT COUNT(*) FROM blogs');
+            const totalItems = countData.rows[0].count;
 
-        const data = await pool.query(`SELECT * FROM blogs
-        LIMIT ${pageSize}
-        OFFSET ${offset}`)
-        const blogs = data.rows
+            data = await pool.query(
+                `SELECT * FROM blogs
+                LIMIT $1
+                OFFSET $2`,
+                [pageSize, offset]
+            );
 
+            blogs = data.rows;
+            if (blogs.length === 0) {
+                return next(errorHandler(404, 'Blogs not found'));
+            }
+
+            return res.status(200).json({ blogs, totalItems });
+        }
+
+        blogs = data.rows;
         if (blogs.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
         }
 
-        res.status(200).json({blogs, totalItems});
+        res.status(200).json(blogs);
 
     } catch (error) {
         next(error);
     }
-})
+});
+
 
 router.get('/getBlog/:blogId', async (req, res, next) => {
     const { blogId } = req.params

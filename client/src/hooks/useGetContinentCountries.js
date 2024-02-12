@@ -13,6 +13,7 @@ export default function useGetContinentCountries (value) {
             const destination = await res.json();
 
             if (destination.success === false) {
+              setLoading(false);
               setError(destination.message)
               return
             }

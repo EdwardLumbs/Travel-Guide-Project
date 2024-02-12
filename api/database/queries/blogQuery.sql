@@ -18,6 +18,13 @@ FROM blogs
 LIMIT pageSize
 OFFSET offset
 
+-- get blogs with 2 tags
+SELECT *
+FROM blogs
+WHERE tag1 ILIKE ANY(place_tag)
+  AND tag2 ILIKE ANY(place_tag)
+LIMIT 4;
+
 -- get Blog
 SELECT *
 FROM blogs

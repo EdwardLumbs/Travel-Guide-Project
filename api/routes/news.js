@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.get('/getNews/:place', async (req, res, next) => {
     const apiKey = process.env.NEWS_API_KEY
-    console.log(apiKey)
     const keyword = `${req.params.place} tourism`
     const url = `https://newsapi.org/v2/everything?q=${keyword}&pageSize=4`
  
@@ -19,7 +18,6 @@ router.get('/getNews/:place', async (req, res, next) => {
             }
         })
         const news = await data.json()
-        console.log(news.articles)
         if (news?.articles.length === 0) {
             return next(errorHandler(404, 'No relevant news found'))
         }
