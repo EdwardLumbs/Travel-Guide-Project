@@ -100,7 +100,7 @@ export default function Blogs() {
           </div>
         </Link>
 
-        <div>
+
           {
             loading ? 
             <p>
@@ -112,6 +112,7 @@ export default function Blogs() {
               {error}
             </p>
             :
+            <div className='flex w-full'>
               <div className='flex gap-4 flex-wrap'>
                 {blogs.length > 0 && blogs.map((blog, index) => (
                   <Link
@@ -122,6 +123,7 @@ export default function Blogs() {
                   </Link>
                 ))}
               </div>
+            </div>
           }
 
           {pages && (
@@ -159,7 +161,7 @@ export default function Blogs() {
               )}
             </div>
           )}
-        </div>
+      
       </div>
     </div>
   )

@@ -86,8 +86,8 @@ export default function Destinations() {
         <p className='text-3xl font-semibold'>
           {error}
         </p> :
-        <div className='flex justify-center'>
-          <div className='flex flex-wrap gap-4 w-auto'>
+        <div className='flex w-full'>
+          <div className='flex flex-wrap gap-4'>
             {destinations.length > 0 && destinations.map((destination) => (
                 <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : 
                 `${destination.continent_name}`}>
