@@ -5,8 +5,8 @@ import BlogCards from '../../components/cards/BlogCards';
 
 export default function UserBlogs() {
   const {currentUser} = useSelector((state) => state.user);
-  const [Loading, setLoading] = useState(false)
-  const [Error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [blogs, setBlogs] = useState([])
   console.log(currentUser.id)
 
@@ -53,16 +53,16 @@ export default function UserBlogs() {
   return (
     <div className="px-4 w-full">
         {
-          Error ?
+          error ?
             <div>
               <p className="text-3xl">
-                {Error}
+                {error}
               </p> 
               <Link to={'/blogs/create'}>
                 Post a blog
               </Link>
             </div>
-          : Loading ? 
+          : loading ? 
             <p className="text-3xl">
               Loading...
             </p> 

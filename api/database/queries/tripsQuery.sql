@@ -12,3 +12,11 @@ VALUES (title, destination, note)
 
 -- get trip
 SELECT * FROM trips WHERE id = $1
+
+-- get user trips
+SELECT * FROM trips
+WHERE user_id = id
+
+-- delete trips
+DELETE FROM trips
+WHERE id = $1

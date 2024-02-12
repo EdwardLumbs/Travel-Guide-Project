@@ -23,6 +23,39 @@ router.post('/createTrip', verifyToken, async(req, res, next) => {
     }
 })
 
+router.delete('/deleteTrip/:tripId', verifyToken, async (req, res, next) => {
+    const { tripId } = req.params
+    console.log(tripId)
+    try {
+        await pool.query(`DELETE FROM trips
+        WHERE id = $1`,
+        [tripId])
+
+        res.status(200).json('Successfully deleted');
+
+    } catch (error) {
+        next(error);
+    }
+})
+
+router.get('/getUserTrips/:userId', verifyToken, async (req, res, next) => {
+    const { userId } = req.params
+    try {
+        const data = await pool.query(`SELECT * FROM trips
+            WHERE user_id = $1`,
+            [userId])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'No trips found'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    }
+})
+
 router.get('/getTrip/:TripId', verifyToken, async (req, res, next) => {
     const { TripId } = req.params
     try {
