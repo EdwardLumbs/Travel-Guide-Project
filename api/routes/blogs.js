@@ -13,7 +13,18 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
     try {
         await pool.query("INSERT INTO blogs (user_id, title, place_tag, photo, content) VALUES ($1, $2, $3, $4, $5)",
             [user_id, title, place_tag, photo, content])
-            res.status(201).json("Blog Posted Successfully");
+
+        const result = await pool.query(
+            "SELECT * FROM blogs WHERE user_id = $1 AND title = $2 AND place_tag = $3 AND photo = $4 AND content = $5",
+            [user_id, title, place_tag, photo, content]
+        );
+
+        if (result.rows.length === 0) {
+            return next(errorHandler(408, 'Something went wrong'));
+        }
+        const blog = result.rows[0]
+
+        res.status(201).json(blog);
 
     } catch (error) {
         next(error);

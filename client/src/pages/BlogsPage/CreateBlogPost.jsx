@@ -25,24 +25,24 @@ const formats = [
   'link', 'image'
 ];
 
-const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/edward-travel-guide.appspot.com/o/1156px-Picture_icon_BLACK.svg.png?alt=media&token=ae839113-7d78-4df7-8f01-fcb929167ed5'
+const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/edward-travel-guide.appspot.com/o/1156px-Picture_icon_BLACK.svg.png?alt=media&token=ae839113-7d78-4df7-8f01-fcb929167ed5';
 
 export default function CreateBlogPost() {
   const {currentUser} = useSelector((state) => state.user);
 
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [selected, setSelected] = useState([])
-  const [tag, setTag] = useState([])
-  const [count, setCount] = useState(0)
-  const [coverPhoto, setCoverPhoto] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [tag, setTag] = useState([]);
+  const [count, setCount] = useState(0);
+  const [coverPhoto, setCoverPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTag(selected.map((data) => data.label))
-  }, [selected])
+    setTag(selected.map((data) => data.label));
+  }, [selected]);
 
   const handleChange = (value) => {
     const max = 1000
@@ -76,8 +76,8 @@ export default function CreateBlogPost() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
       if (!tag || !coverPhoto || !title) {
         setLoading(false)
@@ -86,8 +86,7 @@ export default function CreateBlogPost() {
           setError(null);
         }, 2000);
         return
-      }
-
+      };
       const res = await fetch('/api/blogs/createPost', {
         method: 'POST',
         headers: {
@@ -99,25 +98,22 @@ export default function CreateBlogPost() {
           place_tag: tag,
           photo: coverPhoto,
           content
-        }),
-      }) 
-      const data = await res.json()
-
+        })
+      }) ;
+      const data = await res.json();
       if (data.success === false) {
-        setLoading(false)
-        setError(data.message)
+        setLoading(false);
+        setError(data.message);
         setTimeout(() => {
           setError(null);
         }, 2000);
         return;
       }
-
-      setLoading(false)
-      navigate('/blogs')
-      // create individual blog page
+      setLoading(false);
+      navigate(`/blogs/${data.id}`);
 
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
       setTimeout(() => {
         setError(null);
       }, 2000);

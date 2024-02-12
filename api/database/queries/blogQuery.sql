@@ -18,6 +18,14 @@ FROM blogs
 LIMIT pageSize
 OFFSET offset
 
+-- get newly created blog
+SELECT * FROM blogs 
+WHERE user_id = $1 
+AND title = $2 
+AND place_tag = $3 
+AND photo = $4 
+AND content = $5
+
 -- get blogs with 2 tags
 SELECT *
 FROM blogs
