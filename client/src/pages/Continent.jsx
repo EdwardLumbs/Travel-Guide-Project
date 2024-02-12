@@ -130,35 +130,37 @@ export default function Continent() {
           </div>
         </div>
         
-        <div className="container py-7 mx-auto px-4">
-          <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
-            {
-              blogError ?
-                <p className="text-3xl">
-                  {blogError}
-                </p> 
-              : blogLoading ? 
-                <p className="text-3xl">
-                  Loading...
-                </p> 
-              : 
-                blogs.map((blog) => (
-                  <Link to={`/blogs/${blog.id}`}>
-                    <div className="">
-                      <BlogCards blog={blog}/>
-                    </div>
-                  </Link>
-                ))  
-            }
+        {
+          blogError ?
+            <p className="text-3xl">
+              {blogError}
+            </p> 
+          : blogLoading ? 
+            <p className="text-3xl">
+              Loading...
+            </p> 
+          : 
+          <div className="container py-7 mx-auto px-4">
+            <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
+            { blogs.length > 0 && blogs.map((blog) => (
+              <Link to={`/blogs/${blog.id}`}>
+                <div className="">
+                  <BlogCards blog={blog}/>
+                </div>
+              </Link>
+            ))}
             { blogs.length >= 4 &&
-            <Link
-              className="hover:cursor-pointer hover:underline"
-              to={`/blogs?type=${continentData.continent_name}&page=1`}
-            >See More
-            </Link>
+              <Link
+                className="hover:cursor-pointer hover:underline"
+                to={`/blogs?type=${continentData.continent_name}&page=1`}
+              >See More
+              </Link>
             }
+            </div>
           </div>
-        </div>
+        }
+
+          
 
         <div className="bg-green-100 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
           <div className="mt-4 container px-4 mx-auto">

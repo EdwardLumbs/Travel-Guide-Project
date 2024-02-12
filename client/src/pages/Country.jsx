@@ -455,35 +455,37 @@ export default function Country() {
           </div>
         </div>
 
-        <div className="py-7 gap-4 mx-auto px-4">
-          <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
-            {
-              blogError ?
-                <p className="text-3xl">
-                  {blogError}
-                </p> 
-              : blogLoading ? 
-                <p className="text-3xl">
-                  Loading...
-                </p> 
-              : 
-                blogs.map((blog) => (
-                  <Link to={`/blogs/${blog.id}`}>
-                    <div className="">
-                      <BlogCards blog={blog}/>
-                    </div>
-                  </Link>
-                ))  
-            }
+        {
+          blogError ?
+            <p className="text-3xl">
+              {blogError}
+            </p> 
+          : blogLoading ? 
+            <p className="text-3xl">
+              Loading...
+            </p> 
+          : 
+          <div className="py-7 gap-4 mx-auto px-4">
+            <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
+            { blogs.length > 0 && blogs.map((blog) => (
+              <Link to={`/blogs/${blog.id}`}>
+                <div className="">
+                  <BlogCards blog={blog}/>
+                </div>
+              </Link>
+            ))}
             { blogs.length >= 4 &&
-            <Link
-              className="hover:cursor-pointer hover:underline"
-              to={`/blogs?type=${country.country}&page=1`}
-            >See More
-            </Link>
+              <Link
+                className="hover:cursor-pointer hover:underline"
+                to={`/blogs?type=${country.country}&page=1`}
+              >See More
+              </Link>
             }
+            </div>
           </div>
-        </div>
+        }
+            
+          
 
         <div className="mt-7 py-4 bg-blue-300 mx-0 
           md:mx-2 md:px-4 md:rounded-3xl h-full">
