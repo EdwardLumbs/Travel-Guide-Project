@@ -9,14 +9,23 @@ const router = express.Router();
 
 router.post('/createTrip', verifyToken, async(req, res, next) => {
     const { title, destination, note, user_id } = req.body
-    console.log(title)
-    console.log(destination)
-    console.log(note)
 
     try {
         await pool.query("INSERT INTO trips (title, user_id, destination, note) VALUES ($1, $2, $3, $4)",
         [title, user_id, destination, note])
-        res.status(201).json("Trip Posted Successfully");
+
+        const result = await pool.query(
+            "SELECT * FROM trips WHERE title = $1 AND user_id = $2 AND destination = $3 AND note = $4",
+            [title, user_id, destination, note]
+        );
+
+        if (result.rows.length === 0) {
+            return next(errorHandler(408, 'Something went wrong'));
+        }
+
+        const trip = result.rows[0]
+
+        res.status(201).json(trip);
 
     } catch (error) {
         next(error);

@@ -3,6 +3,7 @@ import SearchFilterResults from './SearchFilterResults';
 import useGetContinent from '../hooks/useGetContinent';
 import useGetCountry from '../hooks/useGetCountry';
 import { MdOutlineClose } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 export default function TripModal({ isOpen, onClose, currentDestination, user_id }) {
     if (!isOpen) return null;
@@ -25,7 +26,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
     })
     const { country } = useGetCountry('all')
     const { continentData } = useGetContinent('all')
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (Array.isArray(continentData) && Array.isArray(country)) {
@@ -157,6 +158,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
             }
             setLoading(false)
             onClose()
+            navigate(`/profile/user-trips/${data.id}`)
         } catch (error) {
             setError(error.message)
             setTimeout(() => {
