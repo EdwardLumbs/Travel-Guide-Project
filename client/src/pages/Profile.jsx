@@ -27,7 +27,7 @@ export default function Profile() {
 
   return (
     <div className='h-screen flex flex-col items-center pt-11 gap-8'>
-      <div className='bg-slate-50 h-80 w-full min-w-min max-w-7xl px-10 rounded-xl flex flex-col items-center justify-center'>
+      <div className='bg-slate-50 h-80 min-w-min rounded-xl flex flex-col items-center justify-center'>
         {/* profile details */}
         {/* change max width? */}
         {/* insert profile picture with props */}
@@ -95,8 +95,25 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      {/* ADD TABS TO ACCESS OUTLETS */}
-      <Outlet/>
+
+      <div className="flex gap-4">
+        <Link to={''}>
+              Summary
+        </Link>
+        <Link to={'edit'}>
+              Edit Profile
+        </Link>
+        <Link to={'user-blogs'}>
+              Blogs
+        </Link>
+        <Link to={'user-trips'}>
+              Trips
+        </Link>
+      </div>      
+      <div className='container mt-7 py-7 bg-orange-300 mx-0 
+        md:mx-2 md:px-4 md:rounded-3xl w-full flex'>
+        <Outlet/>
+      </div>
     </div>
   )
 }

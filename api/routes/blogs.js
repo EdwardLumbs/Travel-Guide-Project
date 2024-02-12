@@ -87,6 +87,23 @@ router.get('/getBlogs', async (req, res, next) => {
     }
 });
 
+router.get('/getUserBlogs/:userId', async (req, res, next) => {
+    const { userId } = req.params
+    try {
+        const data = await pool.query("SELECT * FROM blogs WHERE user_id = $1",
+        [userId])
+
+        console.log(data.rows)
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'No posted blogs'));
+        }
+
+        res.status(200).json(data.rows);
+
+    } catch (error) {
+        next(error);
+    }
+})
 
 router.get('/getBlog/:blogId', async (req, res, next) => {
     const { blogId } = req.params

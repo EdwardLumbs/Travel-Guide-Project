@@ -38,6 +38,11 @@ SELECT *
 FROM blogs
 WHERE id = id
 
+-- get user Blog
+SELECT *
+FROM blogs
+WHERE user_id = userid
+
 -- get Searched Blogs
 SELECT *
 FROM blogs

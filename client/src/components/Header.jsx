@@ -49,7 +49,7 @@ export default function Header() {
                     </Link>
 
                     <ul 
-                        className='hidden text-white font-bold
+                        className='hidden text-slate-600 font-bold
                         lg:flex lg:visible px-2 py-3 rounded-md flex-row gap-4'
                     >
                         <li 
