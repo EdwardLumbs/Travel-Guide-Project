@@ -37,16 +37,13 @@ export default function SearchFilter({
         const sortFromUrl = urlParams.get('sort');
         const pageFromUrl = urlParams.get('page');
         const continentFromUrl = urlParams.get('continent');
-        
-        // if (!searchTermFromUrl && !typeFromUrl && !sortFromUrl && destination) {
-        //     navigate(`/destinations?type=country&sort=ASC&page=1`)
-        // } 
 
         const filterQuery = urlParams.toString();
-        console.log(filterQuery)
+        console.log(searchTermFromUrl)
         if (searchTermFromUrl) {
             setSearchTerm(searchTermFromUrl || '');
         } 
+        console.log(searchTerm)
         
         if (typeFromUrl || sortFromUrl || pageFromUrl || continentFromUrl) {
             if (destination) {
@@ -69,8 +66,9 @@ export default function SearchFilter({
                 setPages(null)
 
                 try {
-                    const res = await fetch(`/api/destination/searchDestination/${searchTerm}`);
+                    const res = await fetch(`/api/destination/searchDestination/${searchTermFromUrl}`);
                     const searchedDestination = await res.json();
+                    console.log(res)
                     
                     if (searchedDestination.success === false) {
                         setLoading(false);
@@ -86,6 +84,7 @@ export default function SearchFilter({
                     setLoading(false);
                 }
         } 
+
         const fetchFilteredLocations = async (filterQuery) => {
                 setLoading(true);
                 if (typeFromUrl === 'country' && continentFromUrl) {
