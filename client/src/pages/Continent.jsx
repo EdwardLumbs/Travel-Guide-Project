@@ -20,32 +20,32 @@ export default function Continent() {
   const {continentCountries, continentCountriesLoading, continentCountriesError} = useGetContinentCountries(continent);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  console.log(blogs)
+  console.log(continentData)
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setBlogLoading(true)
-        const res = await fetch(`/api/blogs/getBlogs?limit=4&tag1=${continentData.continent_name}`)
-        const data = await res.json()
-        console.log(data)
-        if (data.success === false) {
-          setBlogError(data.message)
-          setBlogLoading(false)
-          return
-        }
-        setBlogs(data)
-        setBlogError(null)
+  const fetchBlogs = async () => {
+    try {
+      setBlogLoading(true)
+      const res = await fetch(`/api/blogs/getBlogs?limit=4&tag1=${continentData.continent_name}`)
+      const data = await res.json()
+      console.log(data)
+      if (data.success === false) {
+        setBlogError(data.message)
         setBlogLoading(false)
-      } catch (error) {
-        console.log(error.message)
-        setBlogError(error.message)
-        setBlogLoading(false)
+        return
       }
+      setBlogs(data)
+      setBlogError(null)
+      setBlogLoading(false)
+    } catch (error) {
+      console.log(error.message)
+      setBlogError(error.message)
+      setBlogLoading(false)
     }
-
+  }
+  
+  useEffect(() => {
     fetchBlogs()
-  }, [continentData.continent_name])
+  }, [continentData.continent, blogError])
 
   const openModal = () => {
     setModalOpen(true);
@@ -54,6 +54,20 @@ export default function Continent() {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const handleDelete = async (blogId) => {
+    console.log(blogId)
+    try {
+        const res = await fetch(`/api/blogs/deleteBlog/${blogId}`, {
+          method: 'DELETE'
+        })
+        const data = await res.json()// show a prompt that shows the message of res
+        console.log(data)
+        fetchBlogs()
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -145,7 +159,10 @@ export default function Continent() {
             { blogs.length > 0 && blogs.map((blog) => (
               <Link to={`/blogs/${blog.id}`}>
                 <div className="">
-                  <BlogCards blog={blog}/>
+                  <BlogCards 
+                    blog={blog}
+                    handleDelete={handleDelete}
+                  />
                 </div>
               </Link>
             ))}

@@ -69,30 +69,30 @@ export default function Country() {
     getIataCodes();
   }, [])
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setBlogLoading(true)
-        const res = await fetch(`/api/blogs/getBlogs?limit=4&tag1=${country.continent_name}&tag2=${country.country}`)
-        const data = await res.json()
-        console.log(data)
-        if (data.success === false) {
-          setBlogError(data.message)
-          setBlogLoading(false)
-          return
-        }
-        setBlogs(data)
-        setBlogError(null)
+  const fetchBlogs = async () => {
+    try {
+      setBlogLoading(true)
+      const res = await fetch(`/api/blogs/getBlogs?limit=4&tag1=${country.continent_name}&tag2=${country.country}`)
+      const data = await res.json()
+      console.log(data)
+      if (data.success === false) {
+        setBlogError(data.message)
         setBlogLoading(false)
-      } catch (error) {
-        console.log(error.message)
-        setBlogError(error.message)
-        setBlogLoading(false)
+        return
       }
+      setBlogs(data)
+      setBlogError(null)
+      setBlogLoading(false)
+    } catch (error) {
+      console.log(error.message)
+      setBlogError(error.message)
+      setBlogLoading(false)
     }
+  }
 
+  useEffect(() => {
     fetchBlogs()
-  }, [country.continent_name, country.country])
+  }, [country.continent_name, country.country, blogError])
 
   const handleInputChange = (e) => {
     const text = e.target.value.toLowerCase();
@@ -252,6 +252,20 @@ export default function Country() {
     setInputValue({})
     setFlight('')
     navigate(`${location.pathname}`)
+  }
+
+  const handleDelete = async (blogId) => {
+    console.log(blogId)
+    try {
+        const res = await fetch(`/api/blogs/deleteBlog/${blogId}`, {
+          method: 'DELETE'
+        })
+        const data = await res.json()// show a prompt that shows the message of res
+        console.log(data)
+        fetchBlogs()
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   return (
@@ -470,7 +484,10 @@ export default function Country() {
             { blogs.length > 0 && blogs.map((blog) => (
               <Link to={`/blogs/${blog.id}`}>
                 <div className="">
-                  <BlogCards blog={blog}/>
+                  <BlogCards 
+                    blog={blog}
+                    handleDelete={handleDelete}
+                  />
                 </div>
               </Link>
             ))}

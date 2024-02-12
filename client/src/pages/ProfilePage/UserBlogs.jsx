@@ -10,30 +10,45 @@ export default function UserBlogs() {
   const [blogs, setBlogs] = useState([])
   console.log(currentUser.id)
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setLoading(true)
-        const res = await fetch(`/api/blogs/getUserBlogs/${currentUser.id}`)
-        const data = await res.json()
-        console.log(data)
-        
-        if (data.success === false) {
-          setError(data.message)
-          setLoading(false)
-          return
-        }
-        setBlogs(data)
-        setError(null)
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true)
+      const res = await fetch(`/api/blogs/getUserBlogs/${currentUser.id}`)
+      const data = await res.json()
+      console.log(data)
+      
+      if (data.success === false) {
+        setError(data.message)
         setLoading(false)
-      } catch (error) {
-        console.log(error.message)
-        setError(error.message)
-        setLoading(false)
+        return
       }
+      setBlogs(data)
+      setError(null)
+      setLoading(false)
+    } catch (error) {
+      console.log(error.message)
+      setError(error.message)
+      setLoading(false)
     }
-    fetchBlogs()
-  }, [])
+  }
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const handleDelete = async (blogId) => {
+    console.log(blogId)
+    try {
+        const res = await fetch(`/api/blogs/deleteBlog/${blogId}`, {
+          method: 'DELETE'
+        })
+        const data = await res.json()// show a prompt that shows the message of res
+        console.log(data)
+        fetchBlogs()
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
   return (
     <div className="px-4 w-full">
@@ -61,11 +76,14 @@ export default function UserBlogs() {
             >
                 Post a blog
             </Link>
-            <div className='flex gap-4'>
+            <div className='flex flex-wrap gap-4'>
               {blogs.length > 0 && blogs.map((blog) => (
                 <Link to={`/blogs/${blog.id}`}>
                   <div className="">
-                    <BlogCards blog={blog}/>
+                    <BlogCards 
+                      blog={blog}
+                      handleDelete={handleDelete}
+                    />
                   </div>
                 </Link>
               ))}

@@ -24,6 +24,28 @@ export default function Blogs() {
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
 
+  const getBlogs = async () => {
+    const urlParams = new URLSearchParams(location.search);
+    try {
+      setLoading(true);
+      urlParams.set('page', selectedOption.page);
+      const searchQuery = urlParams.toString();
+      const res  = await fetch(`/api/blogs/getBlogs?${searchQuery}`);
+      const blogs = await res.json();
+      if (blogs.success === false) {
+        setLoading(false);
+        setError(blogs.message);
+      } else {
+        setLoading(false);
+        setBlogs(blogs.blogs);
+        setPages(blogs.totalItems / pageSize);
+      }
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const pageFromUrl = urlParams.get('page');
@@ -34,27 +56,6 @@ export default function Blogs() {
       });
     };
 
-    const getBlogs = async () => {
-      try {
-        setLoading(true);
-        urlParams.set('page', selectedOption.page);
-        const searchQuery = urlParams.toString();
-        const res  = await fetch(`/api/blogs/getBlogs?${searchQuery}`);
-        const blogs = await res.json();
-        if (blogs.success === false) {
-          setLoading(false);
-          setError(blogs.message);
-        } else {
-          setLoading(false);
-          setBlogs(blogs.blogs);
-          setPages(blogs.totalItems / pageSize);
-        }
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    }
-    
     if (queryParams.size <= 1) {
       getBlogs();
     } 
@@ -71,6 +72,19 @@ export default function Blogs() {
     navigate(`/blogs?${searchQuery}`);
   }
 
+  const handleDelete = async (blogId) => {
+    console.log(blogId)
+    try {
+        const res = await fetch(`/api/blogs/deleteBlog/${blogId}`, {
+          method: 'DELETE'
+        })
+        const data = await res.json()// show a prompt that shows the message of res
+        console.log(data)
+        getBlogs()
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -119,7 +133,10 @@ export default function Blogs() {
                     key={index}
                     to={`/blogs/${blog.id}`}
                   >
-                    <BlogCards blog={blog}/>
+                    <BlogCards 
+                      blog={blog}
+                      handleDelete={handleDelete}
+                    />
                   </Link>
                 ))}
               </div>

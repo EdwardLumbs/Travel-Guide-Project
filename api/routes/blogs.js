@@ -31,9 +31,24 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
     }
 })
 
+router.delete('/deleteBlog/:blogId', verifyToken, async (req, res, next) => {
+    const { blogId } = req.params
+    console.log(blogId)
+    try {
+        await pool.query(`DELETE FROM blogs
+        WHERE id = $1`,
+        [blogId])
+
+        res.status(200).json('Successfully deleted');
+
+    } catch (error) {
+        next(error);
+    }
+})
+
+// make it get the most recent
 router.get('/getBlogs', async (req, res, next) => {
     let { page, limit, tag1, tag2 } = req.query;
-    console.log(req.query);
 
     page = parseInt(page) || 1;
     const pageSize = 8;
@@ -47,6 +62,7 @@ router.get('/getBlogs', async (req, res, next) => {
             data = await pool.query(`SELECT *
                 FROM blogs
                 WHERE $1 ILIKE ANY(place_tag)
+                ORDER BY created_at DESC
                 LIMIT ${limit}`, 
             [tag1]);
         } else if (tag1 && tag2) {
@@ -54,6 +70,7 @@ router.get('/getBlogs', async (req, res, next) => {
                 FROM blogs
                 WHERE $1 ILIKE ANY(place_tag)
                 AND $2 ILIKE ANY(place_tag)
+                ORDER BY created_at DESC
                 LIMIT 4;`, 
             [tag1, tag2]);
         } else {
@@ -62,6 +79,7 @@ router.get('/getBlogs', async (req, res, next) => {
 
             data = await pool.query(
                 `SELECT * FROM blogs
+                ORDER BY created_at DESC
                 LIMIT $1
                 OFFSET $2`,
                 [pageSize, offset]
@@ -93,7 +111,6 @@ router.get('/getUserBlogs/:userId', async (req, res, next) => {
         const data = await pool.query("SELECT * FROM blogs WHERE user_id = $1",
         [userId])
 
-        console.log(data.rows)
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'No posted blogs'));
         }

@@ -14,6 +14,7 @@ VALUES (user_id, title, place_tag, photo, content)
 
 -- get blogs
 SELECT *
+ORDER BY created_at DESC
 FROM blogs
 LIMIT pageSize
 OFFSET offset
@@ -31,7 +32,19 @@ SELECT *
 FROM blogs
 WHERE tag1 ILIKE ANY(place_tag)
   AND tag2 ILIKE ANY(place_tag)
+ORDER BY created_at DESC
 LIMIT 4;
+
+-- get blogs with 1 tag
+SELECT *
+FROM blogs
+WHERE tag1 ILIKE ANY(place_tag)
+ORDER BY created_at DESC
+LIMIT 4;
+
+-- delete blog
+DELETE FROM blogs
+WHERE condition
 
 -- get Blog
 SELECT *
