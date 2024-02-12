@@ -9,6 +9,7 @@ export default function BlogPage() {
   const [error, setError] = useState(null);
   const [blog, setBlog] = useState({});
   const [user, setUser] = useState([]);
+  console.log(blog.place_tag)
 
   useEffect(() => {
     const getBlog = async () => {
@@ -66,24 +67,39 @@ export default function BlogPage() {
         <div className="">
           <ImageHero image={blog.photo} />
           <div className="mt-4 container mx-auto px-4">
+
               <p className="text-6xl font-semibold">
                 {blog.title} 
               </p>
-              <div className="flex mt-6 items-center gap-2 pb-6 border-b">
-                <img 
-                  className='h-9 w-9 object-cover rounded-full mr-2'
-                  src={user.photo} 
-                  alt="Cover Image" 
-                />
-                <div className='font-semibold'>
-                  <p>
-                    Author: {user.username}
+
+              <div className="flex flex-col mt-6 justify-center gap-2 pb-6 border-b">
+                <div className='flex gap-2 items-center'>
+                  <img 
+                    className='h-9 w-9 object-cover rounded-full mr-2'
+                    src={user.photo} 
+                    alt="Cover Image" 
+                  />
+                  <div className='font-semibold'>
+                    <p>
+                      Author: {user.username}
+                    </p>
+                    <p>
+                      Created at: {blog.created_at} 
+                    </p>
+                  </div>
+                </div>
+                <div className='flex gap-2'>
+                  <p className='font-semibold'>
+                    Tag(s):
                   </p>
-                  <p>
-                    Created at: {blog.created_at} 
-                  </p>
+                  {blog.place_tag && blog.place_tag.map((tag) =>   
+                    <p>
+                      {tag}
+                    </p>
+                  )}
                 </div>
               </div>
+
               <div
                 className="text-justify text-lg mt-6"
                 dangerouslySetInnerHTML={{__html:blog.content}}
