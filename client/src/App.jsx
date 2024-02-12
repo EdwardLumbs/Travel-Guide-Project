@@ -45,7 +45,7 @@ function App() {
           <Route path='about' element={<About/>} />
           <Route element={<PrivateRoute/>}>
             <Route path='blogs/create' element={<CreateBlogPost/>} />
-            <Route path='profile/trips/:id' element={<Trip/>}/>
+            <Route path='profile/user-trips/:tripId' element={<Trip/>}/>
             <Route path='profile' element={<Profile/>}>
               <Route index element={<ProfileSummary/>} />
               <Route path='user-trips' element={<UserTrips/>} />

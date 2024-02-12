@@ -56,11 +56,13 @@ router.get('/getUserTrips/:userId', verifyToken, async (req, res, next) => {
     }
 })
 
-router.get('/getTrip/:TripId', verifyToken, async (req, res, next) => {
-    const { TripId } = req.params
+router.get('/getTrip/:tripId', verifyToken, async (req, res, next) => {
+    const { tripId } = req.params
+    console.log(tripId)
     try {
-        const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
-        [TripId])
+        const data = await pool.query(`SELECT * FROM trips
+        WHERE id = $1`,
+        [tripId])
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Trip not found'));

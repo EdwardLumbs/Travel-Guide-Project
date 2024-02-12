@@ -31,7 +31,6 @@ export default function BlogPage() {
         console.log(error.message)
       }
     }
-    
     getBlog()
   }, [blogId])
 

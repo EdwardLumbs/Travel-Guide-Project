@@ -44,7 +44,7 @@ export default function UserTrips() {
 
   useEffect(() => {
     getTrips()
-  }, [])
+  }, [isModalOpen])
 
   const handleDelete = async (tripId) => {
     console.log(tripId)
