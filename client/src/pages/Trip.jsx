@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import Hero from '../components/heroComponent/Hero';
 
 export default function Trip() {
@@ -7,6 +7,8 @@ export default function Trip() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [trip, setTrip] = useState({});
+  const location = useLocation();
+  console.log(location.state)
 
   useEffect(() => {
     const getTrip = async () => {
@@ -47,6 +49,13 @@ export default function Trip() {
       <div className="">
         <div className="">
           <Hero image={"/photos/trip.jpg"} />
+          {location.state && 
+          <Link
+            to={`${location.state}`}
+            relative="path"
+            className="hover-underline"
+            >&larr; <span>Back to Last Page</span></Link>
+          }
           <div className="mt-4 container mx-auto px-4">
 
             <p className="text-6xl font-semibold">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import TripModal from '../../components/TripModal';
 import TripCard from '../../components/cards/TripCard'
 import { useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ export default function UserTrips() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [trips, setTrips] = useState([])
+  const location = useLocation();
+  console.log(location)
 
   console.log(currentUser)
   const openModal = () => {
@@ -95,7 +97,10 @@ export default function UserTrips() {
             </button>
             <div className='flex flex-wrap gap-4'>
               {trips.length > 0 && trips.map((trip) => (
-                <Link to={`${trip.id}`}>
+                <Link 
+                  to={`${trip.id}`}
+                  state={`${location.pathname}`}  
+                >
                   <div className="">
                     <TripCard 
                       trip={trip}
