@@ -259,7 +259,7 @@ export default function Explore() {
                   <p className='font-semibold mb-6'>
                     {`Showing Results for ${inputText.category} in ${inputText.place}`}
                   </p>
-                    <div className='flex flex-wrap gap-4'>
+                    <div className='flex w-full flex-wrap gap-4'>
                       {attractions.map((attraction, index) => (                   
                           <Link 
                             key={index} 

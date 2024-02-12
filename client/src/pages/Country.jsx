@@ -6,12 +6,12 @@ import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
 import News from "../components/News";
 import TripModal from "../components/TripModal";
-import ImageHero from '../components/heroComponent/ImageHero'
+import ImageHero from '../components/heroComponent/ImageHero';
+import BlogCards from "../components/cards/BlogCards";
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
   const buttonRef = useRef(null);
-  const params = useParams();
 
   const { countryName, continent } = useParams();
   const { currentUser } = useSelector((state) => state.user);
@@ -30,6 +30,9 @@ export default function Country() {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [currentUserIata, setCurrentUserIata] = useState(null)
   const [isModalOpen, setModalOpen] = useState(false);
+  const [blogLoading, setBlogLoading] = useState(false)
+  const [blogError, setBlogError] = useState(null)
+  const [blogs, setBlogs] = useState([])
 
   const openModal = () => {
     setModalOpen(true);
@@ -65,6 +68,31 @@ export default function Country() {
     }
     getIataCodes();
   }, [])
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setBlogLoading(true)
+        const res = await fetch(`/api/blogs/getBlogs?limit=4&tag1=${country.continent_name}&tag2=${country.country}`)
+        const data = await res.json()
+        console.log(data)
+        if (data.success === false) {
+          setBlogError(data.message)
+          setBlogLoading(false)
+          return
+        }
+        setBlogs(data)
+        setBlogError(null)
+        setBlogLoading(false)
+      } catch (error) {
+        console.log(error.message)
+        setBlogError(error.message)
+        setBlogLoading(false)
+      }
+    }
+
+    fetchBlogs()
+  }, [country.continent_name, country.country])
 
   const handleInputChange = (e) => {
     const text = e.target.value.toLowerCase();
@@ -428,7 +456,33 @@ export default function Country() {
         </div>
 
         <div className="py-7 gap-4 mx-auto px-4">
-          Must Read blogs. Add related blogs here
+          <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
+            {
+              blogError ?
+                <p className="text-3xl">
+                  {blogError}
+                </p> 
+              : blogLoading ? 
+                <p className="text-3xl">
+                  Loading...
+                </p> 
+              : 
+                blogs.map((blog) => (
+                  <Link to={`/blogs/${blog.id}`}>
+                    <div className="">
+                      <BlogCards blog={blog}/>
+                    </div>
+                  </Link>
+                ))  
+            }
+            { blogs.length >= 4 &&
+            <Link
+              className="hover:cursor-pointer hover:underline"
+              to={`/blogs?type=${country.country}&page=1`}
+            >See More
+            </Link>
+            }
+          </div>
         </div>
 
         <div className="mt-7 py-4 bg-blue-300 mx-0 
