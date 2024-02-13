@@ -99,41 +99,41 @@ export default function Destinations() {
         </div>
         }
 
-{pages && (
-  <div className='flex justify-center my-4'>
-    {selectedOption.page > 1 && (
-      <button
-        onClick={() => handlePageChange(selectedOption.page - 1)}
-        className='px-4 py-2 mr-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
-      >
-        Previous Page
-      </button>
-    )}
-
-    <div className="flex items-center">
-      {Array.from({ length: Math.ceil(pages) }, (_, index) => (
-        <button
-          key={index}
-          onClick={() => handlePageChange(index + 1)}
-          className={`px-4 py-2 mx-1 text-white bg-blue-500 border border-blue-500 hover:text-blue-500 hover:bg-white duration-200 rounded-xl ${
-            selectedOption.page === index + 1 ? 'font-semibold' : ''
-          }`}
-        >
-          {index + 1}
-        </button>
-      ))}
-    </div>
-
-    {selectedOption.page < Math.ceil(pages) && (
-      <button
-        onClick={() => handlePageChange(selectedOption.page + 1)}
-        className='px-4 py-2 ml-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
-      >
-        Next Page
-      </button>
-    )}
-  </div>
-)}
+        {pages && (
+          <div className='flex justify-center my-4'>
+            {selectedOption.page > 1 && (
+              <button
+                onClick={() => handlePageChange(selectedOption.page - 1)}
+                className='px-4 py-2 mr-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
+              >
+                Previous Page
+              </button>
+            )}
+        
+            <div className="flex items-center">
+              {Array.from({ length: Math.ceil(pages) }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`px-4 py-2 mx-1 text-white bg-blue-500 border border-blue-500 hover:text-blue-500 hover:bg-white duration-200 rounded-xl ${
+                    selectedOption.page === index + 1 ? 'font-semibold' : ''
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+                
+            {selectedOption.page < Math.ceil(pages) && (
+              <button
+                onClick={() => handlePageChange(selectedOption.page + 1)}
+                className='px-4 py-2 ml-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
+              >
+                Next Page
+              </button>
+            )}
+          </div>
+        )}
         
       </div>
     </div>

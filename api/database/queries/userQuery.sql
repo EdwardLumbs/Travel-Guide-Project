@@ -30,3 +30,11 @@ DELETE FROM users WHERE id = req.params.id
 SELECT username, photo
 FROM users
 WHERE id = id
+
+-- get user blog count
+SELECT COUNT(*) FROM blogs
+WHERE user_id = id
+
+-- get user trip count
+SELECT COUNT(*) FROM trips
+WHERE user_id = id

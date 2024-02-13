@@ -51,7 +51,7 @@ export default function UserBlogs() {
   }
 
   return (
-    <div className="px-4 w-full">
+    <div className="p-7 w-full">
         {
           error ?
             <div>

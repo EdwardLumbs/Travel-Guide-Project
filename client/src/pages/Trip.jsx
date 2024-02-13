@@ -49,24 +49,23 @@ export default function Trip() {
       <div className="">
         <div className="">
           <Hero image={"/photos/trip.jpg"} />
-          {location.state && 
-          <Link
-            to={`${location.state}`}
-            relative="path"
-            className="hover-underline"
-            >&larr; <span>Back to Last Page</span></Link>
-          }
           <div className="mt-4 container mx-auto px-4">
-
-            <p className="text-6xl font-semibold">
+            {location.state && 
+            <Link
+              to={`${location.state}`}
+              relative="path"
+              className="hover-underline"
+              >&larr; <span>Back to Last Page</span></Link>
+            }
+            <p className="text-6xl font-bold">
               {trip.title} 
             </p>
 
-            <p className="text-6xl font-semibold">
+            <p className="mt-4 text-3xl font-semibold">
               {trip.destination} 
             </p>
 
-            <p className="text-6xl font-semibold">
+            <p className="mt-4 text-justify">
               {trip.note} 
             </p>
 

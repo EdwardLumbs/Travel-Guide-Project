@@ -105,15 +105,28 @@ export default function EditProfile() {
   return (
     // change accent colors to color schema
     // change fonts and style
-    <div className='bg-blue-50 w-full min-w-min max-w-7xl py-10 px-10 rounded-xl flex flex-col'>
-      <h1 className='mb-5 text-3xl'>Edit Profile</h1>
+    <div className='w-full min-w-min max-w-7xl p-7 rounded-xl flex flex-col'>
+      <h1 className='text-3xl font-semibold'>
+        Edit Profile
+      </h1>
       <form 
         onSubmit={handleSubmit}
-        className='flex gap-4 min-w-min max-w-7xl'
+        className='min-w-min max-w-7xl mt-4'
       >
-        {/* left */}
-        <div className='flex flex-col gap-4 flex-1 w-[400px]'>
-          <label for="from">from</label>
+        <div className='flex-1 flex gap-2 flex-col items-center justify-center'>
+          <img 
+            className='rounded-full h-40 w-40 object-cover'
+            src={formData.photo || currentUser.photo}
+            alt="Profile Picture" 
+          />
+          <UploadPicture
+            setCoverPhoto={null}
+            formData = {formData}
+            setFormData={setFormData}
+          />
+        </div>
+
+        <div className='flex flex-col gap-4 flex-1 w-full mt-4'>
           <input 
             className='border border-black px-3 py-2 rounded-lg'
             type="text" 
@@ -163,45 +176,36 @@ export default function EditProfile() {
           }
         </div>
 
-        {/* right */}
-        <div className='flex-1 flex gap-2 flex-col items-center justify-center'>
-          <img 
-            className='rounded-full h-40 w-40 object-cover'
-            src={formData.photo || currentUser.photo}
-            alt="Profile Picture" 
-          />
-          <UploadPicture
-            setCoverPhoto={null}
-            formData = {formData}
-            setFormData={setFormData}
-          />
-
-          <div className='flex gap-2 mt-4'>
+        <div className='flex flex-col gap-2 mt-4'>
+          <button 
+            disabled={disabled}
+            className='w-full disabled:opacity-80 hover:cursor-pointer hover:text-blue-600 
+              hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full 
+              bg-blue-600 text-white'
+          >
+            Save Changes
+          </button>
+          <Link 
+            to='/profile'
+            className='hover:cursor-pointer hover:text-red-600 hover:bg-white 
+                duration-100 font-semibold border-black py-1 px-2 rounded-full bg-red-600 
+              text-white text-center'
+          >
             <button 
-              disabled={disabled}
-              className='disabled:opacity-80 border hover:cursor-pointer hover:text-blue-600 hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full bg-blue-600 text-white'
-            >
-              Save Changes
-            </button>
-
-            <Link to='/profile'>
-              <button 
-                type="button"
-                className='border hover:cursor-pointer hover:text-red-600 hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full bg-red-600 text-white'
-              >
-                Cancel
-              </button>
-            </Link>
-            
-            <button 
-              onClick={handleUserDelete}
               type="button"
-              className='border hover:cursor-pointer hover:text-gray-600 hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full bg-gray-600 text-white'
             >
-              Delete account
+              Cancel
             </button>
-          </div>
-
+          </Link>
+          
+          <button 
+            onClick={handleUserDelete}
+            type="button"
+            className='hover:cursor-pointer hover:text-gray-600 hover:bg-white duration-100 
+              font-semibold border-black py-1 px-2 rounded-full bg-gray-600 text-white w-full'
+          >
+            Delete account
+          </button>
         </div>
       </form>
     </div>

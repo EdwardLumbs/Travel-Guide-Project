@@ -74,4 +74,40 @@ router.get('/getUser/:id', async (req, res, next) => {
     } 
 })
 
+router.get('/getBlogCount/:id', async (req, res, next) => {
+    const { id } = req.params
+    console.log(id)
+    try {
+        const data = await pool.query(`SELECT COUNT(*) FROM blogs
+        WHERE user_id = $1`, [id])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Blogs not found'));
+        }
+
+        res.status(200).json(data.rows[0].count);
+
+    } catch (error) {
+        next(error);
+    } 
+})
+
+router.get('/getTripCount/:id', async (req, res, next) => {
+    const { id } = req.params
+    console.log(id)
+    try {
+        const data = await pool.query(`SELECT COUNT(*) FROM trips
+        WHERE user_id = $1`, [id])
+
+        if (data.rows.length === 0) {
+            return next(errorHandler(404, 'Trips not found'));
+        }
+
+        res.status(200).json(data.rows[0].count);
+
+    } catch (error) {
+        next(error);
+    } 
+})
+
 export default router;
