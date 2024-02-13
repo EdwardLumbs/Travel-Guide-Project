@@ -21,6 +21,7 @@ import Trip from './pages/Trip'
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
 import PublicRoute from './components/PublicRoute'
+import Footer from './components/Footer'
 
 import LocalHostClear from './utils/LocalHostClear'
 
@@ -55,6 +56,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <Footer/>
     </BrowserRouter>
 
   )
