@@ -75,6 +75,10 @@ export default function CreateBlogPost() {
     setContent(value);
   }
 
+  const handleDiscard = () => {
+    navigate('/blogs')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -151,6 +155,7 @@ export default function CreateBlogPost() {
               <button 
                 type='button'
                 disabled={loading}
+                onClick={handleDiscard}
                 className='disabled:bg-slate-500 disabled:text-slate-400 disabled:border-slate-500
                   border px-6 py-2 rounded-full 
                 border-red-800 bg-red-800 text-white font-semibold hover:bg-white duration-300 hover:text-red-800'
