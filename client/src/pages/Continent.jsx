@@ -203,8 +203,8 @@ export default function Continent() {
 
           
         {/* News */}
-        <div className="bg-green-100 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
-          <div className="mt-4 container gap-4 mx-auto px-4">
+        <div className="bg-green-100 mx-0 lg:mx-2 py-7 lg:px-4 lg:rounded-3xl">
+          <div className="container gap-4 mx-auto px-4">
             <h1 className="text-4xl font-bold">
               News
             </h1>

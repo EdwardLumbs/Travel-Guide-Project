@@ -518,9 +518,9 @@ export default function Country() {
             
           
 
-        <div className="mt-7 py-4 bg-blue-300 mx-0 
+        <div className="mt-7 py-7 bg-blue-300 mx-0 
           md:mx-2 md:px-4 md:rounded-3xl h-full">
-          <div className="mt-4 container px-4 mx-auto flex flex-col gap-4">
+          <div className="container px-4 mx-auto flex flex-col gap-4">
             <p className="text-3xl font-bold">
                 {`Check out the Latest News from ${country.country}`} 
             </p>
