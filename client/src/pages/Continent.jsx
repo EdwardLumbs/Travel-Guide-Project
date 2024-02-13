@@ -83,7 +83,7 @@ export default function Continent() {
       <div className="">
         <div className="">
           <ImageHero image={continentData.continent_photo} />
-          <div className="mt-4 container flex flex-col mx-auto px-4 h-[300px]">
+          <div className="mt-4 font-bold container flex flex-col mx-auto px-4 h-[300px]">
               <p className="text-6xl">
                 {continentData.continent_name} 
               </p>
@@ -114,15 +114,26 @@ export default function Continent() {
           </div>
         </div>
 
+        {/* Countries */}
         <div className="bg-blue-100 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
+          <div className="container gap-4 mx-auto px-4">
+            <h1 className="text-4xl font-bold">
+              Countries
+            </h1>
+            <p className="mt-4">
+              {`Dive into the rich mosaic of ${continentData.continent_name}'s countries! Explore diverse 
+              cultures, landscapes, and histories as we guide you through this 
+              captivating continent's unique destinations.`}
+            </p>
+          </div>
           <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             {
               continentCountriesError ?
-                <p className="text-3xl">
+                <p className="mx-auto px-4 text-3xl">
                   {continentCountriesError}
                 </p> 
               : continentCountriesLoading ? 
-                <p className="text-3xl">
+                <p className="mx-auto px-4 text-3xl">
                   Loading...
                 </p> : 
                 
@@ -144,17 +155,30 @@ export default function Continent() {
           </div>
         </div>
         
+        {/* Blogs */}
         {
           blogError ?
-            <p className="text-3xl">
+            <p className="mx-auto px-4 text-3xl">
               {blogError}
             </p> 
           : blogLoading ? 
-            <p className="text-3xl">
+            <p className="mx-auto px-4 text-3xl">
               Loading...
             </p> 
           : 
           <div className="container py-7 mx-auto px-4">
+            <div className="mt-4 container gap-4 mx-auto">
+              <h1 className="text-4xl font-bold">
+                Blogs
+              </h1>
+              <p className="mt-4">
+                {`Discover ${continentData.continent_name} through the eyes of fellow travelers! 
+                Dive into our blog section filled with captivating stories, 
+                adventures, and insights, offering a glimpse into the rich 
+                tapestry of experiences waiting to be explored across this 
+                remarkable continent.`}
+              </p>
+            </div>
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             { blogs.length > 0 && blogs.map((blog) => (
               <Link to={`/blogs/${blog.id}`}>
@@ -178,8 +202,19 @@ export default function Continent() {
         }
 
           
-
+        {/* News */}
         <div className="bg-green-100 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
+          <div className="mt-4 container gap-4 mx-auto px-4">
+            <h1 className="text-4xl font-bold">
+              News
+            </h1>
+            <p className="mt-4">
+              {`Stay in the know with ${continentData.continent_name}'s tourism news! 
+              From travel tips to exciting attractions, our news section keeps you updated 
+              on all things tourism-related. Explore the latest updates shaping 
+              your next adventure in ${continentData.continent_name}.`}
+            </p>
+          </div>
           <div className="mt-4 container px-4 mx-auto">
             <News place={continentData.continent_name}/>
           </div>

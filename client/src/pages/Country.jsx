@@ -270,10 +270,12 @@ export default function Country() {
 
   return (
     <>
-    { countryError ? <p className="text-3xl">
+    { countryError ? 
+    <p className="mx-auto container px-4 text-3xl">
       {countryError}
     </p>
-    : loading ? <p className="text-3xl">
+    : loading ? 
+    <p className="mx-auto container px-4 text-3xl">
       Loading...
     </p> :
       <div className="">
@@ -317,12 +319,12 @@ export default function Country() {
               {/* left */}
               <div className="w-full md:w-2/3 md:border-r md:border-violet-500 h-full flex items-center">
                 { flightLoading ? 
-                  <div className="text-2xl font-semibold">
+                  <div className="mx-auto px-4 text-2xl font-semibold">
                     Finding the cheapest flights for you....
                   </div> :
                 flightError ?
                 <div className="flex flex-col gap-4">
-                  <div className="text-3xl font-bold text-red-900">
+                  <div className="mx-auto px-4 text-3xl font-bold text-red-900">
                     {flightError}
                   </div>
                   <button
@@ -418,13 +420,13 @@ export default function Country() {
               {/* right */}
               <div className="md:flex hidden w-1/3 ml-5 h-full items-center">
                 { flightLoading ? 
-                    <div>
+                    <div className="container mx-auto px-4 ">
                       Loading....
                       {/* loading animation */}
                     </div> 
                   :
                   flightError ?
-                  <div>
+                  <div className="container mx-auto px-4 ">
                     Error
                     {/* error animation */}
                   </div>
@@ -471,15 +473,27 @@ export default function Country() {
 
         {
           blogError ?
-            <p className="text-3xl">
+            <p className="mt-4 container mx-auto px-4 text-3xl">
               {blogError}
             </p> 
           : blogLoading ? 
-            <p className="text-3xl">
+            <p className="mt-4 container mx-auto px-4 text-3xl">
               Loading...
             </p> 
           : 
           <div className="py-7 gap-4 mx-auto px-4">
+            <div className="mt-4 container gap-4 mx-auto">
+              <h1 className="text-4xl font-bold">
+                Blogs
+              </h1>
+              <p className="mt-4">
+                {`Dive into the heart of ${country.country}  with our captivating 
+                blogs! Join fellow adventurers as they uncover hidden gems, 
+                share insider tips, and recount their unforgettable experiences 
+                across this diverse landscape. Let their stories spark your 
+                imagination and inspire your next incredible journey.`}
+              </p>
+            </div>
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             { blogs.length > 0 && blogs.map((blog) => (
               <Link to={`/blogs/${blog.id}`}>
@@ -513,7 +527,7 @@ export default function Country() {
             <p className="text-justify">
               {`Stay updated with the latest news from ${country.country}! Explore breaking headlines, 
               trending stories, and insightful articles covering diverse topics. Dive into 
-              the heartbeat of [Country] with our curated news section.`}
+              the heartbeat of ${country.country} with our curated news section.`}
             </p>
             <News place={country.country}/>
           </div>
