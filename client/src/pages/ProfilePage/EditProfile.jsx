@@ -9,9 +9,10 @@ import {
   deleteUserFailure, 
   deleteUserSuccess, 
   deleteUserStart } from '../../redux/slices/userSlice.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css'
 import UploadPicture from '../../components/UploadPicture.jsx';
+import DeleteModal from '../../components/DeleteModal.jsx';
 
 export default function EditProfile() {
   const {currentUser, error} = useSelector((state) => state.user);
@@ -22,7 +23,17 @@ export default function EditProfile() {
   const [disabled, setDisabled] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false)
 
-  console.log(formData)
+  const [openedDeleteModalId, setOpenedDeleteModalId] = useState(null);
+
+  const navigate = useNavigate()
+
+  const openDeleteModal = (currentUserId) => {
+    setOpenedDeleteModalId(currentUserId);
+  };  
+
+  const closeDeleteModal = () => {
+    setOpenedDeleteModalId(null);
+  };
 
   useEffect(() => {
     if (formData.newPassword != formData.confirmNewPassword){
@@ -100,6 +111,7 @@ export default function EditProfile() {
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
+    navigate('/login')
   }
 
   return (
@@ -197,9 +209,16 @@ export default function EditProfile() {
               Cancel
             </button>
           </Link>
+
+          <DeleteModal  
+            blogId={currentUser.id}
+            isOpen={openedDeleteModalId === currentUser.id}
+            onClose={closeDeleteModal}
+            handleDelete={handleUserDelete}
+          />
           
           <button 
-            onClick={handleUserDelete}
+            onClick={() => openDeleteModal(currentUser.id)}
             type="button"
             className='hover:cursor-pointer hover:text-gray-600 hover:bg-white duration-100 
               font-semibold border-black py-1 px-2 rounded-full bg-gray-600 text-white w-full'

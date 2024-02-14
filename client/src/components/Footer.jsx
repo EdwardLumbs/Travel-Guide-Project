@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer class="bg-gray-800 py-4 mt-8">
+    <footer class="bg-gray-800 py-7 mt-8">
         <div className='text-white mx-auto flex container px-4'>
             <div className='min-w-max'> 
                 <Link to='/'>
@@ -86,7 +86,7 @@ export default function Footer() {
                 </div>
             </div>
         </div>
-        <div class="mt-8 border-t-2 border-gray-600 pt-4 container mx-auto text-center text-white">
+        <div class="mt-8 border-t-2 border-gray-600 pt-7 container mx-auto text-center text-white">
             <p class="text-sm">&copy; 2024 Edward'sTravelGuide. All rights reserved.</p>
         </div>
     </footer>

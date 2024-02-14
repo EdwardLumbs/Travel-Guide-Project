@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
+import DeleteModal from "../DeleteModal";
 
-export default function BlogCards({blog, handleDelete}) {
+export default function BlogCards({blog, openDeleteModal}) {
     const [user, setUser] = useState([])
     const {currentUser} = useSelector((state) => state.user);
-    console.log(blog)
+    console.log(blog.id)
 
     useEffect(() => {
         const getUser = async () => {
@@ -36,16 +37,15 @@ export default function BlogCards({blog, handleDelete}) {
                         alt="User Image" 
                     />
                     <p className="text-sm font-semibold">
-                        {/* add author photo */}
                         By: {user.username}
                     </p>
-                    {currentUser.id === blog.user_id &&
+                    {(currentUser && blog && currentUser.id === blog.user_id) &&
                         <MdDelete 
                             className="ml-auto h-6 w-6 text-red-900 duration-75 hover:text-red-600" 
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                handleDelete(blog.id)
+                                openDeleteModal();
                             }}
                         />
                     }

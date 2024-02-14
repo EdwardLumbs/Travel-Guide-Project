@@ -5,6 +5,7 @@ import BlogCards from '../components/cards/BlogCards';
 import SearchFilter from '../components/SearchFilter';
 import Hero from '../components/heroComponent/Hero';
 import { FaPlus } from "react-icons/fa";
+import DeleteModal from '../components/DeleteModal';
 
 export default function Blogs() {
   const {currentUser} = useSelector((state) => state.user);
@@ -12,6 +13,9 @@ export default function Blogs() {
   const [error, setError] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [pages, setPages] = useState();
+
+  const [openedDeleteModalId, setOpenedDeleteModalId] = useState(null);
+
   const [selectedOption, setSelectedOption] = useState({
     type: '',
     sort: '',
@@ -22,6 +26,14 @@ export default function Blogs() {
 
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
+
+  const openDeleteModal = (blogId) => {
+    setOpenedDeleteModalId(blogId);
+  };  
+
+  const closeDeleteModal = () => {
+    setOpenedDeleteModalId(null);
+  };
 
   const getBlogs = async () => {
     const urlParams = new URLSearchParams(location.search);
@@ -128,15 +140,23 @@ export default function Blogs() {
             <div className='flex w-full'>
               <div className='flex gap-4 flex-wrap'>
                 {blogs.length > 0 && blogs.map((blog, index) => (
-                  <Link
-                    key={index}
-                    to={`/blogs/${blog.id}`}
-                  >
-                    <BlogCards 
-                      blog={blog}
+                  <>
+                    <Link
+                      key={index}
+                      to={`/blogs/${blog.id}`}
+                    >
+                      <BlogCards 
+                        blog={blog}
+                        openDeleteModal={() => openDeleteModal(blog.id)}
+                      />
+                    </Link>
+                    <DeleteModal  
+                      blogId={blog.id}
+                      isOpen={openedDeleteModalId === blog.id}
+                      onClose={closeDeleteModal}
                       handleDelete={handleDelete}
                     />
-                  </Link>
+                  </>
                 ))}
               </div>
             </div>

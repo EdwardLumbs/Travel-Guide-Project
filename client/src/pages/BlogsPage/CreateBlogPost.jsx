@@ -132,9 +132,9 @@ export default function CreateBlogPost() {
           onSubmit={handleSubmit}
           className='lg:flex lg:gap-4'
         >
-          <div className='hidden lg:flex h-96 w-96 flex-col items-center justify-items-start'>
+          <div className='hidden lg:flex max-h-max w-96 flex-col items-center justify-items-start'>
             <img 
-              className='h-96 w-96 object-cover'
+              className='h-64 object-cover'
               src={coverPhoto || defaultImage}
               alt="Cover Picture" 
             />

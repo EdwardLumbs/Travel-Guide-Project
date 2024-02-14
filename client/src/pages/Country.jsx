@@ -6,6 +6,7 @@ import SearchFilterResults from "../components/SearchFilterResults";
 import Attractions from "../components/Attractions";
 import News from "../components/News";
 import TripModal from "../components/TripModal";
+import DeleteModal from "../components/DeleteModal";
 import ImageHero from '../components/heroComponent/ImageHero';
 import BlogCards from "../components/cards/BlogCards";
 
@@ -31,7 +32,9 @@ export default function Country() {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [currentUserIata, setCurrentUserIata] = useState(null)
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const [openedDeleteModalId, setOpenedDeleteModalId] = useState(null);
+
   const [blogLoading, setBlogLoading] = useState(false)
   const [blogError, setBlogError] = useState(null)
   const [blogs, setBlogs] = useState([])
@@ -40,16 +43,16 @@ export default function Country() {
     setModalOpen(true);
   };
 
-  const openDeleteModal = () => {
-    setDeleteModalOpen(true);
-  };
-
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  const openDeleteModal = (blogId) => {
+    setOpenedDeleteModalId(blogId);
+  };  
+
   const closeDeleteModal = () => {
-    setDeleteModalOpen(false);
+    setOpenedDeleteModalId(null);
   };
 
   const currentDate = new Date();
@@ -511,14 +514,23 @@ export default function Country() {
             : 
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             { blogs.length > 0 && blogs.map((blog) => (
-              <Link to={`/blogs/${blog.id}`}>
-                <div className="">
-                  <BlogCards 
-                    blog={blog}
-                    handleDelete={handleDelete}
-                  />
-                </div>
-              </Link>
+              <>
+                {console.log(blog)}
+                <Link to={`/blogs/${blog.id}`}>
+                  <div className="">
+                    <BlogCards 
+                      blog={blog}
+                      openDeleteModal={() => openDeleteModal(blog.id)}
+                    />
+                  </div>
+                </Link>
+                <DeleteModal  
+                  blogId={blog.id}
+                  isOpen={openedDeleteModalId === blog.id}
+                  onClose={closeDeleteModal}
+                  handleDelete={handleDelete}
+                />
+              </>
             ))}
             { blogs.length >= 4 &&
               <Link

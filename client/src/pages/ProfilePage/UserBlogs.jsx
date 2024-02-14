@@ -2,13 +2,23 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BlogCards from '../../components/cards/BlogCards';
+import DeleteModal from '../../components/DeleteModal';
 
 export default function UserBlogs() {
   const {currentUser} = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [blogs, setBlogs] = useState([])
-  console.log(currentUser.id)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+
+  const [openedDeleteModalId, setOpenedDeleteModalId] = useState(null);
+
+  const openDeleteModal = (blogId) => {
+    setOpenedDeleteModalId(blogId);
+  };  
+
+  const closeDeleteModal = () => {
+    setOpenedDeleteModalId(null);
+  };
 
   const fetchBlogs = async () => {
     try {
@@ -78,14 +88,22 @@ export default function UserBlogs() {
             </Link>
             <div className='flex flex-wrap gap-4'>
               {blogs.length > 0 && blogs.map((blog) => (
-                <Link to={`/blogs/${blog.id}`}>
-                  <div className="">
-                    <BlogCards 
-                      blog={blog}
-                      handleDelete={handleDelete}
-                    />
-                  </div>
-                </Link>
+                <>
+                  <Link to={`/blogs/${blog.id}`}>
+                    <div className="">
+                      <BlogCards 
+                        blog={blog}
+                        openDeleteModal={() => openDeleteModal(blog.id)}
+                      />
+                    </div>
+                  </Link>
+                  <DeleteModal  
+                    blogId={blog.id}
+                    isOpen={openedDeleteModalId === blog.id}
+                    onClose={closeDeleteModal}
+                    handleDelete={handleDelete}
+                  />
+                </>
               ))}
             </div>
           </div>

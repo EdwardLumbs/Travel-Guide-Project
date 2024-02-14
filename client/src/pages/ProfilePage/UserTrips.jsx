@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import TripModal from '../../components/TripModal';
 import TripCard from '../../components/cards/TripCard'
 import { useSelector } from 'react-redux';
+import DeleteModal from '../../components/DeleteModal';
 
 export default function UserTrips() {
   const {currentUser} = useSelector((state) => state.user);
@@ -11,9 +12,16 @@ export default function UserTrips() {
   const [error, setError] = useState(null)
   const [trips, setTrips] = useState([])
   const location = useLocation();
-  console.log(location)
+  const [openedDeleteModalId, setOpenedDeleteModalId] = useState(null);
 
-  console.log(currentUser)
+  const openDeleteModal = (blogId) => {
+    setOpenedDeleteModalId(blogId);
+  };  
+
+  const closeDeleteModal = () => {
+    setOpenedDeleteModalId(null);
+  };
+
   const openModal = () => {
     setModalOpen(true);
   };
@@ -97,17 +105,25 @@ export default function UserTrips() {
             </button>
             <div className='flex flex-wrap gap-4'>
               {trips.length > 0 && trips.map((trip) => (
-                <Link 
-                  to={`${trip.id}`}
-                  state={`${location.pathname}`}  
-                >
-                  <div className="">
-                    <TripCard 
-                      trip={trip}
-                      handleDelete={handleDelete}
-                    />
-                  </div>
-                </Link>
+                <>
+                  <Link 
+                    to={`${trip.id}`}
+                    state={`${location.pathname}`}  
+                  >
+                    <div className="">
+                      <TripCard 
+                        trip={trip}
+                        openDeleteModal={() => openDeleteModal(trip.id)}
+                      />
+                    </div>
+                  </Link>
+                  <DeleteModal  
+                    blogId={trip.id}
+                    isOpen={openedDeleteModalId === trip.id}
+                    onClose={closeDeleteModal}
+                    handleDelete={handleDelete}
+                  />
+                </>
               ))}
             </div>
           </div>
