@@ -283,8 +283,11 @@ export default function Flights() {
   return (
     // change accent colors
     <div>
-      <Hero image={"photos/airplane.jpg"}/>
-      <div className="container absolute top-[570px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+      <Hero 
+        image={"photos/airplane.jpg"}
+        content={'Finding the cheapest flights have never been easier'}
+      />
+      <div className="h-[650px] lg:h-[350px]">
         {location.state && 
         <Link
           to={`${search}`}
@@ -292,10 +295,10 @@ export default function Flights() {
           className="hover-underline"
           >&larr; <span>Back to Last Page</span></Link>
         }
-
         <form 
           onSubmit={handleSubmit}
-          className='bg-white shadow-lg rounded-xl flex flex-col justify-center items-center p-7 relative gap-4 mb-8'
+          className='bg-white shadow-lg rounded-xl flex flex-col justify-center items-center p-7 relative gap-4
+          container left-1/2 -translate-x-1/2 -translate-y-1/4 lg:-translate-y-1/2'
         >
           <div className='flex flex-col lg:flex-row gap-4 w-full justify-center flex-grow'>
             <div className='relative flex-grow'>
@@ -489,8 +492,7 @@ export default function Flights() {
           </div>
         </form>
         
-
-        <div className='flex'>
+        <div className='flex container mx-auto px-4 mt-7 -translate-y-1/2'>
           <div>
             {loading ? 
             <p>
