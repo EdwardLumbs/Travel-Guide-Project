@@ -105,6 +105,8 @@ router.get('/getBlogs', async (req, res, next) => {
                 OFFSET $2`,
                 [pageSize, offset]
             );
+            
+            blogs = data.rows;
 
             if (blogs.length === 0) {
                 return next(errorHandler(404, 'Blogs not found'));
