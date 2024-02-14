@@ -57,6 +57,8 @@ router.get('/getBlogs', async (req, res, next) => {
 
     try {
         let data;
+        let data1;
+        let data2;
         let blogs;
 
         if (tag1 && !tag2) {
@@ -66,8 +68,9 @@ router.get('/getBlogs', async (req, res, next) => {
                 ORDER BY created_at DESC
                 LIMIT ${limit}`, 
                 [tag1]);
+            blogs = data.rows;
         } else if (tag1 && tag2) {
-            data = await pool.query(`SELECT *
+            data1 = await pool.query(`SELECT *
                 FROM blogs
                 WHERE $1 ILIKE ANY(place_tag)
                 AND $2 ILIKE ANY(place_tag)
@@ -75,15 +78,21 @@ router.get('/getBlogs', async (req, res, next) => {
                 LIMIT 4;`, 
                 [tag1, tag2]);
 
-
-            if (data.rows.length === 0) {
-                data = await pool.query(`SELECT *
+            data2 = await pool.query(`SELECT *
                 FROM blogs
                 WHERE $1 ILIKE ANY(place_tag)
                 ORDER BY created_at DESC
                 LIMIT ${limit}`, 
                 [tag2]);
-            }
+            
+            blogs = [...data1.rows, ...data2.rows]
+            const compareObjects = (obj1, obj2) => {
+              return obj1.id === obj2.id; 
+            };
+              
+            blogs = blogs.filter((item, index, self) => 
+              index === self.findIndex((t) => compareObjects(t, item))
+            );
 
         } else {
             const countData = await pool.query('SELECT COUNT(*) FROM blogs');
@@ -97,7 +106,6 @@ router.get('/getBlogs', async (req, res, next) => {
                 [pageSize, offset]
             );
 
-            blogs = data.rows;
             if (blogs.length === 0) {
                 return next(errorHandler(404, 'Blogs not found'));
             }
@@ -105,7 +113,6 @@ router.get('/getBlogs', async (req, res, next) => {
             return res.status(200).json({ blogs, totalItems });
         }
 
-        blogs = data.rows;
         if (blogs.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
         }

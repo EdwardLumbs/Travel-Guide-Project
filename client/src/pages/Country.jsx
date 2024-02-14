@@ -31,6 +31,7 @@ export default function Country() {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [currentUserIata, setCurrentUserIata] = useState(null)
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [blogLoading, setBlogLoading] = useState(false)
   const [blogError, setBlogError] = useState(null)
   const [blogs, setBlogs] = useState([])
@@ -39,8 +40,16 @@ export default function Country() {
     setModalOpen(true);
   };
 
+  const openDeleteModal = () => {
+    setDeleteModalOpen(true);
+  };
+
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
   };
 
   const currentDate = new Date();
@@ -192,7 +201,6 @@ export default function Country() {
       console.log(error);
     }
   }
-
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -478,15 +486,6 @@ export default function Country() {
         </div>
 
         {
-          blogError ?
-            <p className="mt-4 container mx-auto px-4 text-3xl">
-              {blogError}
-            </p> 
-          : blogLoading ? 
-            <p className="mt-4 container mx-auto px-4 text-3xl">
-              Loading...
-            </p> 
-          : 
           <div className="py-7 gap-4 mx-auto px-4">
             <div className="mt-4 container gap-4 mx-auto">
               <h1 className="text-4xl font-bold">
@@ -500,6 +499,16 @@ export default function Country() {
                 imagination and inspire your next incredible journey.`}
               </p>
             </div>
+            {
+              blogError ?
+              <p className="mt-4 container mx-auto px-4 text-3xl">
+                {blogError}
+              </p> 
+            : blogLoading ? 
+              <p className="mt-4 container mx-auto px-4 text-3xl">
+                Loading...
+              </p> 
+            : 
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             { blogs.length > 0 && blogs.map((blog) => (
               <Link to={`/blogs/${blog.id}`}>
@@ -519,6 +528,7 @@ export default function Country() {
               </Link>
             }
             </div>
+            }
           </div>
         }
             
