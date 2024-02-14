@@ -24,8 +24,8 @@ export default function Footer() {
                     </div>
                 </Link>
             </div>
-            <div className='w-full ml-32'>
-                <div className='flex justify-between'>
+            <div className='w-full ml-8 lg:ml-32'>
+                <div className='flex flex-col lg:flex-row gap-6 justify-between'>
                     <div className='flex flex-col'>
                         <h1 className='text-lg font-semibold'>
                             Site Map

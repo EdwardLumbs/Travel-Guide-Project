@@ -180,7 +180,10 @@ export default function Explore() {
 
   return (
     <div>
-      <Hero image={"photos/explore.jpg"}/>
+      <Hero 
+        image={"photos/explore.jpg"}
+        content={'Navigate through numerous attractions using our Explore Page'}
+      />
       <div className='mt-5 container flex flex-col mx-auto px-4'>
         <form 
           onSubmit={handleSubmit}

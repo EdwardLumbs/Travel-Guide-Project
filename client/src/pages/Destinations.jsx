@@ -62,7 +62,10 @@ export default function Destinations() {
 
   return (
     <div className=''>
-      <Hero image={"photos/destination.jpg"}/>
+      <Hero 
+        image={"photos/destination.jpg"}
+        content={'Find your next Destination'}
+      />
       <div className='mt-5 container flex flex-col items-center mx-auto px-4'>
         <div className='w-full'>
           <SearchFilter 

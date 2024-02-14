@@ -99,7 +99,10 @@ export default function Blogs() {
 
   return (
     <div>
-      <Hero image={"photos/blogs.jpg"}/>
+      <Hero 
+        image={"photos/blogs.jpg"}
+        content={'Explore traveler insights on our Blog Page'}
+      />
       <div className='mt-5 container flex flex-col items-center mx-auto px-4'>
 
         <div className='w-full'>
