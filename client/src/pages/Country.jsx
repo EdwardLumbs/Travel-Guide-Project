@@ -16,6 +16,7 @@ export default function Country() {
   const { countryName, continent } = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const { country, loading, countryError } = useGetCountry(countryName);
+  const [error, setError] = useState(null)
   const [flight, setFlight] = useState();
   const [flightLoading, setFlightLoading] = useState(false);
   const [flightError, setFlightError] = useState(null);
@@ -210,7 +211,7 @@ export default function Country() {
 
     // add error 404 page
     if (country && country.continent_name && continent && country.continent_name.toLowerCase() !== continent.toLowerCase()) {
-      console.log('error 404')
+      setError('Continent Error')
     }
 
   }, [country, location.search]);
@@ -270,7 +271,12 @@ export default function Country() {
 
   return (
     <>
-    { countryError ? 
+    { error ? 
+    <p className="mx-auto container px-4 text-3xl">
+      {error}
+    </p>
+    :
+    countryError ? 
     <p className="mx-auto container px-4 text-3xl">
       {countryError}
     </p>

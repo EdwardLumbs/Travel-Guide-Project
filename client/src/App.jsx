@@ -17,6 +17,7 @@ import CreateBlogPost from './pages//BlogsPage/CreateBlogPost'
 import BlogPage from './pages/BlogsPage/BlogPage'
 import UserTrips from './pages/ProfilePage/UserTrips'
 import Trip from './pages/Trip'
+import NotFoundPage from './pages/404Page'
 
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
@@ -54,6 +55,7 @@ function App() {
               <Route path='edit' element={<EditProfile/>} />
             </Route>
           </Route>
+          <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>
       <Footer/>
