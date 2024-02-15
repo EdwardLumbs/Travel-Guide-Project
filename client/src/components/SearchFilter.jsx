@@ -263,7 +263,7 @@ export default function SearchFilter({
                 className='border hover:border-slate-600 duration-200  rounded-full p-2 pl-10 w-full lg:w-96 box-border'
                 type="text" 
                 id='searchTerm'
-                placeholder='Search for a destination'
+                placeholder={blog ? `Title` : `Search for a destination`}
                 value={searchTerm}
                 onChange={handleSearchChange}
                 required
@@ -283,7 +283,7 @@ export default function SearchFilter({
           <div className='lg:flex lg:gap-6'>
             <div>
               <label className={`${blog ? 'mb-2' : ''} flex items-center`}>
-                Filter by type of Place
+                {blog ? `Filter by tag` : `Filter by type of Place`}
               </label>
               <select 
                 value={selectedOption.type}

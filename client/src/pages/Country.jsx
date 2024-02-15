@@ -298,7 +298,7 @@ export default function Country() {
       <div className="">
         <div className="">
           <ImageHero image={country.photo} />
-          <div className="mt-4 container flex mx-auto px-4 h-[300px]">
+          <div className="mt-4 container flex mx-auto px-4">
             <div>
               <p className="text-6xl font-bold">
                 {country.country}
@@ -324,14 +324,15 @@ export default function Country() {
                   />
                 </>
               }
+              
             </div>
           </div>
         </div>
 
               {/* flight div */}
-        <div className="bg-violet-300 py-7 mx-0 md:mx-2 
+        <div className="mt-20 bg-violet-100 py-7 mx-0 md:mx-2 
           md:px-4 md:rounded-3xl h-[220px] lg:h-[200px] flex items-center">
-          <div className="container flex mx-auto px-4 h-full">
+          <div className="container flex flex-col mx-auto px-4 h-full">
             <div className="flex w-full justify-between h-full">
               {/* left */}
               <div className="w-full md:w-2/3 md:border-r md:border-violet-500 h-full flex items-center">
@@ -390,7 +391,7 @@ export default function Country() {
                 :
                 <div className="flex flex-col gap-4 mr-2 lg:mr-0">
                   <p className="text-3xl font-bold">
-                    {`Check out the cheapest flights for ${country.country}`}
+                    {`Check out the cheapest flights to ${country.country}`}
                   </p>
                   <form 
                     onSubmit={handleSubmit}
@@ -472,27 +473,12 @@ export default function Country() {
           </div>
         </div>
 
-                {/* attractions div */}
-        <div className="mt-7 py-7 bg-orange-300 mx-0 
-          md:mx-2 md:px-4 md:rounded-3xl h-full flex items-center">
-            {/* h-[300px] lg:h-[200px] */}
-          <div className="container flex mx-auto px-4">
-            <Attractions 
-              capital={country.capital} 
-              countryName={country.country} 
-              continent={country.continent_name}
-              countryPage={true}
-              tripData={null}
-              setTripData={null}
-            />
-          </div>
-        </div>
-
+                {/* blogs */}
         {
-          <div className="py-7 gap-4 mx-auto px-4">
-            <div className="mt-4 container gap-4 mx-auto">
+          <div className="container my-20 py-7 gap-4 mx-auto px-4">
+            <div className="container gap-4 mx-auto">
               <h1 className="text-4xl font-bold">
-                Blogs
+                Blogspot: Where Stories Unfold
               </h1>
               <p className="mt-4">
                 {`Dive into the heart of ${country.country}  with our captivating 
@@ -501,6 +487,14 @@ export default function Country() {
                 across this diverse landscape. Let their stories spark your 
                 imagination and inspire your next incredible journey.`}
               </p>
+              <Link
+                className="hover:cursor-pointer max-w-max flex gap-2 items-center 
+                text-white bg-blue-500 py-2 px-3 rounded-lg hover:bg-white 
+                duration-300 hover:text-blue-800 mt-2"
+                to={'/blogs'}
+              >
+                Check all blogs
+              </Link>
             </div>
             {
               blogError ?
@@ -512,7 +506,7 @@ export default function Country() {
                 Loading...
               </p> 
             : 
-            <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
+            <div className="mt-4 container gap-4 flex flex-wrap mx-auto">
             { blogs.length > 0 && blogs.map((blog) => (
               <>
                 {console.log(blog)}
@@ -532,7 +526,7 @@ export default function Country() {
                 />
               </>
             ))}
-            { blogs.length >= 4 &&
+            { blogs.length >= 5 &&
               <Link
                 className="hover:cursor-pointer hover:underline"
                 to={`/blogs?type=${country.country}&page=1`}
@@ -543,10 +537,24 @@ export default function Country() {
             }
           </div>
         }
-            
-          
 
-        <div className="mt-7 py-7 bg-blue-300 mx-0 
+            {/* attractions div */}
+        <div className="my-20 py-7 bg-orange-100 mx-0 
+          md:mx-2 md:px-4 md:rounded-3xl h-full flex items-center">
+            {/* h-[300px] lg:h-[200px] */}
+          <div className="container flex mx-auto px-4">
+            <Attractions 
+              capital={country.capital} 
+              countryName={country.country} 
+              continent={country.continent_name}
+              countryPage={true}
+              tripData={null}
+              setTripData={null}
+            />
+          </div>
+        </div>
+
+        <div className="my-20 py-7 bg-blue-100 mx-0 
           md:mx-2 md:px-4 md:rounded-3xl h-full">
           <div className="container px-4 mx-auto flex flex-col gap-4">
             <p className="text-3xl font-bold">

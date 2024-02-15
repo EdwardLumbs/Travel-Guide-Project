@@ -222,14 +222,14 @@ export default function Explore() {
             </div>
 
             <div className='relative flex flex-col gap-2'>
-              <label>Search for places</label>
+              <label>Choose a category</label>
               <input
                 className='border hover:border-slate-600 duration-200 rounded-full p-2 w-full lg:w-96 box-border'
                 type="text"
                 id='category'
                 required
                 autoComplete='off'
-                placeholder='Type a place'
+                placeholder='Type a category'
                 onChange={handleChange}
                 value={inputText.category}
                 onKeyDown={(e) => {
@@ -259,7 +259,7 @@ export default function Explore() {
           </button>
         </form>
         <div className=''>
-          {attractions && 
+          {attractions.length > 0 ? 
             <div>
               {loading ? 
               <p>
@@ -289,6 +289,71 @@ export default function Explore() {
                     </div>
                 </div>
               }
+            </div>
+          :
+            <div className='w-full bg-orange-100 p-4 rounded-xl'>
+              <h1 className='text-3xl font-extrabold'>              
+                Don't know where to go? Don't worry, we got you!
+              </h1>
+              <p>
+                Our explore page helps you find attractions that interest you.
+              </p>
+
+              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
+                <div className='flex gap-4 w-2/3 items-center'>
+                  <p className='text-6xl font-bold bg-orange-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                    1 
+                  </p>
+                  <p className='text-lg'>
+                    Input the place you want to go to (e.g Berlin, Paris). The more specific the better.
+                  </p>
+                </div>
+                <div className='w-1/3 flex justify-center'>
+                  <img 
+                    className='h-[80px]'
+                    src="vectors/location-pin.svg" 
+                    alt="pin" 
+                  />
+                </div>
+              </div>
+                
+              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
+                <div className='w-1/3 flex justify-center'>
+                  <img 
+                    className='h-[95px] object-cover'
+                    src="vectors/category.svg" 
+                    alt="category" 
+                  />
+                </div>
+                <div className='flex gap-4 w-2/3 items-center'>
+                  <p className='text-lg'>
+                    Choose the category that interests you (e.g Sports, Restaurants). Choose one from the dropdown suggestions
+                  </p>
+                  <p className='text-6xl font-bold bg-orange-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                    2 
+                  </p>
+                </div>
+              </div>
+                
+              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
+                <div className='flex gap-4 w-2/3 items-center'>
+                  <p className='text-6xl font-bold bg-orange-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                    3
+                  </p>
+                  <p className='text-lg'>
+                    Wait for the results. Happy exploring!
+                  </p>
+                </div>
+                <div className='w-1/3 flex justify-center'>
+                  <img 
+                    className='h-[80px]'
+                    src="vectors/sunglasses.svg" 
+                    alt="glasses" 
+                  />
+                </div>
+              </div>
+                
+              
             </div>
           }
         </div>

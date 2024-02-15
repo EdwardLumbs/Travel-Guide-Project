@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/getNews/:place', async (req, res, next) => {
     const apiKey = process.env.NEWS_API_KEY
     const keyword = `${req.params.place} tourism`
-    const url = `https://newsapi.org/v2/everything?q=${keyword}&pageSize=4`
+    const url = `https://newsapi.org/v2/everything?q=${keyword}&pageSize=5`
  
     try {
         const data = await fetch(url, {

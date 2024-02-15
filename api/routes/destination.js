@@ -176,7 +176,7 @@ router.get('/getContinentCountry', async (req, res, next) => {
         JOIN continents 
         ON continent_id = continents.id
         WHERE continent_name ILIKE $1
-        LIMIT 4`
+        LIMIT 5`
     }
 
     try {

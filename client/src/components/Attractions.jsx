@@ -156,12 +156,11 @@ export default function Attractions({capital, countryName, continent}) {
 
   return (
     <div className=''>
-        <p className='text-3xl font-bold mb-4'>Look for the best attractions</p>
+        <p className='text-3xl font-bold mb-4'>Find great attractions</p>
         <div className='flex flex-col relative'>
             <p className='mb-4 text-justify'>
                 Discover local gems effortlessly! Explore nearby attractions with our 
-                intuitive search feature. Simply enter what place you want to go to, and 
-                we'll unveil the hidden treasures waiting to be explored. Start your adventure now!
+                intuitive search feature. Start your adventure now!
             </p>
             <form 
                 className='flex flex-col lg:flex-row relative'

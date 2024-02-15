@@ -75,7 +75,7 @@ router.get('/getBlogs', async (req, res, next) => {
                 WHERE $1 ILIKE ANY(place_tag)
                 AND $2 ILIKE ANY(place_tag)
                 ORDER BY created_at DESC
-                LIMIT 4;`, 
+                LIMIT 5;`, 
                 [tag1, tag2]);
 
             data2 = await pool.query(`SELECT *

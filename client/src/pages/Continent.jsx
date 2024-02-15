@@ -8,6 +8,9 @@ import TripModal from "../components/TripModal";
 import { useSelector } from 'react-redux';
 import ImageHero from "../components/heroComponent/ImageHero";
 import BlogCards from "../components/cards/BlogCards";
+import { MdFlight } from "react-icons/md";
+import { MdExplore } from "react-icons/md";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Continent() {
   const { currentUser } = useSelector((state) => state.user);
@@ -83,7 +86,7 @@ export default function Continent() {
       <div className="">
         <div className="">
           <ImageHero image={continentData.continent_photo} />
-          <div className="mt-4 font-bold container flex flex-col mx-auto px-4 h-[300px]">
+          <div className="mt-4 font-bold container flex flex-col mx-auto px-4">
               <p className="text-6xl">
                 {continentData.continent_name} 
               </p>
@@ -110,15 +113,37 @@ export default function Continent() {
                   
                 </>
               }
-
+              <div className="flex justify-end items-center mt-7 gap-7">
+                <Link to={`/explore`}>
+                  <div className="bg-yellow-100 w-56 h-auauto rounded-lg p-4 flex flex-col gap-7">
+                    <h1 className="text-2xl">
+                      Find the best things to do
+                    </h1>
+                    <div className="text-6xl justify-end flex">
+                      <MdExplore />
+                    </div>
+                  </div>
+                </Link>
+                <Link to={`/flights`}>
+                  <div className="bg-red-100 w-56 h-auto rounded-lg p-4 flex flex-col gap-7">
+                    <h1 className="text-2xl">
+                      Search for cheap flights
+                    </h1>
+                    <div className="text-6xl justify-end flex">
+                      <MdFlight />
+                    </div>
+                  </div>
+                </Link>
+              </div>
+          
           </div>
         </div>
 
         {/* Countries */}
-        <div className="bg-blue-100 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
+        <div className="bg-blue-100 mt-6 mb-20 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
           <div className="container gap-4 mx-auto px-4">
             <h1 className="text-4xl font-bold">
-              Countries
+              {`Explore ${continentData.continent_name}`}
             </h1>
             <p className="mt-4">
               {`Dive into the rich mosaic of ${continentData.continent_name}'s countries! Explore diverse 
@@ -126,7 +151,7 @@ export default function Continent() {
               captivating continent's unique destinations.`}
             </p>
           </div>
-          <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
+          <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 pb-6">
             {
               continentCountriesError ?
                 <p className="mx-auto px-4 text-3xl">
@@ -136,40 +161,67 @@ export default function Continent() {
                 <p className="mx-auto px-4 text-3xl">
                   Loading...
                 </p> : 
-                
-                continentCountries.map((country) => (
-                  <Link to={`${country.country}`}>
-                    <div className="">
-                      <DestinationCard key={country.id} destination={country}/>
+
+
+              continentCountries.length > 0 &&
+              <div className='flex gap-5 flex-col w-full'>
+                <div className='bg-white shadow-md hover:shadow-lg
+                    transition-shadow overflow-hidden rounded-lg'
+                >
+                    <Link 
+                        to={continentCountries[0].country}
+                    >
+                        <img 
+                          className='w-full h-96 object-cover hover:scale-105 transition-scale duration-300'
+                          src={continentCountries[0].photo || continentCountries[0].continent_photo} 
+                          alt="Cover Image" 
+                        />
+                        <p className='text-lg px-4 pt-2 font-semibold'>
+                          {continentCountries[0].continent_name}
+                        </p>
+                        <p className={`${continentCountries[0].country ? 'pb-2' : 'py-2'} md:text-3xl text-2xl font-bold px-4`}>
+                          {continentCountries[0].country || continentCountries[0].continent_name}
+                        </p>
+                    </Link>
+                </div>
+                <div className='flex md:flex-row flex-col flex-wrap gap-4'>
+                  {continentCountries.slice(1).map((country) => (
+                    <Link to={`${country.country}`}>
+                      <div className="">
+                        <DestinationCard key={country.id} destination={country}/>
+                      </div>
+                    </Link>
+                  ))}
+                  { continentCountries.length >= 5 &&
+                  <Link
+                    className="hover:cursor-pointer"
+                    to={`/destinations?type=country&sort=ASC&page=1&continent=${continentData.continent_name}`}
+                  >
+                    <div 
+                      className="max-w-max flex gap-2 items-center text-white bg-blue-500 py-2 px-3 rounded-lg
+                              hover:bg-white duration-300 hover:text-blue-800"
+                    >
+                      <p className="font-bold text-lg">
+                        See more
+                      </p>
+                      <div>
+                        <FaArrowRight />
+                      </div>
                     </div>
                   </Link>
-                ))  
-            }
-            { continentCountries.length >= 4 &&
-            <Link
-              className="hover:cursor-pointer hover:underline"
-              to={`/destinations?type=country&sort=ASC&page=1&continent=${continentData.continent_name}`}
-            >See More
-            </Link>
+                }
+                </div>
+              </div>
             }
           </div>
         </div>
         
         {/* Blogs */}
         {
-          blogError ?
-            <p className="mx-auto px-4 text-3xl">
-              {blogError}
-            </p> 
-          : blogLoading ? 
-            <p className="mx-auto px-4 text-3xl">
-              Loading...
-            </p> 
-          : 
-          <div className="container py-7 mx-auto px-4">
-            <div className="mt-4 container gap-4 mx-auto">
+          <div className="py-7 my-20">
+            <div className="container gap-4 mx-auto px-4">
               <h1 className="text-4xl font-bold">
-                Blogs
+                Blogspot: Where Stories Unfold
               </h1>
               <p className="mt-4">
                 {`Discover ${continentData.continent_name} through the eyes of fellow travelers! 
@@ -178,7 +230,25 @@ export default function Continent() {
                 tapestry of experiences waiting to be explored across this 
                 remarkable continent.`}
               </p>
+              <Link
+                className="hover:cursor-pointer max-w-max flex gap-2 items-center 
+                text-white bg-blue-500 py-2 px-3 rounded-lg hover:bg-white 
+                duration-300 hover:text-blue-800 mt-2"
+                to={'/blogs'}
+              >
+                Check all blogs
+              </Link>
             </div>
+            {
+            blogError ?
+              <p className="mx-auto text-center mt-4 px-4 text-3xl">
+                {blogError}
+              </p> 
+            : blogLoading ? 
+              <p className="mx-auto px-4 text-3xl">
+                Loading...
+              </p> 
+            : 
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             { blogs.length > 0 && blogs.map((blog) => (
               <Link to={`/blogs/${blog.id}`}>
@@ -190,23 +260,35 @@ export default function Continent() {
                 </div>
               </Link>
             ))}
-            { blogs.length >= 4 &&
+            { blogs.length >= 5 &&
               <Link
-                className="hover:cursor-pointer hover:underline"
+                className="hover:cursor-pointer"
                 to={`/blogs?type=${continentData.continent_name}&page=1`}
-              >See More
+              >
+                <div 
+                  className="max-w-max flex gap-2 items-center text-white bg-blue-500 py-2 px-3 rounded-lg
+                          hover:bg-white duration-300 hover:text-blue-800"
+                >
+                  <p className="font-bold text-lg">
+                    See more
+                  </p>
+                  <div>
+                    <FaArrowRight />
+                  </div>
+                </div>
               </Link>
             }
             </div>
+            }
           </div>
         }
 
           
         {/* News */}
-        <div className="bg-green-100 mx-0 lg:mx-2 py-7 lg:px-4 lg:rounded-3xl">
+        <div className="bg-orange-100 mx-0 lg:mx-2 py-7 lg:px-4 lg:rounded-3xl my-20">
           <div className="container gap-4 mx-auto px-4">
             <h1 className="text-4xl font-bold">
-              News
+              {`Tales fresh off the press, straight from ${continentData.continent_name}!`}
             </h1>
             <p className="mt-4">
               {`Stay in the know with ${continentData.continent_name}'s tourism news! 

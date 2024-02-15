@@ -19,7 +19,7 @@ export default function TripCard({trip, openDeleteModal}) {
         {trip.title}
       </p>
       <p className='mt-2 text-xl font-semibold'>
-        Destination: {trip.destination}
+        To: {trip.destination}
       </p>
       <p className='mt-2 line-clamp-1'>
         Note: {trip.note}

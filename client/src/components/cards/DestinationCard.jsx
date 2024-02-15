@@ -2,9 +2,9 @@ export default function DestinationCard({destination}) {
   console.log(destination)
   return (
     <div className='bg-white shadow-md hover:shadow-lg 
-    transition-shadow overflow-hidden rounded-lg w-full sm:w-[300px]'>
+    transition-shadow overflow-hidden rounded-lg w-[500px] md:w-[300px]'>
       <img 
-        className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'
+        className='h-[320px] md:h-[220px] w-[500px] md:w-full object-cover hover:scale-105 transition-scale duration-300'
         src={destination.photo || destination.continent_photo} 
         alt="Cover Image" 
       />

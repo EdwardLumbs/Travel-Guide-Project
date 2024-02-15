@@ -1,9 +1,9 @@
 export default function NewsCard({article}) {
     return (
-        <div className='bg-white shadow-md hover:shadow-lg 
-        transition-shadow overflow-hidden rounded-lg w-full sm:w-[300px]'>
+        <div className='bg-white shadow-md hover:shadow-lg px-3
+            transition-shadow overflow-hidden rounded-lg w-full flex items-center'>
             <img 
-                className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'
+                className='w-36 h-36 rounded-lg object-cover hover:scale-105 transition-scale duration-300'
                 src={article.urlToImage} 
                 alt="Cover Image" 
             />

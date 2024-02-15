@@ -285,7 +285,7 @@ export default function Flights() {
     <div>
       <Hero 
         image={"photos/airplane.jpg"}
-        content={'Finding the cheapest flights have never been easier'}
+        content={'Finding the cheapest flights has never been easier'}
       />
       <div className="h-[650px] lg:h-[350px]">
         {location.state && 
@@ -492,7 +492,7 @@ export default function Flights() {
           </div>
         </form>
         
-        <div className='flex container mx-auto px-4 mt-7 -translate-y-1/2'>
+        <div className='flex container mx-auto px-4 mt-7 -translate-y-1/2 bg-blue-100 p-4 rounded-xl'>
           <div>
             {loading ? 
             <p>
@@ -509,22 +509,69 @@ export default function Flights() {
               <h1 className='text-3xl font-extrabold'>
                 Discover the Best Deals! 
               </h1>
-              <p className='tex'>
-                Explore our innovative flight search webpage, designed to find you the cheapest airfares effortlessly. 
+              <p className=''>
+                Explore our flight search feature, designed to find you the cheapest airfares effortlessly. 
               </p>
-              <p>
-                <span className='text-3xl font-bold'>1</span> Simply input your departure and destination cities          
-              </p>
-              <p className='ml-auto'>
-                <span className='text-3xl font-bold'>2</span> Select your travel dates 
-              </p>
-              <p>
-                <span className='text-3xl font-bold'>3</span> Let our powerful search engine do the rest. 
-              </p>
-              <p>
+              {/* first step */}
+              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
+                <div className='flex gap-4 w-2/3 items-center'>
+                  <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                    1
+                  </p> 
+                  <p className='text-lg'>
+                    Input your departure and destination cities          
+                  </p>
+                </div>
+                <div className='w-1/3 flex justify-center'>
+                  <img 
+                    className='h-[80px]'
+                    src="vectors/location-pin.svg" 
+                    alt="pin" 
+                  />
+                </div>
+              </div>
+              {/* second step */}
+              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4 justify-end'>
+                <div className='w-1/3 flex justify-center'>
+                  <img 
+                    className='w-32'
+                    src="vectors/two-calendar.svg" 
+                    alt="calendar" 
+                  />
+                </div>
+                <div className='flex gap-4 w-2/3 items-center justify-end'>
+                  <p className='text-lg'>
+                    Select your travel dates 
+                  </p>
+                  <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                    2
+                  </p> 
+                </div>
+              </div>
+              {/* third step */}
+              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
+                <div className='flex gap-4 w-2/3 items-center'>
+                  <p className='text-6xl font-bold bg-blue-300 rounded-full  min-w-24 min-h-24 flex items-center justify-center'>
+                    3
+                  </p> 
+                  <p className='text-lg'>
+                    Let our powerful search engine do the rest. 
+                  </p>
+                </div>
+                <div className='w-1/3 flex justify-center'>
+                  <img 
+                    className='h-[80px]'
+                    src="vectors/plane.svg" 
+                    alt="plane" 
+                  />
+                </div>
+              </div>
+            
+              <p className='mt-4 text-lg'>
                 Find unbeatable prices and book your next adventure with ease!
               </p>
             </div>
+
             : flight &&
             <div className='flex flex-col'>
             <p>

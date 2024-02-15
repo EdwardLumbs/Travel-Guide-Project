@@ -90,7 +90,7 @@ export default function Destinations() {
           {error}
         </p> :
         <div className='flex w-full'>
-          <div className='flex flex-wrap gap-4'>
+          <div className='flex w-full flex-wrap gap-4'>
             {destinations.length > 0 && destinations.map((destination) => (
                 <Link to={destination.country ? `${destination.continent_name}/${destination.country}` : 
                 `${destination.continent_name}`}>
