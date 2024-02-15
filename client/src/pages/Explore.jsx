@@ -8,6 +8,8 @@ export default function Explore() {
   const buttonRef = useRef(null);
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
+  const [chosen, setChosen] = useState(null)
+  const [chosenCategory, setChosenCategory] = useState(null)
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -21,9 +23,17 @@ export default function Explore() {
   })
   const navigate = useNavigate()
 
+  console.log(chosenCategory)
+  console.log(chosen)
+
 
   const handleChange = (e) => {
     const text = e.target.value
+
+    if (e.target.id === 'category') {
+      setChosenCategory(text)
+    }
+
     setInputText({
       ...inputText,
       [e.target.id]: e.target.value
@@ -43,6 +53,7 @@ export default function Explore() {
   };
 
   const handleSuggestionClick = (e, name='none', suggestion) => {
+    setChosenCategory(suggestion.category)
     setInputText({
       ...inputText,
       'category': suggestion.category
@@ -58,6 +69,7 @@ export default function Explore() {
     console.log('clicked')
     e.preventDefault()
     console.log(inputText)
+    setChosen(chosenCategory)
     const urlParams = new URLSearchParams()
     urlParams.set('place', inputText.place)
     urlParams.set('category', inputText.category)
@@ -123,6 +135,8 @@ export default function Explore() {
     const filterQuery = urlParams.toString();
 
     if (categoryFromUrl || placeFromUrl || limitFromUrl) {
+        setChosenCategory(categoryFromUrl)
+
         setInputText({
           place: placeFromUrl || '',
           category: categoryFromUrl || '',
@@ -260,7 +274,7 @@ export default function Explore() {
               attractions.length > 0 && 
                 <div className='flex flex-col'>
                   <p className='font-semibold mb-6'>
-                    {`Showing Results for ${inputText.category} in ${inputText.place}`}
+                    {`Showing Results for ${chosen} in ${inputText.place}`}
                   </p>
                     <div className='flex w-full flex-wrap gap-4'>
                       {attractions.map((attraction, index) => (                   
@@ -269,7 +283,7 @@ export default function Explore() {
                             to={attraction.properties.datasource.raw.website || `https://www.google.com/search?q=${encodeURIComponent(attraction.properties.name)}`}
                             target='_blank'
                           >
-                            <AttractionCard category={inputText.category} attraction={attraction} />
+                            <AttractionCard category={chosen} attraction={attraction} />
                           </Link>
                       ))}
                     </div>

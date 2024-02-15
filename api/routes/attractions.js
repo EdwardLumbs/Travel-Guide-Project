@@ -15,7 +15,6 @@ router.get('/getAttractions', async (req, res, next) => {
 
     const data = await getCategories()
     const categories = data.map((datum) => datum.category)
-    console.log(categories)
 
     if (!categories.includes(category)) {
         return next(errorHandler(404, 'Category not found'))

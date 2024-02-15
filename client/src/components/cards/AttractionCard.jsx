@@ -176,7 +176,7 @@ export default function AttractionCard({category, attraction}) {
           {attraction.properties.formatted}
         </p>
         <p className='text-2xl font-bold mb-2 px-3 line-clamp-1'>
-          {attraction.properties.name}
+          {attraction.properties.name || category}
         </p>
       </div>
     )
