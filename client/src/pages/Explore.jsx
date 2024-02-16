@@ -136,6 +136,7 @@ export default function Explore() {
 
     if (categoryFromUrl || placeFromUrl || limitFromUrl) {
         setChosenCategory(categoryFromUrl)
+        setChosen(categoryFromUrl)
 
         setInputText({
           place: placeFromUrl || '',
@@ -291,6 +292,16 @@ export default function Explore() {
               }
             </div>
           :
+          loading ? 
+            <p>
+                Loading...
+            </p>
+            : 
+            error ?
+            <p>
+                {error}
+            </p>
+            :
             <div className='w-full bg-orange-100 p-4 rounded-xl'>
               <h1 className='text-3xl font-extrabold'>              
                 Don't know where to go? Don't worry, we got you!
@@ -353,7 +364,7 @@ export default function Explore() {
                 </div>
               </div>
                 
-              
+          
             </div>
           }
         </div>

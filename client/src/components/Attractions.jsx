@@ -16,6 +16,7 @@ export default function Attractions({capital, countryName, continent}) {
     const navigate = useNavigate();
 
     console.log(chosenCategory)
+    console.log(attractions)
 
     const handleChange = (e) => {
         const text = e.target.value.toLowerCase()
@@ -123,6 +124,7 @@ export default function Attractions({capital, countryName, continent}) {
 
         if (categoryFromUrl) {
             setCategory(categoryFromUrl);
+            setChosenCategory(categoryFromUrl)
         }
 
         const getAttractions = async () => {
@@ -156,9 +158,9 @@ export default function Attractions({capital, countryName, continent}) {
 
   return (
     <div className=''>
-        <p className='text-3xl font-bold mb-4'>Find great attractions</p>
+        <p className='text-6xl font-bold mb-4'>Find great attractions</p>
         <div className='flex flex-col relative'>
-            <p className='mb-4 text-justify'>
+            <p className='mb-4 text-xl text-justify'>
                 Discover local gems effortlessly! Explore nearby attractions with our 
                 intuitive search feature. Start your adventure now!
             </p>
