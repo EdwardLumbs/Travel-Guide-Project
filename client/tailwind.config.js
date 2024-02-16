@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        logo: ['Comfortaa']
+        logo: ['Comfortaa'],
+        sans: ['Montserrat']
       }
     },
   },
