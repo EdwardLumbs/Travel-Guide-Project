@@ -42,9 +42,16 @@ export default function Trip() {
         {error}
       </p>
     : loading ? 
-      <p className="text-3xl">
-        Loading...
+    <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+      <img 
+        className='h-[80px]'
+        src="/vectors/plane.svg" 
+        alt="plane" 
+      />
+      <p className='text-lg'>
+        Waiting for Landing
       </p>
+    </div>
     :
       <div className="">
         <div className="">

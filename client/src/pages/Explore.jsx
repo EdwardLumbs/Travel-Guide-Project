@@ -263,9 +263,16 @@ export default function Explore() {
           {attractions.length > 0 ? 
             <div>
               {loading ? 
-              <p>
-                  Loading...
-              </p>
+                <div className='animate-pulse mx-auto container px-4 my-4 flex flex-col items-center'>
+                  <img 
+                    className='h-[80px]'
+                    src="/vectors/plane.svg" 
+                    alt="plane" 
+                  />
+                  <p className='text-lg'>
+                    Waiting for Landing
+                  </p>
+                </div>
               : 
               error ?
               <p>
@@ -293,9 +300,16 @@ export default function Explore() {
             </div>
           :
           loading ? 
-            <p>
-                Loading...
-            </p>
+            <div className='animate-pulse mx-auto container px-4 my-4 flex flex-col items-center'>
+              <img 
+                className='h-[80px]'
+                src="/vectors/plane.svg" 
+                alt="plane" 
+              />
+              <p className='text-lg'>
+                Waiting for Landing
+              </p>
+            </div>
             : 
             error ?
             <p>

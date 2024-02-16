@@ -79,9 +79,16 @@ export default function Continent() {
           {continentError}
         </p>
       : continentLoading ? 
-        <p className="text-3xl mx-auto px-4 mt-4">
-          Loading...
-        </p>
+        <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+          <img 
+            className='h-[80px]'
+            src="/vectors/plane.svg" 
+            alt="plane" 
+          />
+          <p className='text-lg'>
+            Waiting for Landing
+          </p>
+        </div>
       :
       <div className="">
         <div className="">
@@ -158,9 +165,17 @@ export default function Continent() {
                   {continentCountriesError}
                 </p> 
               : continentCountriesLoading ? 
-                <p className="mx-auto px-4 text-3xl">
-                  Loading...
-                </p> : 
+              <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center justify-center'>
+                <img 
+                  className='h-[80px]'
+                  src="/vectors/plane.svg" 
+                  alt="plane" 
+                />
+                <p className='text-lg'>
+                  Waiting for Landing
+                </p>
+              </div>
+              : 
 
 
               continentCountries.length > 0 &&
@@ -245,9 +260,16 @@ export default function Continent() {
                 {blogError}
               </p> 
             : blogLoading ? 
-              <p className="mx-auto px-4 text-3xl">
-                Loading...
-              </p> 
+            <div className='animate-pulse mx-auto container px-4 my-4 flex flex-col items-center'>
+              <img 
+                className='h-[80px]'
+                src="/vectors/plane.svg" 
+                alt="plane" 
+              />
+              <p className='text-lg'>
+                Waiting for Landing
+              </p>
+            </div>
             : 
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 ">
             { blogs.length > 0 && blogs.map((blog) => (

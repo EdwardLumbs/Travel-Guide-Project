@@ -204,10 +204,16 @@ export default function Attractions({capital, countryName, continent}) {
             {attractions && 
                 <div className='mt-4'>
                     {loading ? 
-                    <p className=''>
-                        {/* loading animation */}
-                        Loading...
-                    </p>
+                    <div className='animate-pulse mx-auto container px-4 my-4 flex flex-col items-center'>
+                      <img 
+                        className='h-[80px]'
+                        src="/vectors/plane.svg" 
+                        alt="plane" 
+                      />
+                      <p className='text-lg'>
+                        Waiting for Landing
+                      </p>
+                    </div>
                     : 
                     error ?
                     <p>

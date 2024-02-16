@@ -14,7 +14,7 @@ export default {
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
-    // ...
+    // Define keyframes animation
   ],
 }
 

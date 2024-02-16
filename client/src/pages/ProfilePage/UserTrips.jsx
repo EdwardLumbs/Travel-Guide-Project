@@ -98,9 +98,16 @@ export default function UserTrips() {
               </button>
             </div>
           : loading ? 
-            <p className="text-3xl">
-              Loading...
-            </p> 
+          <div className='animate-pulse my-4 flex flex-col items-center'>
+            <img 
+              className='h-[80px]'
+              src="/vectors/plane.svg" 
+              alt="plane" 
+            />
+            <p className='text-lg'>
+              Waiting for Landing
+            </p>
+          </div>
           : 
           <div className='w-full flex flex-col gap-2'>
             <button 

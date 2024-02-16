@@ -206,9 +206,16 @@ export default function CreateBlogPost() {
             <div className='flex gap-4 items-center ml-auto'>
               <div>
                 { loading ? 
-                    <p>
-                      Loading...
-                    </p>
+                    <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+                      <img 
+                        className='h-[80px]'
+                        src="/vectors/plane.svg" 
+                        alt="plane" 
+                      />
+                      <p className='text-lg'>
+                        Waiting for Landing
+                      </p>
+                    </div>
                   :
                   error &&
                     <p className='text-red-500 font-bold'>

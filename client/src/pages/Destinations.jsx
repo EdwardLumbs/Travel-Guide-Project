@@ -82,9 +82,17 @@ export default function Destinations() {
         </div>
         
         { loading ?
-        <p className='text-3xl font-semibold'>
-          Loading...
-        </p> :
+        <div className='animate-pulse my-4 flex flex-col items-center'>
+          <img 
+            className='h-[80px]'
+            src="/vectors/plane.svg" 
+            alt="plane" 
+          />
+          <p className='text-lg'>
+            Waiting for Landing
+          </p>
+        </div>
+        :
         error ? 
         <p className='text-3xl font-semibold'>
           {error}
