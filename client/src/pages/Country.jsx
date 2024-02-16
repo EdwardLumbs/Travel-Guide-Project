@@ -9,6 +9,7 @@ import TripModal from "../components/TripModal";
 import DeleteModal from "../components/DeleteModal";
 import ImageHero from '../components/heroComponent/ImageHero';
 import BlogCards from "../components/cards/BlogCards";
+import { TbCurrencyPeso } from "react-icons/tb";
 
 export default function Country() {
   // add a function where if continent and country arent validate, return error
@@ -292,9 +293,17 @@ export default function Country() {
       {countryError}
     </p>
     : loading ? 
-    <p className="mx-auto container px-4 text-3xl">
-      Loading...
-    </p> :
+    <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+      <img 
+        className='h-[80px]'
+        src="/vectors/plane.svg" 
+        alt="plane" 
+      />
+      <p className='text-lg'>
+        Waiting for Landing
+      </p>
+    </div>
+    :
       <div className="">
         <div className="">
           <ImageHero image={country.photo} />
@@ -338,7 +347,7 @@ export default function Country() {
               <div className="w-full md:w-2/3 md:border-r md:border-violet-500 h-full flex items-center">
                 { flightLoading ? 
                   <div className="mx-auto px-4 text-2xl font-semibold">
-                    Finding the cheapest flights for you....
+                    Finding the cheapest flight for you....
                   </div> :
                 flightError ?
                 <div className="flex flex-col gap-4">
@@ -355,23 +364,24 @@ export default function Country() {
                 flight ? 
                   <div className="flex flex-col gap-4">
                     <p className="text-4xl font-bold">
-                      {`Cheapest flight from ${inputValue.name || inputValue.from || currentUser.user_iata} is:`}
+                      {`Cheapest flight from ${inputValue.name || inputValue.from || currentUser.user_iata}:`}
                     </p>
                     {/* specify where is their location */}
-                    <div className="flex flex-col gap-4 md:hidden">
-                      <p className="text-3xl font-bold">
+                    <div className="flex flex-col justify-center items-center gap-4 md:hidden">
+                      <p className="flex text-7xl font-bold">
+                        <TbCurrencyPeso/>
                         {flight.price}
                       </p>
-                      <div className="flex gap-4">
+                      <div className="flex gap-4 w-full">
                         <Link
-                          className="w-max items-center border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
+                          className="flex-1 text-center items-center border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
                             text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
                           to={`/flights?${filter}`}
                           state={{search: `${location.pathname}?${iataQuery}`}}
                         >Check it out
                         </Link>
                         <button
-                          className="w-max border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
+                          className="flex-1 text-center border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800"
                           onClick={handleNewEntry}
                         >
                           Enter a different location
@@ -436,12 +446,15 @@ export default function Country() {
                 }
               </div>
               {/* right */}
-              <div className="md:flex hidden w-1/3 ml-5 h-full items-center">
+              <div className="md:flex hidden w-1/3 ml-5 h-full justify-center items-center">
                 { flightLoading ? 
-                    <div className="container mx-auto px-4 ">
-                      Loading....
-                      {/* loading animation */}
-                    </div> 
+                    <div className=''>
+                      <img
+                        className='w-32 animate-pulse' 
+                        src="/vectors/magnifying-glass.svg" 
+                        alt="maginfying-glass" 
+                      />
+                    </div>
                   :
                   flightError ?
                   <div className="container mx-auto px-4 ">
@@ -450,8 +463,9 @@ export default function Country() {
                   </div>
                   :
                   flight ? 
-                  <div className="flex flex-col gap-4">
-                    <p className="text-3xl font-bold">
+                  <div className="flex items-center flex-col gap-4">
+                    <p className="flex text-5xl font-bold">
+                      <TbCurrencyPeso/>
                       {flight.price}
                     </p>
                     <Link
@@ -463,9 +477,16 @@ export default function Country() {
                     </Link>
                   </div>
                   :
-                  <p>
-                    default display
-                  </p>
+                  <div className='flex flex-col justify-center items-center'>
+                    <img
+                      className='w-32' 
+                      src="/vectors/magnifying-glass.svg" 
+                      alt="maginfying-glass" 
+                    />
+                    <p className='text-center mt-1 text-lg font-semibold'>
+                      Search for a Flight 
+                    </p>
+                  </div>
                 }
               </div>
             </div>
@@ -502,9 +523,16 @@ export default function Country() {
                 {blogError}
               </p> 
             : blogLoading ? 
-              <p className="mt-4 container mx-auto px-4 text-3xl">
-                Loading...
-              </p> 
+              <div className='animate-pulse my-4 flex flex-col items-center'>
+                <img 
+                  className='h-[80px]'
+                  src="/vectors/plane.svg" 
+                  alt="plane" 
+                />
+                <p className='text-lg'>
+                  Waiting for Landing
+                </p>
+              </div>
             : 
             <div className="mt-4 container gap-4 flex flex-wrap mx-auto">
             { blogs.length > 0 && blogs.map((blog) => (

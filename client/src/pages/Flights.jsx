@@ -2,12 +2,15 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import SearchFilterResults from '../components/SearchFilterResults';
 import Hero from '../components/heroComponent/Hero';
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import { TbCurrencyPeso } from "react-icons/tb";
+import { IoIosArrowForward } from "react-icons/io";
 
 export default function Flights() {
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
   const [flight, setFlight] = useState();
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [filteredSuggestionsFrom, setFilteredSuggestionsFrom] = useState([]);
@@ -177,6 +180,8 @@ export default function Flights() {
     const infantsFromUrl = urlParams.get('infants');
     const cabinsFromUrl = urlParams.get('selected_cabins');
     const filterQuery = urlParams.toString();
+    setFrom(flyFromUrl)
+    setTo(flyToUrl)
 
     if (flyFromUrl || 
       flyToUrl ||
@@ -264,6 +269,8 @@ export default function Flights() {
     setFilteredSuggestionsTo([]);
     setFilteredSuggestionsFrom([]);
     setLoading(true);
+    setFrom(inputText.from_params || inputText.from)
+    setTo(inputText.to_params || inputText.to)
     const urlParams = new URLSearchParams();
     urlParams.set('fly_from', inputText.from);
     urlParams.set('fly_to', inputText.to);
@@ -287,7 +294,7 @@ export default function Flights() {
         image={"photos/airplane.jpg"}
         content={'Finding the cheapest flights has never been easier'}
       />
-      <div className="h-[1000px] lg:h-[690px]">
+      <div className="h-[1650px] lg:h-[740px]">
         {location.state && 
         <Link
           to={`${search}`}
@@ -497,15 +504,16 @@ export default function Flights() {
               </select>
             </div>
             <button className='bg-blue-500 text-xl rounded-md text-white font-semibold px-5 py-2 w-full'>
-              Search for the Cheapest Flight
+              Search for Cheap Flights
             </button>
           </div>
         </form>
         
-        <div className='flex container mx-auto -translate-y-20 bg-blue-100 p-7 rounded-xl'>
-          <div>
+        <div className='flex flex-col lg:flex-row items-center gap-4 container mx-auto -translate-y-20 bg-blue-100 p-7 rounded-xl'>
+          {/* left */}
+          <div className='lg:w-2/3'>
             {loading ? 
-            <p>
+            <p className='text-4xl font-semibold items-center'>
               {/* change loading animation */}
               Getting your flight for you...
             </p> 
@@ -524,7 +532,7 @@ export default function Flights() {
               </p>
               {/* first step */}
               <div className='bg-white rounded-xl'>
-                <div className=' flex items-center p-4 mt-4 mx-16 justify-between'>
+                <div className='flex lg:flex-row flex-col items-center p-4 mt-4 mx-16 justify-between'>
                   <div className='flex gap-4 items-center'>
                     <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
                       1
@@ -533,7 +541,7 @@ export default function Flights() {
                       Input your departure and destination cities          
                     </p>
                   </div>
-                  <div className='w-1/4 flex justify-end'>
+                  <div className='lg:w-1/4 flex justify-end lg:border-l border-black'>
                     <img 
                       className='h-[80px]'
                       src="vectors/location-pin.svg" 
@@ -544,8 +552,8 @@ export default function Flights() {
               </div>
               {/* second step */}
               <div className='bg-white rounded-xl'>
-                <div className='flex items-center p-4 mt-4 mx-16 justify-between'>
-                  <div className='w-1/4 flex justify-start'>
+                <div className='flex lg:flex-row flex-col  items-center p-4 mt-4 mx-16 justify-between'>
+                  <div className='lg:w-1/4 flex justify-start lg:border-r border-black'>
                     <img 
                       className='w-32'
                       src="vectors/two-calendar.svg" 
@@ -564,7 +572,7 @@ export default function Flights() {
               </div>
               {/* third step */}
               <div className='bg-white rounded-xl'>
-                <div className=' flex items-center p-4 mt-4 mx-16 justify-between'>
+                <div className='flex lg:flex-row flex-col items-center p-4 mt-4 mx-16 justify-between'>
                   <div className='flex gap-4 items-center'>
                     <p className='text-6xl font-bold bg-blue-300 rounded-full  min-w-24 min-h-24 flex items-center justify-center'>
                       3
@@ -573,7 +581,7 @@ export default function Flights() {
                       Let our powerful search engine do the rest. 
                     </p>
                   </div>
-                  <div className='w-1/4 flex justify-end'>
+                  <div className='lg:w-1/4 flex justify-end lg:border-l border-black'>
                     <img 
                       className='h-[80px]'
                       src="vectors/plane.svg" 
@@ -589,34 +597,61 @@ export default function Flights() {
             </div>
 
             : flight &&
-            <div className='flex flex-col'>
-            <p>
-              Check out the cheapest flight we found 
-              from {inputText.from_params || inputText.from} to {inputText.to_params || inputText.to}:
-            </p>
-          </div>
+            <div className='flex flex-col h-full'>
+              <p className='text-4xl font-semibold items-center'>
+                Check out the cheapest flight we found 
+                from {from} to {to}:
+              </p>
+            </div>
             }
           </div>
+
+          {/* right */}
+          <div className='flex justify-center items-center lg:w-1/3'>
             {
-              flight ?
-                <div>
-                  <p className='text-3xl font-semibold'>
-                    {flight.price}
+              loading ?
+              <div className=''>
+                  <img
+                    className='w-64 animate-pulse' 
+                    src="vectors/magnifying-glass.svg" 
+                    alt="maginfying-glass" 
+                  />
+                  <p className='text-center mt-4 text-lg font-semibold'>
+                    Searching...
                   </p>
-                  <a 
-                    className='text-blue-900 font-semibold underline'
-                    href={flight.deep_link}
-                    target="_blank"
-                  >
-                    Check out the details
-                  </a>
                 </div>
               :
-                <p>
-                  Search for a Flight!
-                </p>
+              flight ?
+                <div className='lg:pl-20 gap-4 lg:border-l lg:border-black flex flex-col h-64 justify-center items-center'>
+                  <p className='flex text-8xl lg:text-6xl font-semibold'>
+                    <TbCurrencyPeso/>
+                    {flight.price}
+                  </p>
+                  <div className='flex items-center text-lg duration-200 text-blue-900 hover:text-blue-600'>
+                    <a 
+                      className='font-semibold'
+                      href={flight.deep_link}
+                      target="_blank"
+                    >
+                      Check out the details
+                    </a>
+                    <IoIosArrowForward />
+                  </div>
+                </div>
+              :
+                <div className=''>
+                  <img
+                    className='w-64' 
+                    src="vectors/magnifying-glass.svg" 
+                    alt="maginfying-glass" 
+                  />
+                  <p className='text-center mt-4 text-lg font-semibold'>
+                    Search for a Flight 
+                  </p>
+                </div>
             }
           </div>
+        </div>
           
         </div>
     </div>
