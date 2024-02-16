@@ -58,15 +58,19 @@ export default function ProfileSummary() {
         user_id={currentUser.id}
       />
       <div className=''>
-        <h1 className='text-3xl font-bold'>
+        <h1 className='text-5xl font-bold'>
           Welcome to your personalized travel hub! 
         </h1>
-        <p className='text-justify mt-2'>
+        <p className='text-justify my-4 text-lg'>
           Here, you're in command of your adventures. 
           Explore, plan, and share your travel experiences with ease. 
           Let's embark on a journey tailored just for you.
         </p>
       </div>
+
+      <p className='text-2xl font-bold'>
+        Profile Summary:
+      </p>
 
       <div className='flex flex-col lg:flex-row gap-3 flex-1 basis-full'>
         <Link 

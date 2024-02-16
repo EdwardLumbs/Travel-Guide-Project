@@ -300,11 +300,11 @@ export default function Country() {
           <ImageHero image={country.photo} />
           <div className="mt-4 container flex mx-auto px-4">
             <div>
-              <p className="text-6xl font-bold">
+              <p className="text-8xl font-bold">
                 {country.country}
                   <span className="text-2xl"> {country.continent_name}</span>
               </p>
-              <p className="mt-4 text-justify">
+              <p className="my-4 text-lg text-justify">
                 {country.description}
               </p>
               {
@@ -354,7 +354,7 @@ export default function Country() {
                 </div> :
                 flight ? 
                   <div className="flex flex-col gap-4">
-                    <p className="text-3xl font-bold">
+                    <p className="text-4xl font-bold">
                       {`Cheapest flight from ${inputValue.name || inputValue.from || currentUser.user_iata} is:`}
                     </p>
                     {/* specify where is their location */}
@@ -390,7 +390,7 @@ export default function Country() {
                   </div>
                 :
                 <div className="flex flex-col gap-4 mr-2 lg:mr-0">
-                  <p className="text-3xl font-bold">
+                  <p className="text-4xl font-bold">
                     {`Check out the cheapest flights to ${country.country}`}
                   </p>
                   <form 
@@ -477,10 +477,10 @@ export default function Country() {
         {
           <div className="container my-20 py-7 gap-4 mx-auto px-4">
             <div className="container gap-4 mx-auto">
-              <h1 className="text-4xl font-bold">
+              <h1 className="text-6xl font-bold">
                 Blogspot: Where Stories Unfold
               </h1>
-              <p className="mt-4">
+              <p className="my-4 text-lg text-justify">
                 {`Dive into the heart of ${country.country}  with our captivating 
                 blogs! Join fellow adventurers as they uncover hidden gems, 
                 share insider tips, and recount their unforgettable experiences 
@@ -557,10 +557,10 @@ export default function Country() {
         <div className="my-20 py-7 bg-blue-100 mx-0 
           md:mx-2 md:px-4 md:rounded-3xl h-full">
           <div className="container px-4 mx-auto flex flex-col gap-4">
-            <p className="text-3xl font-bold">
+            <p className="text-6xl font-bold">
                 {`Check out the Latest News from ${country.country}`} 
             </p>
-            <p className="text-justify">
+            <p className="mb-4 text-lg text-justify">
               {`Stay updated with the latest news from ${country.country}! Explore breaking headlines, 
               trending stories, and insightful articles covering diverse topics. Dive into 
               the heartbeat of ${country.country} with our curated news section.`}

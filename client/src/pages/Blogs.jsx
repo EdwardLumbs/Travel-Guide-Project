@@ -103,7 +103,7 @@ export default function Blogs() {
         image={"photos/blogs.jpg"}
         content={'Explore traveler insights on our Blog Page'}
       />
-      <div className='mt-5 container flex flex-col items-center mx-auto px-4'>
+      <div className='mt-4 container flex flex-col items-center mx-auto px-4'>
 
         <div className='w-full'>
           <SearchFilter 
@@ -122,13 +122,11 @@ export default function Blogs() {
         <Link
           className='ml-auto mb-4 border py-2 px-3 rounded-lg text-white bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white duration-200 ' 
           to={currentUser ? '/blogs/create' : '/login'}>
-          <div className='flex items-center gap-1'>
+          <div className='flex font-bold items-center gap-1'>
             <FaPlus/>
             Post A Blog
           </div>
         </Link>
-
-
           {
             loading ? 
             <p>

@@ -55,7 +55,7 @@ export default function Profile() {
           <h1 className='text-4xl basis-full font-semibold'>
             {currentUser.username}
           </h1>
-          <div className='mt-5 text-j'>{
+          <div className='text-justify text-xl mt-2'>{
             currentUser.description || 
             <Link to='edit'>
               <div className="flex items-center gap-2 opacity-70 hover:opacity-100 hover:cursor-pointer">
@@ -64,7 +64,7 @@ export default function Profile() {
               </div>
             </Link>}
           </div>
-          <div className='mt-5'>{
+          <div className='mt-2 text-xl'>{
             currentUser.user_iata || 
             <Link to='edit'>
               <div className="flex items-center gap-2 opacity-70 hover:opacity-100 hover:cursor-pointer">
@@ -76,7 +76,7 @@ export default function Profile() {
         </div>
         
         <div className="mt-5 bg-slate-400">
-          <div className="flex flex-row md:flex-col border-y-2 border-black">
+          <div className="flex font-semibold text-lg flex-row md:flex-col border-y-2 border-black">
             <Link 
               to={''}
               className={`hover:bg-slate-500 px-7 py-2 duration-100 

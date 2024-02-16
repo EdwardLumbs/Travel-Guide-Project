@@ -40,7 +40,7 @@ export default function News({place}) {
             </p>
         :
         news.length > 0 && 
-            <div className='flex gap-5 md:flex-row flex-col'>
+            <div className='flex gap-5 lg:flex-row flex-col'>
                 <div className='bg-white shadow-md hover:shadow-lg relative
                     transition-shadow overflow-hidden rounded-lg w-full flex-1'
                 >

@@ -302,68 +302,77 @@ export default function Explore() {
                 {error}
             </p>
             :
-            <div className='w-full bg-orange-100 p-4 rounded-xl'>
-              <h1 className='text-3xl font-extrabold'>              
+            <div className='w-full bg-orange-100 p-7 rounded-xl'>
+              <h1 className='text-5xl font-bold'>              
                 Don't know where to go? Don't worry, we got you!
               </h1>
-              <p>
-                Our explore page helps you find attractions that interest you.
+              <p className='text-lg mt-2'>
+                Our explore page helps you find attractions that interests you.
               </p>
 
-              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
-                <div className='flex gap-4 w-2/3 items-center'>
-                  <p className='text-6xl font-bold bg-orange-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
-                    1 
-                  </p>
-                  <p className='text-lg'>
-                    Input the place you want to go to (e.g Berlin, Paris). The more specific the better.
-                  </p>
+              <div className='flex flex-col gap-4 mt-4 h-full'>
+
+                <div className='bg-white rounded-xl flex-1'>
+                  <div className='flex flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
+                    <div className='flex flex-col lg:flex-row gap-10 items-center'>
+                      <p className='text-8xl font-bold bg-orange-300 rounded-full min-w-32 min-h-32 flex items-center justify-center'>
+                        1 
+                      </p>
+                      <p className='text-xl'>
+                        Input the place you want to go to (e.g Berlin, Paris). The more specific the better.
+                      </p>
+                    </div>
+                    <div className='w-1/4 flex justify-end'>
+                      <img 
+                        className='h-[150px]'
+                        src="vectors/location-pin.svg" 
+                        alt="pin" 
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className='w-1/3 flex justify-center'>
-                  <img 
-                    className='h-[80px]'
-                    src="vectors/location-pin.svg" 
-                    alt="pin" 
-                  />
+
+                <div className='bg-white rounded-xl flex-1'>
+                  <div className=' flex flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
+                    <div className='w-1/4 flex justify-start'>
+                      <img 
+                        className='h-[150px]'
+                        src="vectors/category.svg" 
+                        alt="category" 
+                      />
+                    </div>
+                    <div className='flex flex-col lg:flex-row gap-4 items-center'>
+                      <p className='text-xl'>
+                        Choose the category that interests you (e.g Sports, Restaurants). Choose one from the dropdown suggestions
+                      </p>
+                      <p className='text-8xl font-bold bg-orange-300 rounded-full min-w-32 min-h-32 flex items-center justify-center'>
+                        2 
+                      </p>
+                    </div>
+                  </div>
                 </div>
+
+                <div className='bg-white rounded-xl flex-1'>
+                  <div className='flex flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
+                    <div className='flex flex-col lg:flex-row gap-10 items-center'>
+                      <p className='text-8xl font-bold bg-orange-300 rounded-full min-w-32 min-h-32 flex items-center justify-center'>
+                        3
+                      </p>
+                      <p className='text-xl'>
+                        Wait for the results. Happy exploring!
+                      </p>
+                    </div>
+                    <div className='w-1/4 flex justify-end'>
+                      <img 
+                        className='h-[150px]'
+                        src="vectors/sunglasses.svg" 
+                        alt="glasses" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
               </div>
-                
-              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
-                <div className='w-1/3 flex justify-center'>
-                  <img 
-                    className='h-[95px] object-cover'
-                    src="vectors/category.svg" 
-                    alt="category" 
-                  />
-                </div>
-                <div className='flex gap-4 w-2/3 items-center'>
-                  <p className='text-lg'>
-                    Choose the category that interests you (e.g Sports, Restaurants). Choose one from the dropdown suggestions
-                  </p>
-                  <p className='text-6xl font-bold bg-orange-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
-                    2 
-                  </p>
-                </div>
-              </div>
-                
-              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
-                <div className='flex gap-4 w-2/3 items-center'>
-                  <p className='text-6xl font-bold bg-orange-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
-                    3
-                  </p>
-                  <p className='text-lg'>
-                    Wait for the results. Happy exploring!
-                  </p>
-                </div>
-                <div className='w-1/3 flex justify-center'>
-                  <img 
-                    className='h-[80px]'
-                    src="vectors/sunglasses.svg" 
-                    alt="glasses" 
-                  />
-                </div>
-              </div>
-                
           
             </div>
           }

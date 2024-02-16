@@ -287,7 +287,7 @@ export default function Flights() {
         image={"photos/airplane.jpg"}
         content={'Finding the cheapest flights has never been easier'}
       />
-      <div className="h-[650px] lg:h-[350px]">
+      <div className="h-[1000px] lg:h-[690px]">
         {location.state && 
         <Link
           to={`${search}`}
@@ -302,9 +302,14 @@ export default function Flights() {
         >
           <div className='flex flex-col lg:flex-row gap-4 w-full justify-center flex-grow'>
             <div className='relative flex-grow'>
-              <label htmlFor="from" className="absolute top-7 left-7 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">From</label>
+              <label 
+                htmlFor="from" 
+                className="absolute text-gray-500 top-7 left-7 transform -translate-y-full -translate-x-1/2 text-sm font-semibold"
+              >
+                From
+              </label>
               <input
-                className='border border-black px-3 py-2 rounded-md pt-8 w-full lg:flex-grow'
+                className='border text-xl border-black px-3 py-2 rounded-md pt-8 w-full lg:flex-grow'
                 type="text"
                 id='from'
                 required
@@ -331,9 +336,14 @@ export default function Flights() {
               </div>
             </div>
             <div className='relative flex-grow'>
-              <label htmlFor="to" className="absolute top-7 left-5 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">To</label>
+              <label 
+                htmlFor="to" 
+                className="absolute top-7 text-gray-500 left-5 transform -translate-y-full -translate-x-1/2 text-sm font-semibold"
+              >
+                To
+              </label>
               <input
-                className='border border-black px-3 py-2 rounded-lg pt-8 w-full lg:flex-grow'
+                className='border text-xl border-black px-3 py-2 rounded-lg pt-8 w-full lg:flex-grow'
                 type="text"
                 id='to'
                 required
@@ -361,9 +371,9 @@ export default function Flights() {
             </div>
             <div className='border border-black px-3 rounded-lg flex justify-evenly lg:flex-grow'>
               <div className='relative'>
-                <label htmlFor="departure" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Departure</label>
+                <label htmlFor="departure" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Departure</label>
                 <input 
-                  className='pt-8'
+                  className='pt-8 text-xl'
                   type="date" 
                   id='date_from'
                   min={today}
@@ -373,9 +383,9 @@ export default function Flights() {
                 />
               </div>
               <div className='relative'>
-                <label htmlFor="return" className="absolute top-7 left-5 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Return</label>
+                <label htmlFor="return" className="text-gray-500 absolute top-7 left-5 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Return</label>
                 <input 
-                  className='pt-8'
+                  className='pt-8 text-xl'
                   type="date" 
                   id='return_from'
                   min={params.date_from}
@@ -390,9 +400,9 @@ export default function Flights() {
             {/* for smaller screen */}
             <div className='lg:hidden flex gap-4 justify-between'>
               <div className='relative flex-grow w-full'>
-                <label htmlFor="adults" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
+                <label htmlFor="adults" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
                 <input 
-                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='adults'
                   min = "0"
@@ -403,9 +413,9 @@ export default function Flights() {
                 />
               </div>
               <div className='relative flex-grow w-full'>
-                <label htmlFor="children" className="absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
+                <label htmlFor="children" className="text-gray-500 absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
                 <input 
-                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='children'
                   min = "0"
@@ -416,9 +426,9 @@ export default function Flights() {
                 />
               </div>
               <div className='relative flex-grow w-full'>
-                <label htmlFor="infants" className="absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
+                <label htmlFor="infants" className="text-gray-500 absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
                 <input 
-                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='infants'
                   min = "0"
@@ -432,9 +442,9 @@ export default function Flights() {
             {/* end for smaller screen */}
             <div className='hidden lg:flex gap-4 w-full'>
               <div className='relative flex-grow w-full'>
-                <label htmlFor="adults" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
+                <label htmlFor="adults" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
                 <input 
-                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='adults'
                   min = "0"
@@ -445,9 +455,9 @@ export default function Flights() {
                 />
               </div>
               <div className='relative flex-grow w-full'>
-                <label htmlFor="children" className="absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
+                <label htmlFor="children" className="text-gray-500 absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
                 <input 
-                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='children'
                   min = "0"
@@ -458,9 +468,9 @@ export default function Flights() {
                 />
               </div>
               <div className='relative flex-grow w-full'>
-                <label htmlFor="infants" className="absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
+                <label htmlFor="infants" className="text-gray-500 absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
                 <input 
-                  className='border border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='infants'
                   min = "0"
@@ -472,9 +482,9 @@ export default function Flights() {
               </div>
             </div>
             <div className='relative w-full'>
-              <label htmlFor="class" className="absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Class</label>
+              <label htmlFor="class" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Class</label>
               <select 
-                className='border border-black px-3 py-2 rounded-md pt-8 w-full'
+                className='border text-xl border-black px-3 py-2 rounded-md pt-8 w-full'
                 name="cabin" 
                 id="selected_cabins"
                 onChange={handleChange}
@@ -486,13 +496,13 @@ export default function Flights() {
                 <option value="F">First Class</option>
               </select>
             </div>
-            <button className='bg-blue-500 rounded-md text-white font-semibold px-5 py-2 w-full'>
+            <button className='bg-blue-500 text-xl rounded-md text-white font-semibold px-5 py-2 w-full'>
               Search for the Cheapest Flight
             </button>
           </div>
         </form>
         
-        <div className='flex container mx-auto px-4 mt-7 -translate-y-1/2 bg-blue-100 p-4 rounded-xl'>
+        <div className='flex container mx-auto -translate-y-20 bg-blue-100 p-7 rounded-xl'>
           <div>
             {loading ? 
             <p>
@@ -506,68 +516,74 @@ export default function Flights() {
             : !flight ?
             // default display
             <div className='w-full'>
-              <h1 className='text-3xl font-extrabold'>
+              <h1 className='text-4xl font-extrabold'>
                 Discover the Best Deals! 
               </h1>
-              <p className=''>
+              <p className='text-lg'>
                 Explore our flight search feature, designed to find you the cheapest airfares effortlessly. 
               </p>
               {/* first step */}
-              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
-                <div className='flex gap-4 w-2/3 items-center'>
-                  <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
-                    1
-                  </p> 
-                  <p className='text-lg'>
-                    Input your departure and destination cities          
-                  </p>
-                </div>
-                <div className='w-1/3 flex justify-center'>
-                  <img 
-                    className='h-[80px]'
-                    src="vectors/location-pin.svg" 
-                    alt="pin" 
-                  />
+              <div className='bg-white rounded-xl'>
+                <div className=' flex items-center p-4 mt-4 mx-16 justify-between'>
+                  <div className='flex gap-4 items-center'>
+                    <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                      1
+                    </p> 
+                    <p className='text-lg'>
+                      Input your departure and destination cities          
+                    </p>
+                  </div>
+                  <div className='w-1/4 flex justify-end'>
+                    <img 
+                      className='h-[80px]'
+                      src="vectors/location-pin.svg" 
+                      alt="pin" 
+                    />
+                  </div>
                 </div>
               </div>
               {/* second step */}
-              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4 justify-end'>
-                <div className='w-1/3 flex justify-center'>
-                  <img 
-                    className='w-32'
-                    src="vectors/two-calendar.svg" 
-                    alt="calendar" 
-                  />
-                </div>
-                <div className='flex gap-4 w-2/3 items-center justify-end'>
-                  <p className='text-lg'>
-                    Select your travel dates 
-                  </p>
-                  <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
-                    2
-                  </p> 
+              <div className='bg-white rounded-xl'>
+                <div className='flex items-center p-4 mt-4 mx-16 justify-between'>
+                  <div className='w-1/4 flex justify-start'>
+                    <img 
+                      className='w-32'
+                      src="vectors/two-calendar.svg" 
+                      alt="calendar" 
+                    />
+                  </div>
+                  <div className='flex gap-4 items-center justify-end'>
+                    <p className='text-lg'>
+                      Select your travel dates 
+                    </p>
+                    <p className='text-6xl font-bold bg-blue-300 rounded-full min-w-24 min-h-24 flex items-center justify-center'>
+                      2
+                    </p> 
+                  </div>
                 </div>
               </div>
               {/* third step */}
-              <div className='bg-white rounded-xl flex items-center gap-4 p-4 mt-4'>
-                <div className='flex gap-4 w-2/3 items-center'>
-                  <p className='text-6xl font-bold bg-blue-300 rounded-full  min-w-24 min-h-24 flex items-center justify-center'>
-                    3
-                  </p> 
-                  <p className='text-lg'>
-                    Let our powerful search engine do the rest. 
-                  </p>
-                </div>
-                <div className='w-1/3 flex justify-center'>
-                  <img 
-                    className='h-[80px]'
-                    src="vectors/plane.svg" 
-                    alt="plane" 
-                  />
+              <div className='bg-white rounded-xl'>
+                <div className=' flex items-center p-4 mt-4 mx-16 justify-between'>
+                  <div className='flex gap-4 items-center'>
+                    <p className='text-6xl font-bold bg-blue-300 rounded-full  min-w-24 min-h-24 flex items-center justify-center'>
+                      3
+                    </p> 
+                    <p className='text-lg'>
+                      Let our powerful search engine do the rest. 
+                    </p>
+                  </div>
+                  <div className='w-1/4 flex justify-end'>
+                    <img 
+                      className='h-[80px]'
+                      src="vectors/plane.svg" 
+                      alt="plane" 
+                    />
+                  </div>
                 </div>
               </div>
             
-              <p className='mt-4 text-lg'>
+              <p className='mt-4 text-lg font-bold'>
                 Find unbeatable prices and book your next adventure with ease!
               </p>
             </div>

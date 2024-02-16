@@ -65,13 +65,13 @@ export default function BlogPage() {
       <div className="">
         <div className="">
           <ImageHero image={blog.photo} />
-          <div className="mt-4 container mx-auto px-4">
+          <div className="mt-10 container mx-auto px-4">
 
               <p className="text-6xl font-semibold">
                 {blog.title} 
               </p>
 
-              <div className="flex flex-col mt-6 justify-center gap-2 pb-6 border-b">
+              <div className="flex flex-col mt-6 justify-center gap-2 pb-8 border-b">
                 <div className='flex gap-2 items-center'>
                   <img 
                     className='h-9 w-9 object-cover rounded-full mr-2'
@@ -100,7 +100,7 @@ export default function BlogPage() {
               </div>
 
               <div
-                className="text-justify text-lg mt-6"
+                className="text-justify text-lg my-8"
                 dangerouslySetInnerHTML={{__html:blog.content}}
               />
           </div>

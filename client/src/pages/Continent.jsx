@@ -75,29 +75,29 @@ export default function Continent() {
   return (
     <div>
       {continentError ? 
-        <p className="text-3xl">
+        <p className="text-3xl mx-auto px-4 mt-4">
           {continentError}
         </p>
       : continentLoading ? 
-        <p className="text-3xl">
+        <p className="text-3xl mx-auto px-4 mt-4">
           Loading...
         </p>
       :
       <div className="">
         <div className="">
           <ImageHero image={continentData.continent_photo} />
-          <div className="mt-4 font-bold container flex flex-col mx-auto px-4">
-              <p className="text-6xl">
+          <div className="mt-4 container flex flex-col mx-auto px-4">
+              <p className="text-8xl font-bold ">
                 {continentData.continent_name} 
               </p>
-              <p className="mt-4 text-justify">
+              <p className="my-4 text-lg text-justify">
                 {continentData.continent_description}
               </p>
               {
                 currentUser &&
                 <>
                   <p 
-                    className="hover:underline hover:cursor-pointer text-blue-600"
+                    className="hover:underline text-lg hover:cursor-pointer text-blue-600"
                     onClick={openModal}  
                   >
                     Start a plan
@@ -116,7 +116,7 @@ export default function Continent() {
               <div className="flex justify-end items-center mt-7 gap-7">
                 <Link to={`/explore`}>
                   <div className="bg-yellow-100 w-56 h-auauto rounded-lg p-4 flex flex-col gap-7">
-                    <h1 className="text-2xl">
+                    <h1 className="text-2xl font-semibold">
                       Find the best things to do
                     </h1>
                     <div className="text-6xl justify-end flex">
@@ -126,7 +126,7 @@ export default function Continent() {
                 </Link>
                 <Link to={`/flights`}>
                   <div className="bg-red-100 w-56 h-auto rounded-lg p-4 flex flex-col gap-7">
-                    <h1 className="text-2xl">
+                    <h1 className="text-2xl font-semibold">
                       Search for cheap flights
                     </h1>
                     <div className="text-6xl justify-end flex">
@@ -142,16 +142,16 @@ export default function Continent() {
         {/* Countries */}
         <div className="bg-blue-100 mt-6 mb-20 py-7 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
           <div className="container gap-4 mx-auto px-4">
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-6xl font-bold">
               {`Explore ${continentData.continent_name}`}
             </h1>
-            <p className="mt-4">
+            <p className="my-4 text-lg text-justify">
               {`Dive into the rich mosaic of ${continentData.continent_name}'s countries! Explore diverse 
               cultures, landscapes, and histories as we guide you through this 
               captivating continent's unique destinations.`}
             </p>
           </div>
-          <div className="mt-4 container gap-4 flex flex-wrap mx-auto px-4 pb-6">
+          <div className=" container gap-4 flex flex-wrap mx-auto px-4 pb-6">
             {
               continentCountriesError ?
                 <p className="mx-auto px-4 text-3xl">
@@ -220,10 +220,10 @@ export default function Continent() {
         {
           <div className="py-7 my-20">
             <div className="container gap-4 mx-auto px-4">
-              <h1 className="text-4xl font-bold">
+              <h1 className="text-6xl font-bold">
                 Blogspot: Where Stories Unfold
               </h1>
-              <p className="mt-4">
+              <p className="my-4 text-lg text-justify">
                 {`Discover ${continentData.continent_name} through the eyes of fellow travelers! 
                 Dive into our blog section filled with captivating stories, 
                 adventures, and insights, offering a glimpse into the rich 
@@ -233,7 +233,7 @@ export default function Continent() {
               <Link
                 className="hover:cursor-pointer max-w-max flex gap-2 items-center 
                 text-white bg-blue-500 py-2 px-3 rounded-lg hover:bg-white 
-                duration-300 hover:text-blue-800 mt-2"
+                duration-300 hover:text-blue-800 mb-4"
                 to={'/blogs'}
               >
                 Check all blogs
@@ -287,10 +287,10 @@ export default function Continent() {
         {/* News */}
         <div className="bg-orange-100 mx-0 lg:mx-2 py-7 lg:px-4 lg:rounded-3xl my-20">
           <div className="container gap-4 mx-auto px-4">
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-6xl font-bold">
               {`Tales fresh off the press, straight from ${continentData.continent_name}!`}
             </h1>
-            <p className="mt-4">
+            <p className="mt-4 text-lg text-justify">
               {`Stay in the know with ${continentData.continent_name}'s tourism news! 
               From travel tips to exciting attractions, our news section keeps you updated 
               on all things tourism-related. Explore the latest updates shaping 

@@ -115,10 +115,10 @@ export default function EditProfile() {
   }
 
   return (
-    // change accent colors to color schema
+    // change accent colors to color schematext-lg 
     // change fonts and style
     <div className='w-full min-w-min max-w-7xl p-7 rounded-xl flex flex-col'>
-      <h1 className='text-3xl font-semibold'>
+      <h1 className='text-5xl font-bold'>
         Edit Profile
       </h1>
       <form 
@@ -140,7 +140,7 @@ export default function EditProfile() {
 
         <div className='flex flex-col gap-4 flex-1 w-full mt-4'>
           <input 
-            className='border border-black px-3 py-2 rounded-lg'
+            className='text-lg border border-black px-3 py-2 rounded-lg'
             type="text" 
             placeholder='Name' 
             id="username" 
@@ -151,14 +151,14 @@ export default function EditProfile() {
           <textarea
             type="text" 
             placeholder='Description'
-            className='border border-black px-3 py-2 rounded-lg'
+            className='text-lg border border-black px-3 py-2 rounded-lg'
             id='description'
             onChange={handleChange}
             defaultValue={currentUser.description || ''}
           />
 
           <input 
-            className='border border-black px-3 py-2 rounded-lg'
+            className='text-lg border border-black px-3 py-2 rounded-lg'
             type="text" 
             placeholder='Enter the IATA code near you' 
             id="user_iata" 
@@ -168,7 +168,7 @@ export default function EditProfile() {
           />
 
           <input 
-            className='border border-black px-3 py-2 rounded-lg'
+            className='text-lg border border-black px-3 py-2 rounded-lg'
             type="password" 
             placeholder='Enter new password' 
             id="newPassword" 
@@ -176,7 +176,7 @@ export default function EditProfile() {
           />
 
           <input 
-            className='border border-black px-3 py-2 rounded-lg'
+            className='text-lg border border-black px-3 py-2 rounded-lg'
             type="password" 
             placeholder='Confirm your new password' 
             id="confirmNewPassword" 
@@ -191,16 +191,16 @@ export default function EditProfile() {
         <div className='flex flex-col gap-2 mt-4'>
           <button 
             disabled={disabled}
-            className='w-full disabled:opacity-80 hover:cursor-pointer hover:text-blue-600 
-              hover:bg-white duration-100 font-semibold border-black py-1 px-2 rounded-full 
+            className='text-lg w-full disabled:opacity-80 hover:cursor-pointer hover:text-blue-600 
+              hover:bg-white duration-100 font-semibold border-black py-2 px-2 rounded-full 
               bg-blue-600 text-white'
           >
             Save Changes
           </button>
           <Link 
             to='/profile'
-            className='hover:cursor-pointer hover:text-red-600 hover:bg-white 
-                duration-100 font-semibold border-black py-1 px-2 rounded-full bg-red-600 
+            className='text-lg hover:cursor-pointer hover:text-red-600 hover:bg-white 
+                duration-100 font-semibold border-black py-2 px-2 rounded-full bg-red-600 
               text-white text-center'
           >
             <button 
@@ -220,8 +220,8 @@ export default function EditProfile() {
           <button 
             onClick={() => openDeleteModal(currentUser.id)}
             type="button"
-            className='hover:cursor-pointer hover:text-gray-600 hover:bg-white duration-100 
-              font-semibold border-black py-1 px-2 rounded-full bg-gray-600 text-white w-full'
+            className='text-lg hover:cursor-pointer hover:text-gray-600 hover:bg-white duration-100 
+              font-semibold border-black py-2 px-2 rounded-full bg-gray-600 text-white w-full'
           >
             Delete account
           </button>

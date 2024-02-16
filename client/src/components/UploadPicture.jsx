@@ -89,7 +89,7 @@ export default function UploadPicture ({setCoverPhoto, formData, setFormData}) {
             <button 
                 type='button'
                 onClick={() => fileRef.current.click()}
-                className='flex items-center gap-2 text-blue-400 hover:opacity-80 hover:underline'
+                className='text-lg flex items-center gap-2 text-blue-400 hover:opacity-80 hover:underline'
             >
                 <CiCirclePlus className='scale-150'/>
                 {setFormData ? 

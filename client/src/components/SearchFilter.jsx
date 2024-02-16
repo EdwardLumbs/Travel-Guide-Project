@@ -254,7 +254,7 @@ export default function SearchFilter({
     }
 
   return (
-    <div className='lg:flex lg:flex-col lg:gap-6 mb-7 mt-2 w-full'>
+    <div className='lg:flex lg:flex-col lg:gap-6 mb-4 mt-2 w-full'>
         <form 
             className='relative items-center lg:mb-1 mb-5'
             onSubmit={handleSearchSubmit}

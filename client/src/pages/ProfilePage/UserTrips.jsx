@@ -79,13 +79,21 @@ export default function UserTrips() {
         user_id={currentUser.id}
       />
       <div className="p-7 w-full">
+        <div className='text-5xl font-bold mb-4'>
+          Your Trips
+        </div>
         {
           error ?
             <div>
               <p className="text-3xl">
                 {error}
               </p> 
-              <button onClick={openModal}>
+              <button 
+                className='font-bold mb-4 border py-2 px-3 rounded-lg text-white 
+                bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white 
+                duration-200 '
+                onClick={openModal}
+              >
                 Plan a trip
               </button>
             </div>
@@ -96,7 +104,7 @@ export default function UserTrips() {
           : 
           <div className='w-full flex flex-col gap-2'>
             <button 
-              className='ml-auto mb-4 border py-2 px-3 rounded-lg text-white 
+              className='font-bold ml-auto mb-4 border py-2 px-3 rounded-lg text-white 
               bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white 
               duration-200 '
               onClick={openModal}

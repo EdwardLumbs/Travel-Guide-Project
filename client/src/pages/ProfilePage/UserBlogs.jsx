@@ -62,13 +62,21 @@ export default function UserBlogs() {
 
   return (
     <div className="p-7 w-full">
+      <div className='text-5xl font-bold mb-4'>
+        Your Blogs
+      </div>
         {
           error ?
             <div>
               <p className="text-3xl">
                 {error}
               </p> 
-              <Link to={'/blogs/create'}>
+              <Link 
+                to={'/blogs/create'}
+                className='font-bold mb-4 border py-2 px-3 rounded-lg text-white 
+                bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white 
+                duration-200 '
+              >
                 Post a blog
               </Link>
             </div>
@@ -79,7 +87,7 @@ export default function UserBlogs() {
           : 
           <div className='w-full flex flex-col gap-2'>
             <Link 
-              className='ml-auto mb-4 border py-2 px-3 rounded-lg text-white 
+              className='font-bold ml-auto mb-4 border py-2 px-3 rounded-lg text-white 
               bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white 
               duration-200 '
               to={'/blogs/create'}

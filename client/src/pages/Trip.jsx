@@ -57,19 +57,19 @@ export default function Trip() {
               className="hover-underline"
               >&larr; <span>Back to Last Page</span></Link>
             }
-            <p className="text-6xl font-bold">
-              {trip.title} 
-            </p>
+            <div className='mb-8 mt-8 bg-orange-100 rounded-xl p-7'>
+              <p className="text-6xl font-bold">
+                {trip.title} 
+              </p>
 
-            <p className="mt-4 text-3xl font-semibold">
-              {trip.destination} 
-            </p>
+              <p className="mt-4 text-3xl font-semibold">
+                To: {trip.destination} 
+              </p>
 
-            <p className="mt-4 text-justify">
-              {trip.note} 
-            </p>
-
-
+              <p className="mt-4 text-justify">
+                Notes: {trip.note} 
+              </p>
+            </div>
           </div>
 
 
