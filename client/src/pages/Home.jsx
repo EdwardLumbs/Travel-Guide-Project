@@ -122,7 +122,7 @@ export default function Home() {
       </div>
 
           {/* destination section */}
-      <div className="mt-20 container flex flex-col  mx-auto px-4">
+      <div className="mt-20 container flex flex-col mx-auto px-4">
         <h1 className="text-6xl font-bold ">
           Your next adventure awaits
         </h1>
