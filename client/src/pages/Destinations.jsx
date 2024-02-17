@@ -64,7 +64,11 @@ export default function Destinations() {
     <div className=''>
       <Hero 
         image={"photos/destination.jpg"}
-        content={'Find your next Destination'}
+        content={
+          <p className='font-bold'>
+          Find your next Destination
+          </p>
+          }
       />
       <div className='my-5 container flex flex-col items-center mx-auto px-4'>
         <div className='w-full'>
@@ -115,7 +119,7 @@ export default function Destinations() {
             {selectedOption.page > 1 && (
               <button
                 onClick={() => handlePageChange(selectedOption.page - 1)}
-                className='px-4 py-2 mr-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
+                className='px-4 py-2 mr-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
               >
                 Previous Page
               </button>
@@ -126,7 +130,7 @@ export default function Destinations() {
                 <button
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
-                  className={`px-4 py-2 mx-1 text-white bg-blue-500 border border-blue-500 hover:text-blue-500 hover:bg-white duration-200 rounded-xl ${
+                  className={`px-4 py-2 mx-1 text-white bg-blue-800 border border-blue-800 hover:text-blue-800 hover:bg-white duration-200 rounded-xl ${
                     selectedOption.page === index + 1 ? 'font-semibold' : ''
                   }`}
                 >
@@ -138,7 +142,7 @@ export default function Destinations() {
             {selectedOption.page < Math.ceil(pages) && (
               <button
                 onClick={() => handlePageChange(selectedOption.page + 1)}
-                className='px-4 py-2 ml-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
+                className='px-4 py-2 ml-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
               >
                 Next Page
               </button>

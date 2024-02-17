@@ -5,9 +5,13 @@ export default function About() {
     <div>
       <Hero
         image={"photos/about.jpg"}
-        content={'Travelers creating travels for travelers'}
+        content={
+          <p className='font-bold'>
+            For travelers by travelers
+          </p>
+        }
       />
-      <div className="my-20 container flex flex-col  mx-auto px-4">
+      <div className="my-20 container flex flex-col mx-auto px-4">
         <h1 className="text-6xl font-bold">
           Welcome to Edward'sTravelGuide
         </h1>

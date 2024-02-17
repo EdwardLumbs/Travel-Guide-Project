@@ -19,7 +19,7 @@ export default function Footer() {
                 </p>
                 <Link to='/sign-up'>
                     <div className="mt-4 text-center border px-6 py-2 rounded-full border-blue-800 bg-blue-800 
-                        text-white font-semibold hover:bg-white duration-300 hover:text-blue-800">
+                        text-white font-bold hover:bg-white duration-300 hover:text-blue-800">
                         Create an Account
                     </div>
                 </Link>

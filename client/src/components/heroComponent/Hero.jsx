@@ -8,7 +8,7 @@ export default function Hero({image, content, home}) {
       style={{ backgroundImage: `url(${image})` }}
     >
       <div className="flex items-center container h-full mx-auto px-4 py-7">
-        <p className='text-6xl text-white font-bold'>
+        <p className='text-6xl text-white'>
           {content}
         </p>
       </div>

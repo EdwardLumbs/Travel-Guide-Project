@@ -73,8 +73,16 @@ export default function Home() {
         home={true}
         content={
         <>
-          <h1 className="text-8xl">
-            Welcome To <span className="font-logo"><span className="font-extrabold font-logo">Edward's</span>TravelGuide</span>
+          <h1 className="text-8xl font-bold">
+            Welcome To
+          </h1>
+          <h1 className="text-8xl font-logo text-green-600 flex">
+            <p className="font-extrabold text-green-500">
+              Edward's
+            </p>
+            <p className="">
+              TravelGuide
+            </p>
           </h1>
           <p className="mt-4 text-2xl font-semibold">
             Your Journey Starts Here
@@ -82,10 +90,13 @@ export default function Home() {
         </>}
       />
           {/* plan section */}
-      <div className="mt-20 bg-orange-100 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
+      <div 
+        className="mt-20 bg-blue-100 bg-cover mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl"
+        style={{ backgroundImage: `url('/photos/home-plan.jpg')` }}
+      >
         <div className="mt-20 container mx-auto px-4 py-20">
           <h1 className="text-6xl font-bold">
-            Plan your next trip on us
+            Plan your next trip with us
           </h1>
           <div className="mt-4">
             {currentUser ?
@@ -96,8 +107,8 @@ export default function Home() {
                   user_id={currentUser.id}
                 />
                 <button 
-                  className="border border-white px-3 py-1 rounded-full hover:bg-white
-                  hover:text-violet-300 text-lg bg-violet-300 duration-300 text-white"
+                  className="font-bold px-3 py-1 rounded-full hover:bg-white
+                  hover:text-blue-800 text-lg bg-blue-800 duration-300 text-white"
                   onClick={openModal}  
                 >
                   Check it out
@@ -105,15 +116,17 @@ export default function Home() {
               </>
             :
             <>
-              <p className="text-lg mb-4">
+              <p className="text-lg mb-4 font-bold">
                 Create an account and start planning for your next adventure
               </p>
               <Link
-                  className="border border-white px-3 py-1 rounded-full hover:bg-white
-                  hover:text-violet-300 text-lg bg-violet-300 duration-300 text-white"
+                  className="inline-block"
                   to={'/sign-up'}
               >
-                Create an account
+                <p className="font-bold px-3 py-1 rounded-full hover:bg-white
+                  hover:text-blue-800 text-lg bg-blue-800 duration-300 text-white">
+                  Create an account
+                </p>
               </Link>
             </>
             }
@@ -127,13 +140,15 @@ export default function Home() {
           Your next adventure awaits
         </h1>
         <p className="text-lg mt-2">
-          Explore various places effortlessly.
+          Explore various places effortlessly
         <Link 
-          className="ml-2 border px-3 py-1 rounded-full border-blue-800 bg-blue-800 
-          text-white hover:bg-white duration-300 hover:text-blue-800"
+          className='inline-block'
           to={'/destinations'}
         >
-          Check it out
+          <p className="font-bold ml-2 border px-3 py-1 rounded-full border-blue-800 bg-blue-800 
+          text-white hover:bg-white duration-300 hover:text-blue-800">
+            Check it out
+          </p>
         </Link>
         </p>
         { 
@@ -164,7 +179,10 @@ export default function Home() {
       </div>
 
           {/* flight section */}
-      <div className="mt-20 bg-violet-300">
+      <div 
+        className="mt-20 bg-cover"
+        style={{ backgroundImage: `url('/photos/home-flight.jpg')` }}
+      >
         <div className="mt-20 container mx-auto px-4 py-20 text-center">
           <h1 className="text-6xl font-bold">
             Find the cheapest flights
@@ -173,11 +191,13 @@ export default function Home() {
             Explore our flight search feature, designed to find you the cheapest airfares effortlessly. 
           </p>
           <Link 
-            className="border border-white px-3 py-1 rounded-full hover:bg-white
-            hover:text-violet-300 text-lg bg-violet-300 duration-300 text-white"
+            className="inline-block"
             to={'/flights'}
           >
-            Check it out
+            <p className="font-bold border border-white px-3 py-1 rounded-full hover:bg-blue-800
+            text-lg bg-transparent duration-300 text-white">
+              Check it out
+            </p>
           </Link>
         </div>
       </div>
@@ -191,12 +211,15 @@ export default function Home() {
           <p>
             Learn cultures through the eyes of our users
           </p>
+          
           <Link 
-            className="border border-white px-3 py-1 rounded-full hover:bg-white
-            hover:text-violet-300 text-lg bg-violet-300 duration-300 text-white"
+            className='inline-block'
             to={'/blogs'}
           >
-            Check it out
+            <p className="font-bold border px-3 py-1 rounded-full border-blue-800 bg-blue-800 
+            text-white hover:bg-white duration-300 hover:text-blue-800">
+              Check it out
+            </p>
           </Link>
         </div>
         
@@ -259,8 +282,11 @@ export default function Home() {
       </div>
 
           {/* attractions section */}
-      <div className="my-20 bg-orange-100 mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl">
-        <div className="mt-20 container mx-auto px-4 py-20 text-center">
+      <div 
+        className="my-20 bg-cover mx-0 lg:mx-2 lg:px-4 lg:rounded-3xl"
+        style={{ backgroundImage: `url('/photos/home-explore.jpg')` }}
+      >
+        <div className="mt-20 container mx-auto px-4 py-20 text-center text-white">
           <h1 className="text-6xl font-bold">
             Discover attractions
           </h1>
@@ -268,8 +294,8 @@ export default function Home() {
             Easily explore attractions that interests you through our explore page
           </p>
           <Link 
-            className="border border-white px-3 py-1 rounded-full hover:bg-white
-            hover:text-violet-300 text-lg bg-violet-300 duration-300 text-white"
+            className="border border-white px-3 py-1 rounded-full hover:bg-blue-800
+            text-lg bg-transparent duration-300 text-white"
             to={'/explore'}
           >
             Check it out

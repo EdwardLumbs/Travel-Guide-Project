@@ -197,7 +197,11 @@ export default function Explore() {
     <div>
       <Hero 
         image={"photos/explore.jpg"}
-        content={'Navigate through numerous attractions using our Explore Page'}
+        content={
+          <p className='font-bold'>
+          Navigate through numerous attractions using our Explore Page
+          </p>
+          }
       />
       <div className='mt-5 container flex flex-col mx-auto px-4'>
         <form 
@@ -256,7 +260,9 @@ export default function Explore() {
             className='lg:w-40 mb-6 border px-6 py-2 rounded-full border-blue-800 bg-blue-800 text-white font-semibold hover:bg-white duration-300 hover:text-blue-800'
             ref={buttonRef}
           >
-            Explore
+            <p className='font-bold'>
+              Explore
+            </p>
           </button>
         </form>
         <div className='mb-5'>

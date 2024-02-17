@@ -43,13 +43,13 @@ export default function Header() {
             <nav className= 'py-5'>
                 <div className='flex items-center justify-between px-4 '>
                     <Link to='/'>
-                        <div className="text-xl font-logo text-green-700">
+                        <div className="text-xl font-logo text-white">
                             <span className="font-extrabold">Edward's</span>TravelGuide
                         </div>
                     </Link>
 
                     <ul 
-                        className='hidden text-slate-600 font-bold
+                        className='hidden text-white font-bold
                         lg:flex lg:visible px-2 py-3 rounded-md flex-row gap-4'
                     >
                         <li 
@@ -98,7 +98,9 @@ export default function Header() {
                                     alt="profile"
                                     className='rounded-full h-7 w-7 object-cover' 
                                 />
-                                ) : <p className='border border-blue-600 rounded-lg text-blue-600 px-7 py-1'>
+                                ) : <p className='border border-blue-800 rounded-lg  px-7 py-1 font-bold
+                                        bg-blue-800 text-white duration-200 hover:bg-transparent'
+                                    >
                                         LOGIN
                                     </p>
                             }

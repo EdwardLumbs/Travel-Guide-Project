@@ -101,7 +101,11 @@ export default function Blogs() {
     <div>
       <Hero 
         image={"photos/blogs.jpg"}
-        content={'Explore traveler insights on our Blog Page'}
+        content={
+          <p className='font-bold'>
+            Explore traveler insights on our Blog Page
+          </p>
+        }
       />
       <div className='mt-4 container flex flex-col items-center mx-auto px-4'>
 
@@ -120,7 +124,7 @@ export default function Blogs() {
         </div>
 
         <Link
-          className='ml-auto mb-4 border py-2 px-3 rounded-lg text-white bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white duration-200 ' 
+          className='ml-auto mb-4 border py-2 px-3 rounded-lg text-white bg-blue-800 border-blue-800 hover:text-blue-800 hover:bg-white duration-200 ' 
           to={currentUser ? '/blogs/create' : '/login'}>
           <div className='flex font-bold items-center gap-1'>
             <FaPlus/>
@@ -175,7 +179,7 @@ export default function Blogs() {
               {selectedOption.page > 1 && (
                 <button
                   onClick={() => handlePageChange(selectedOption.page - 1)}
-                  className='px-4 py-2 mr-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
+                  className='px-4 py-2 mr-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
                 >
                   Previous Page
                 </button>
@@ -186,7 +190,7 @@ export default function Blogs() {
                   <button
                     key={index}
                     onClick={() => handlePageChange(index + 1)}
-                    className={`px-4 py-2 mx-1 text-white bg-blue-500 border border-blue-500 hover:text-blue-500 hover:bg-white duration-200 rounded-xl ${
+                    className={`px-4 py-2 mx-1 text-white bg-blue-800 border border-blue-800 hover:text-blue-800 hover:bg-white duration-200 rounded-xl ${
                       selectedOption.page === index + 1 ? 'font-semibold' : ''
                     }`}
                   >
@@ -198,7 +202,7 @@ export default function Blogs() {
               {selectedOption.page < Math.ceil(pages) && (
                 <button
                   onClick={() => handlePageChange(selectedOption.page + 1)}
-                  className='px-4 py-2 ml-2 text-blue-500 bg-white border border-blue-500 hover:text-white hover:bg-blue-500 duration-200 rounded-xl'
+                  className='px-4 py-2 ml-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
                 >
                   Next Page
                 </button>

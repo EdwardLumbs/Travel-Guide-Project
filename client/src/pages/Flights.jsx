@@ -292,7 +292,12 @@ export default function Flights() {
     <div>
       <Hero 
         image={"photos/airplane.jpg"}
-        content={'Finding the cheapest flights has never been easier'}
+        content={
+          <p className='font-bold'>
+            Finding the cheapest flights has never been easier
+          </p>
+        }
+        
       />
       <div className="h-[1680px] lg:h-[780px]">
         {location.state && 
@@ -503,7 +508,10 @@ export default function Flights() {
                 <option value="F">First Class</option>
               </select>
             </div>
-            <button className='bg-blue-500 text-xl rounded-md text-white font-semibold px-5 py-2 w-full'>
+            <button 
+              className='bg-blue-800 text-xl rounded-md text-white font-semibold px-5 py-2 w-full
+                  hover:bg-white hover:text-blue-800 duration-200 border border-blue-800'
+            >
               Search for Cheap Flights
             </button>
           </div>

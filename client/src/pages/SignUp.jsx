@@ -71,7 +71,10 @@ export default function SignUp() {
 
   return (
     // change accent colors based on the schema
-    <div className='bg-green-200 h-screen flex justify-center items-center'>
+    <div 
+      className='bg-cover h-screen flex justify-center items-center'
+      style={{ backgroundImage: `url('/photos/login.jpg')` }}
+    >
       <div className='bg-white p-6 rounded-xl w-80'>
         <div className='flex flex-col gap-5 items-center border-b-2 border-slate-700 pb-6'>
           <div className="text-2xl">
