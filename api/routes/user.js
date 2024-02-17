@@ -11,7 +11,6 @@ const router = express.Router();
 router.post('/updateUser/:id', verifyToken, async (req, res, next) => {
     const { username, description, photo, user_iata } = req.body;
 
-    console.log(username)
     if (req.user.id != req.params.id)
         return next(errorHandler(401, 'Not your account'));
 
@@ -76,7 +75,6 @@ router.get('/getUser/:id', async (req, res, next) => {
 
 router.get('/getBlogCount/:id', async (req, res, next) => {
     const { id } = req.params
-    console.log(id)
     try {
         const data = await pool.query(`SELECT COUNT(*) FROM blogs
         WHERE user_id = $1`, [id])
@@ -94,7 +92,6 @@ router.get('/getBlogCount/:id', async (req, res, next) => {
 
 router.get('/getTripCount/:id', async (req, res, next) => {
     const { id } = req.params
-    console.log(id)
     try {
         const data = await pool.query(`SELECT COUNT(*) FROM trips
         WHERE user_id = $1`, [id])

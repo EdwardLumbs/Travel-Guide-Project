@@ -158,7 +158,7 @@ export default function Continent() {
               captivating continent's unique destinations.`}
             </p>
           </div>
-          <div className=" container gap-4 flex flex-wrap mx-auto px-4 pb-6">
+          <div className="container gap-4 flex flex-wrap mx-auto px-4 pb-6">
             {
               continentCountriesError ?
                 <p className="mx-auto px-4 text-3xl">
@@ -176,8 +176,6 @@ export default function Continent() {
                 </p>
               </div>
               : 
-
-
               continentCountries.length > 0 &&
               <div className='flex gap-5 flex-col w-full'>
                 <div className='bg-white shadow-md hover:shadow-lg

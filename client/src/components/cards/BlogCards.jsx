@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import DeleteModal from "../DeleteModal";
 
-export default function BlogCards({blog, openDeleteModal}) {
+export default function BlogCards({home, blog, openDeleteModal}) {
     const [user, setUser] = useState([])
     const {currentUser} = useSelector((state) => state.user);
     console.log(blog.id)
@@ -39,7 +39,7 @@ export default function BlogCards({blog, openDeleteModal}) {
                     <p className="text-sm font-semibold">
                         By: {user.username}
                     </p>
-                    {(currentUser && blog && currentUser.id === blog.user_id) &&
+                    {(!home && currentUser && blog && currentUser.id === blog.user_id) &&
                         <MdDelete 
                             className="ml-auto h-6 w-6 text-red-900 duration-75 hover:text-red-600" 
                             onClick={(e) => {

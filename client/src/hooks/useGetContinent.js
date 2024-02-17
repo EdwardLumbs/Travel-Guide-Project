@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function useGetContinent (type='all') {
     const [continentData, setContinentData] = useState({});
+    const [continentPhoto, setContinentPhoto] = useState({});
     const [continentLoading, setLoading] = useState(false);
     const [continentError, setError] = useState(null);
 
@@ -22,6 +23,7 @@ export default function useGetContinent (type='all') {
         if (type === 'all') {
           const continentNames = destination.map((continent) => continent.continent_name)
           setContinentData(continentNames);
+          setContinentPhoto(destination);
           setLoading(false);
         } else {
           setContinentData(destination);
@@ -39,5 +41,5 @@ export default function useGetContinent (type='all') {
       fetchDestination();
     }, [type]);
 
-  return ({continentData, continentLoading, continentError});
+  return ({continentData, continentPhoto, continentLoading, continentError});
 }

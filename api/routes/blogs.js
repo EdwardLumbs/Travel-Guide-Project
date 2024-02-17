@@ -33,7 +33,6 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
 
 router.delete('/deleteBlog/:blogId', verifyToken, async (req, res, next) => {
     const { blogId } = req.params
-    console.log(blogId)
     try {
         await pool.query(`DELETE FROM blogs
         WHERE id = $1`,
@@ -49,10 +48,9 @@ router.delete('/deleteBlog/:blogId', verifyToken, async (req, res, next) => {
 // make it get the most recent
 router.get('/getBlogs', async (req, res, next) => {
     let { page, limit, tag1, tag2 } = req.query;
-    console.log(req.query)
 
     page = parseInt(page) || 1;
-    const pageSize = 8;
+    const pageSize = limit || 8;
     const offset = (page - 1) * pageSize;
 
     try {
