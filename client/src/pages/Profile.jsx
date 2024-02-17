@@ -28,7 +28,7 @@ export default function Profile() {
   }
 
   return (
-    <div className='container bg-slate-200 rounded-3xl mx-auto flex flex-col md:flex-row mt-24'>
+    <div className='container bg-slate-200 rounded-3xl mx-auto flex flex-col md:flex-row mt-24 mb-4'>
       <div className='md:min-h-screen'>
         {/* profile details */}
         {/* change max width? */}

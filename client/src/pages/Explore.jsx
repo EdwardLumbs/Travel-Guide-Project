@@ -259,7 +259,7 @@ export default function Explore() {
             Explore
           </button>
         </form>
-        <div className=''>
+        <div className='mb-5'>
           {attractions.length > 0 ? 
             <div>
               {loading ? 
@@ -327,12 +327,12 @@ export default function Explore() {
               <div className='flex flex-col gap-4 mt-4 h-full'>
 
                 <div className='bg-white rounded-xl flex-1'>
-                  <div className='flex flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
+                  <div className='flex gap-2 flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
                     <div className='flex flex-col lg:flex-row gap-10 items-center'>
                       <p className='text-8xl font-bold bg-orange-300 rounded-full min-w-32 min-h-32 flex items-center justify-center'>
                         1 
                       </p>
-                      <p className='text-xl'>
+                      <p className='text-xl text-justify'>
                         Input the place you want to go to (e.g Berlin, Paris). The more specific the better.
                       </p>
                     </div>
@@ -347,7 +347,7 @@ export default function Explore() {
                 </div>
 
                 <div className='bg-white rounded-xl flex-1'>
-                  <div className=' flex flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
+                  <div className=' flex gap-2 flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
                     <div className='w-1/4 flex justify-start'>
                       <img 
                         className='h-[150px]'
@@ -356,7 +356,7 @@ export default function Explore() {
                       />
                     </div>
                     <div className='flex flex-col lg:flex-row gap-4 items-center'>
-                      <p className='text-xl'>
+                      <p className='text-xl text-justify'>
                         Choose the category that interests you (e.g Sports, Restaurants). Choose one from the dropdown suggestions
                       </p>
                       <p className='text-8xl font-bold bg-orange-300 rounded-full min-w-32 min-h-32 flex items-center justify-center'>
@@ -367,7 +367,7 @@ export default function Explore() {
                 </div>
 
                 <div className='bg-white rounded-xl flex-1'>
-                  <div className='flex flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
+                  <div className='flex gap-2 flex-col lg:flex-row items-center p-4 mx-auto lg:mx-40 justify-between'>
                     <div className='flex flex-col lg:flex-row gap-10 items-center'>
                       <p className='text-8xl font-bold bg-orange-300 rounded-full min-w-32 min-h-32 flex items-center justify-center'>
                         3

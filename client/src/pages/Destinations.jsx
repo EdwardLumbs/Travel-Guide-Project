@@ -66,7 +66,7 @@ export default function Destinations() {
         image={"photos/destination.jpg"}
         content={'Find your next Destination'}
       />
-      <div className='mt-5 container flex flex-col items-center mx-auto px-4'>
+      <div className='my-5 container flex flex-col items-center mx-auto px-4'>
         <div className='w-full'>
           <SearchFilter 
             blog={null} 
@@ -111,7 +111,7 @@ export default function Destinations() {
         }
 
         {pages && (
-          <div className='flex justify-center my-4'>
+          <div className='flex justify-center my-5'>
             {selectedOption.page > 1 && (
               <button
                 onClick={() => handlePageChange(selectedOption.page - 1)}

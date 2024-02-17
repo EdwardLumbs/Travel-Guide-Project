@@ -294,7 +294,7 @@ export default function Flights() {
         image={"photos/airplane.jpg"}
         content={'Finding the cheapest flights has never been easier'}
       />
-      <div className="h-[1650px] lg:h-[740px]">
+      <div className="h-[1680px] lg:h-[780px]">
         {location.state && 
         <Link
           to={`${search}`}
