@@ -140,7 +140,7 @@ export default function EditProfile() {
 
         <div className='flex flex-col gap-4 flex-1 w-full mt-4'>
           <input 
-            className='text-lg border border-black px-3 py-2 rounded-lg'
+            className='text-lg border duration-200 hover:border-black px-3 py-2 rounded-lg'
             type="text" 
             placeholder='Name' 
             id="username" 
@@ -151,14 +151,14 @@ export default function EditProfile() {
           <textarea
             type="text" 
             placeholder='Description'
-            className='text-lg border border-black px-3 py-2 rounded-lg'
+            className='text-lg border duration-200 hover:border-black px-3 py-2 rounded-lg'
             id='description'
             onChange={handleChange}
             defaultValue={currentUser.description || ''}
           />
 
           <input 
-            className='text-lg border border-black px-3 py-2 rounded-lg'
+            className='text-lg border duration-200 hover:border-black px-3 py-2 rounded-lg'
             type="text" 
             placeholder='Enter the IATA code near you' 
             id="user_iata" 
@@ -168,7 +168,7 @@ export default function EditProfile() {
           />
 
           <input 
-            className='text-lg border border-black px-3 py-2 rounded-lg'
+            className='text-lg border duration-200 hover:border-black px-3 py-2 rounded-lg'
             type="password" 
             placeholder='Enter new password' 
             id="newPassword" 
@@ -176,7 +176,7 @@ export default function EditProfile() {
           />
 
           <input 
-            className='text-lg border border-black px-3 py-2 rounded-lg'
+            className='text-lg border duration-200 hover:border-black px-3 py-2 rounded-lg'
             type="password" 
             placeholder='Confirm your new password' 
             id="confirmNewPassword" 

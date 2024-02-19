@@ -96,7 +96,7 @@ export default function Home() {
       >
         <div className="mt-20 container mx-auto px-4 py-20">
           <h1 className="text-6xl font-bold">
-            Plan your next trip with us
+            Plan your trip with us
           </h1>
           <div className="mt-4">
             {currentUser ?

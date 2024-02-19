@@ -32,7 +32,7 @@ export default function Profile() {
       className='bg-cover flex justify-center items-center'
       style={{ backgroundImage: `url('/photos/profile.jpg')` }}
     >
-      <div className='container bg-slate-200 rounded-3xl mx-auto flex flex-col md:flex-row mt-24 mb-6'>
+      <div className='container bg-white rounded-3xl mx-auto flex flex-col md:flex-row mt-24 mb-6'>
         <div className='md:min-h-screen'>
           {/* profile details */}
           {/* change max width? */}
@@ -79,33 +79,33 @@ export default function Profile() {
             </div>
           </div>
             
-          <div className="mt-5 bg-slate-400">
+          <div className="mt-5 bg-white">
             <div className="flex font-semibold text-lg flex-row md:flex-col border-y-2 border-black">
               <Link 
                 to={''}
-                className={`hover:bg-slate-500 px-7 py-2 duration-100 
-                  ${location.pathname === '/profile' ? 'bg-slate-300' : ''}`}
+                className={`hover:bg-orange-100 px-7 py-2 duration-100 
+                  ${location.pathname === '/profile' ? 'bg-orange-100' : ''}`}
               >
                     Summary
               </Link>
               <Link 
                 to={'edit'}
-                className={`hover:bg-slate-500 px-7 py-2 duration-100 
-                  ${location.pathname === '/profile/edit' ? 'bg-slate-300' : ''}`}
+                className={`hover:bg-orange-100 px-7 py-2 duration-100 
+                  ${location.pathname === '/profile/edit' ? 'bg-orange-100' : ''}`}
               >
                     Edit Profile
               </Link>
               <Link 
                 to={'user-blogs'}
-                className={`hover:bg-slate-500 px-7 py-2 duration-100 
-                  ${location.pathname === '/profile/user-blogs' ? 'bg-slate-300' : ''}`}
+                className={`hover:bg-orange-100 px-7 py-2 duration-100 
+                  ${location.pathname === '/profile/user-blogs' ? 'bg-orange-100' : ''}`}
               >
                     Blogs
               </Link>
               <Link 
                 to={'user-trips'}
-                className={`hover:bg-slate-500 px-7 py-2 duration-100 
-                  ${location.pathname === '/profile/user-trips' ? 'bg-slate-300' : ''}`}
+                className={`hover:bg-orange-100 px-7 py-2 duration-100 
+                  ${location.pathname === '/profile/user-trips' ? 'bg-orange-100' : ''}`}
               >
                     Trips
               </Link>
@@ -114,7 +114,7 @@ export default function Profile() {
 
         </div>
             
-        <div className='flex-1 bg-slate-300 rounded-r-3xl'>
+        <div className='flex-1 bg-orange-100 rounded-r-3xl'>
           <Outlet/>
         </div>
       </div>

@@ -68,12 +68,12 @@ export default function UserBlogs() {
         {
           error ?
             <div>
-              <p className="text-3xl">
+              <p className="text-3xl mb-4">
                 {error}
               </p> 
               <Link 
                 to={'/blogs/create'}
-                className='font-bold mb-4 border py-2 px-3 rounded-lg text-white 
+                className='font-bold my-4 border py-2 px-3 rounded-lg text-white 
                 bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white 
                 duration-200 '
               >

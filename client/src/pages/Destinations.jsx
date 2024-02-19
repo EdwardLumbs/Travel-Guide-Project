@@ -115,11 +115,11 @@ export default function Destinations() {
         }
 
         {pages && (
-          <div className='flex justify-center my-5'>
+          <div className='flex justify-center mt-20 mb-5'>
             {selectedOption.page > 1 && (
               <button
                 onClick={() => handlePageChange(selectedOption.page - 1)}
-                className='px-4 py-2 mr-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
+                className='min-w-max px-4 py-2 mr-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
               >
                 Previous Page
               </button>
@@ -142,7 +142,7 @@ export default function Destinations() {
             {selectedOption.page < Math.ceil(pages) && (
               <button
                 onClick={() => handlePageChange(selectedOption.page + 1)}
-                className='px-4 py-2 ml-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
+                className='min-w-max px-4 py-2 ml-2 text-blue-800 bg-white border border-blue-800 hover:text-white hover:bg-blue-800 duration-200 rounded-xl'
               >
                 Next Page
               </button>

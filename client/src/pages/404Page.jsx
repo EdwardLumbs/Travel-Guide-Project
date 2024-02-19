@@ -2,8 +2,10 @@ import {Link} from 'react-router-dom'
 
 export default function NotFoundPage() {
   return (
-    <div className="h-screen container flex flex-col mx-auto px-4">
-      <div className="h-full gap-4 flex flex-col justify-center items-center">
+    <div className="bg-cover h-screen flex flex-col w-full"
+      style={{ backgroundImage: `url('/photos/error.jpg')` }}
+    >
+      <div className="text-white h-full gap-4 flex flex-col justify-center items-center">
         <h1 className="font-bold text-8xl">
           404 Error
         </h1>

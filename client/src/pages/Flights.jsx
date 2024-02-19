@@ -321,7 +321,7 @@ export default function Flights() {
                 From
               </label>
               <input
-                className='border text-xl border-black px-3 py-2 rounded-md pt-8 w-full lg:flex-grow'
+                className='border hover:border-slate-600 duration-200 text-xl px-3 py-2 rounded-md pt-8 w-full lg:flex-grow'
                 type="text"
                 id='from'
                 required
@@ -355,7 +355,7 @@ export default function Flights() {
                 To
               </label>
               <input
-                className='border text-xl border-black px-3 py-2 rounded-lg pt-8 w-full lg:flex-grow'
+                className='border text-xl hover:border-slate-600 duration-200 px-3 py-2 rounded-lg pt-8 w-full lg:flex-grow'
                 type="text"
                 id='to'
                 required
@@ -381,7 +381,7 @@ export default function Flights() {
                 )}
               </div>
             </div>
-            <div className='border border-black px-3 rounded-lg flex justify-evenly lg:flex-grow'>
+            <div className='border hover:border-slate-600 duration-200 px-3 rounded-lg flex justify-evenly lg:flex-grow'>
               <div className='relative'>
                 <label htmlFor="departure" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Departure</label>
                 <input 
@@ -414,7 +414,7 @@ export default function Flights() {
               <div className='relative flex-grow w-full'>
                 <label htmlFor="adults" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
                 <input 
-                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl hover:border-slate-600 duration-200 pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='adults'
                   min = "0"
@@ -427,7 +427,7 @@ export default function Flights() {
               <div className='relative flex-grow w-full'>
                 <label htmlFor="children" className="text-gray-500 absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
                 <input 
-                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl hover:border-slate-600 duration-200 pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='children'
                   min = "0"
@@ -440,7 +440,7 @@ export default function Flights() {
               <div className='relative flex-grow w-full'>
                 <label htmlFor="infants" className="text-gray-500 absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
                 <input 
-                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl hover:border-slate-600 duration-200 pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='infants'
                   min = "0"
@@ -456,7 +456,7 @@ export default function Flights() {
               <div className='relative flex-grow w-full'>
                 <label htmlFor="adults" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Adults</label>
                 <input 
-                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl hover:border-slate-600 duration-200 pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='adults'
                   min = "0"
@@ -469,7 +469,7 @@ export default function Flights() {
               <div className='relative flex-grow w-full'>
                 <label htmlFor="children" className="text-gray-500 absolute top-7 left-10 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Children</label>
                 <input 
-                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl hover:border-slate-600 duration-200 pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='children'
                   min = "0"
@@ -482,7 +482,7 @@ export default function Flights() {
               <div className='relative flex-grow w-full'>
                 <label htmlFor="infants" className="text-gray-500 absolute top-7 left-9 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Infants</label>
                 <input 
-                  className='border text-xl border-black pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
+                  className='border text-xl hover:border-slate-600 duration-200 pl-3 pr-2 py-2 rounded-lg pt-8 w-full'
                   type="number" 
                   id='infants'
                   min = "0"
@@ -496,7 +496,7 @@ export default function Flights() {
             <div className='relative w-full'>
               <label htmlFor="class" className="text-gray-500 absolute top-7 left-8 transform -translate-y-full -translate-x-1/2 text-sm font-semibold">Class</label>
               <select 
-                className='border text-xl border-black px-3 py-2 rounded-md pt-8 w-full'
+                className='border text-xl hover:border-slate-600 duration-200 px-3 py-2 rounded-md pt-8 w-full'
                 name="cabin" 
                 id="selected_cabins"
                 onChange={handleChange}

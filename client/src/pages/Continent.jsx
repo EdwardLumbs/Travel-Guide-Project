@@ -211,7 +211,7 @@ export default function Continent() {
                     to={`/destinations?type=country&sort=ASC&page=1&continent=${continentData.continent_name}`}
                   >
                     <div 
-                      className="max-w-max flex gap-2 items-center text-white bg-blue-500 py-2 px-3 rounded-lg
+                      className="max-w-max flex gap-2 items-center text-white bg-blue-800 py-2 px-3 rounded-lg
                               hover:bg-white duration-300 hover:text-blue-800"
                     >
                       <p className="font-bold text-lg">
@@ -286,7 +286,7 @@ export default function Continent() {
                 to={`/blogs?type=${continentData.continent_name}&page=1`}
               >
                 <div 
-                  className="max-w-max flex gap-2 items-center text-white bg-blue-500 py-2 px-3 rounded-lg
+                  className="max-w-max flex gap-2 items-center text-white bg-blue-800 py-2 px-3 rounded-lg
                           hover:bg-white duration-300 hover:text-blue-800"
                 >
                   <p className="font-bold text-lg">
