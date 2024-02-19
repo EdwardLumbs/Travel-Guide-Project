@@ -63,13 +63,22 @@ export default function News({place}) {
                         />
                         <div className="absolute left-0 right-0 bottom-0 
                             p-7 flex flex-col gap-1 hover:scale-105 transition-scale duration-300">
-                            <p className="text-sm font-semibold line-clamp-1 text-white">
+                            <p 
+                                className="text-sm font-semibold line-clamp-1 text-white"
+                                style={{ textShadow: '0 0 5px rgba(0,0,0,0.5)' }}
+                            >
                                 author: {news[0].author}
                             </p>
-                            <p className='text-6xl font-bold text-white'>
+                            <p 
+                                className='text-6xl font-bold text-white'
+                                style={{ textShadow: '0 0 5px rgba(0,0,0,0.5)' }}
+                            >
                                 {news[0].title}
                             </p>
-                            <p className="text-sm text-white">
+                            <p 
+                                className="text-sm text-white"
+                                style={{ textShadow: '0 0 5px rgba(0,0,0,0.5)' }}
+                            >
                                 {news[0].description}
                             </p>
                         </div>
