@@ -2,7 +2,7 @@ import { MdDelete } from "react-icons/md";
 
 export default function TripCard({trip, openDeleteModal}) {
 
-  console.log(trip)
+  console.log(trip);
 
   return (
     <div className='bg-white shadow-md hover:shadow-lg 

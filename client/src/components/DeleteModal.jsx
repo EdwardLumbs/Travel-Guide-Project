@@ -2,7 +2,7 @@ import { MdOutlineClose } from "react-icons/md";
 
 export default function DeleteModal({ blogId, isOpen, onClose, handleDelete }) {
     if (!isOpen) return null;
-    console.log(blogId)
+    console.log(blogId);
 
     return (
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>

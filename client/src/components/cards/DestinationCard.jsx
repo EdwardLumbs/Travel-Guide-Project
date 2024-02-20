@@ -1,5 +1,5 @@
 export default function DestinationCard({destination}) {
-  console.log(destination)
+  console.log(destination);
   return (
     <div className='bg-white shadow-md hover:shadow-lg 
     transition-shadow overflow-hidden rounded-lg w-[500px] md:w-[300px]'>

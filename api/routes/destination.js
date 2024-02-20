@@ -17,19 +17,19 @@ router.get('/getCountry/:name', async (req, res, next) => {
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Country not found'));
-        }
+        };
         
         const location = data.rows[0];
         res.status(200).json(location);
         
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/getCountryNames', async (req, res, next) => {
     try {
-        const data = await pool.query(`SELECT country FROM countries`)
+        const data = await pool.query(`SELECT country FROM countries`);
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Countries not found'));
@@ -39,9 +39,9 @@ router.get('/getCountryNames', async (req, res, next) => {
         res.status(200).json(countryNames);
         
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/getCountries', async (req, res, next) => {
     let { page, pageSize } = req.query;
@@ -50,8 +50,8 @@ router.get('/getCountries', async (req, res, next) => {
     const offset = (page - 1) * pageSize;
 
     try {
-        const countData = await pool.query(`SELECT COUNT(*) FROM countries`)
-        const totalItems = countData.rows[0].count
+        const countData = await pool.query(`SELECT COUNT(*) FROM countries`);
+        const totalItems = countData.rows[0].count;
 
         const data = await pool.query(`SELECT country, continent_name, photo
         FROM countries
@@ -63,15 +63,15 @@ router.get('/getCountries', async (req, res, next) => {
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Country not found'));
-        }
+        };
         
         const location = data.rows;
         res.status(200).json({location, totalItems});
         
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/getContinent/:name', async (req, res, next) => {
     try {
@@ -88,9 +88,9 @@ router.get('/getContinent/:name', async (req, res, next) => {
         res.status(200).json(location);
         
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/getContinents/', async (req, res, next) => {
     try {
@@ -99,25 +99,25 @@ router.get('/getContinents/', async (req, res, next) => {
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Continents not found'));
-        }
+        };
         
         const location = data.rows;
         res.status(200).json(location);
         
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/searchDestination/:destination', async (req, res, next) => {
-    const { destination } = req.params
+    const { destination } = req.params;
 
     try {
         let data = await pool.query(`SELECT country, continent_name, photo
         FROM countries
         JOIN continents
         ON continent_id = continents.id
-        WHERE country ILIKE $1`, [`%${destination}%`])
+        WHERE country ILIKE $1`, [`%${destination}%`]);
 
         if (data.rows.length === 0) {
             const continentData = await pool.query(`SELECT continent_name, continent_photo
@@ -125,28 +125,28 @@ router.get('/searchDestination/:destination', async (req, res, next) => {
             WHERE continent_name ILIKE $1`, [`%${destination}%`])
             if (continentData.rows.length === 0) {
                 return next(errorHandler(404, `No destinations found for ${destination}`));
-            } 
+            };
 
-            data = continentData
-        }
+            data = continentData;
+        };
 
         const location = data.rows;
         res.status(200).json(location);
 
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/getContinentCountry', async (req, res, next) => {
-    let { continent, sort, page, pageSize } = req.query
+    let { continent, sort, page, pageSize } = req.query;
 
     page = parseInt(page) || 1;
     pageSize = parseInt(pageSize) || 8;
     const offset = (page - 1) * pageSize;
 
-    let sqlQuery
-    let totalItems
+    let sqlQuery;
+    let totalItems;
 
     // for destination page
     if (sort) {
@@ -168,7 +168,7 @@ router.get('/getContinentCountry', async (req, res, next) => {
             OFFSET ${offset}`
         } else {
             return next(errorHandler(400, 'Invalid type parameter'));
-        }
+        };
     // for continent page
     } else {
         sqlQuery = `SELECT countries.id, country, continent_name, photo
@@ -177,21 +177,21 @@ router.get('/getContinentCountry', async (req, res, next) => {
         ON continent_id = continents.id
         WHERE continent_name ILIKE $1
         LIMIT 5`
-    }
+    };
 
     try {
         const data = await pool.query(sqlQuery, [continent]);
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Countries not found'));
-        }
+        };
         
         const location = data.rows;
         res.status(200).json({location, totalItems});
         
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/filterCountries', async (req, res, next) => {
     let {type, sort, page, pageSize} = req.query;
@@ -201,7 +201,7 @@ router.get('/filterCountries', async (req, res, next) => {
     const offset = (page - 1) * pageSize;
 
     try {
-        let totalItems
+        let totalItems;
 
         let sqlQuery
         if (type.toLowerCase() === 'country') {

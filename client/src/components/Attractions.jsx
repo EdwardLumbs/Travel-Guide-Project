@@ -19,7 +19,7 @@ export default function Attractions({capital, countryName, continent}) {
     console.log(attractions)
 
     const handleChange = (e) => {
-        const text = e.target.value.toLowerCase()
+        const text = e.target.value.toLowerCase();
         setCategory(text);
 
         let filtered = categories.filter((data) => 
@@ -49,11 +49,11 @@ export default function Attractions({capital, countryName, continent}) {
                 const highlightedSuggestion = filteredSuggestions[highlightedIndex];
                 handleSuggestionClick(e, name='none', highlightedSuggestion);
             } else {
-                setFilteredSuggestions([])
+                setFilteredSuggestions([]);
                 e.target.blur();
                 if (buttonRef && buttonRef.current) {
                   buttonRef.current.focus();
-                  buttonRef.click()
+                  buttonRef.click();
                 }
             }
         };
@@ -72,32 +72,32 @@ export default function Attractions({capital, countryName, continent}) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-        const urlParams = new URLSearchParams()
-        urlParams.set('place', capital)
-        urlParams.set('category', category)
-        setChosenCategory(category)
-        const searchQuery = urlParams.toString()
-        navigate(`/destinations/${continent}/${countryName}?${searchQuery}`)
-    }
+        e.preventDefault();
+        const urlParams = new URLSearchParams();
+        urlParams.set('place', capital);
+        urlParams.set('category', category);
+        setChosenCategory(category);
+        const searchQuery = urlParams.toString();
+        navigate(`/destinations/${continent}/${countryName}?${searchQuery}`);
+    };
 
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const res = await fetch ('/api/attractions/getCategories')
-                const data = await res.json()
+                const res = await fetch ('/api/attractions/getCategories');
+                const data = await res.json();
 
                 if (data.success === false) {
-                    setError(data.message)
-                }
-                setCategories(data)
+                    setError(data.message);
+                };
+                setCategories(data);
             } catch (error) {
-                setError(error)
-                console.log(error)
+                setError(error);
+                console.log(error);
             }
         }
-        getCategories()
-    }, [])
+        getCategories();
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -132,29 +132,29 @@ export default function Attractions({capital, countryName, continent}) {
             if (placeFromUrl !== capital){
                 setError("An error occurred");
                 return;
-            }
+            };
     
             try {
-                const res = await fetch (`/api/attractions/getAttractions?${filterQuery}`)
-                const attractionsData = await res.json() 
+                const res = await fetch (`/api/attractions/getAttractions?${filterQuery}`);
+                const attractionsData = await res.json() ;
                 console.log(attractionsData)
                 if (attractionsData.success === false) {
-                    setLoading(false)
-                    setError(attractionsData.message)
+                    setLoading(false);
+                    setError(attractionsData.message);
                 }
-                setLoading(false)
-                setAttractions(attractionsData)
+                setLoading(false);
+                setAttractions(attractionsData);
             } catch (error) {
-                setLoading(false)
-                setError(error)
-                console.log(error)
+                setLoading(false);
+                setError(error);
+                console.log(error);
             }
         }
         
         if (categoryFromUrl) {
-            getAttractions()
+            getAttractions();
         }
-    }, [location.search])
+    }, [location.search]);
 
   return (
     <div className=''>

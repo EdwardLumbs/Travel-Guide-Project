@@ -24,7 +24,7 @@ export default function Explore() {
   const navigate = useNavigate()
 
   console.log(chosenCategory)
-  console.log(chosen)
+  console.log(attractions)
 
 
   const handleChange = (e) => {

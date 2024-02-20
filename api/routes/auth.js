@@ -31,7 +31,7 @@ router.post('/login', async (req, res, next) => {
         const data = await pool.query("SELECT * FROM users WHERE email = $1",
             [email]);
 
-        const user = data.rows[0]
+        const user = data.rows[0];
 
         if (!user) {
             return next(errorHandler(404, "User not Found"));
@@ -51,7 +51,7 @@ router.post('/login', async (req, res, next) => {
             .cookie('access_token', token, {maxAge: 3600000, httpOnly: true, sameSite: 'strict' })
             .cookie('refresh_token', refreshToken, {httpOnly: true, sameSite: 'strict' })
             .status(200)
-            .json(rest)
+            .json(rest);
 
     } catch (error) {
         next(error);
@@ -87,7 +87,7 @@ router.post('/google', async (req, res, next) => {
                 .cookie('access_token', token, {maxAge: 3600000, httpOnly: true, sameSite: 'strict' })
                 .cookie('refresh_token', refreshToken, {httpOnly: true, sameSite: 'strict' })
                 .status(200)
-                .json(rest)
+                .json(rest);
 
         } else {
             const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -99,7 +99,7 @@ router.post('/google', async (req, res, next) => {
                 .cookie('access_token', token, {maxAge: 3600000, httpOnly: true, sameSite: 'strict' })
                 .cookie('refresh_token', refreshToken, {httpOnly: true, sameSite: 'strict' })
                 .status(200)
-                .json(rest)
+                .json(rest);
         }
 
     } catch (error) {
@@ -109,24 +109,24 @@ router.post('/google', async (req, res, next) => {
 
 router.get('/signout', (req, res, next) => {
     try {
-        res.clearCookie('access_token')
-        res.clearCookie('refresh_token')
-        res.status(200).json('User has been logged out!')
+        res.clearCookie('access_token');
+        res.clearCookie('refresh_token');
+        res.status(200).json('User has been logged out!');
     } catch (error) {
-        next(err)
+        next(err);
     }
 })
 
 router.get('/checkCookie', (req, res, next) => {
     try {
-        const cookie = req.cookies.refresh_token
+        const cookie = req.cookies.refresh_token;
         if (!cookie) {
-            res.json({'status' : false})
+            res.json({'status' : false});
         } else {
-            res.json({'status' : true})
+            res.json({'status' : true});
         }
     } catch (err) {
-        next(err)
+        next(err);
     }
 })
 

@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import NewsCard from './cards/NewsCard'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import NewsCard from './cards/NewsCard';
 
 export default function News({place}) {
-    const [news, setNews] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
-    console.log(news)
+    const [news, setNews] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    console.log(news);
 
     useEffect(() => {
         const getNews = async () => {
             try {
-                const res = await fetch(`/api/news/getNews/${place}`)
-                const data = await res.json()
+                const res = await fetch(`/api/news/getNews/${place}`);
+                const data = await res.json();
                 if (data.success === false) {
-                    setLoading(false)
-                    setError(data.message)
+                    setLoading(false);
+                    setError(data.message);
                 }
-                setLoading(false)
-                setNews(data)
+                setLoading(false);
+                setNews(data);
             } catch (error) {
-                setLoading(false)
-                setError(error)
-                console.log(error)
+                setLoading(false);
+                setError(error);
+                console.log(error);
             }
         }
-        getNews()
-    }, [])
+        getNews();
+    }, []);
 
   return (
     <div>

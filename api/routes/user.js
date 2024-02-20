@@ -37,8 +37,8 @@ router.post('/updateUser/:id', verifyToken, async (req, res, next) => {
 
     } catch (error) {
         next(error);
-    }
-})
+    };
+});
 
 router.delete('/delete/:id', verifyToken, async (req, res, next) => {
     if (req.user == req.params.id) 
@@ -48,63 +48,63 @@ router.delete('/delete/:id', verifyToken, async (req, res, next) => {
         await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
         res.clearCookie('access_token')
         res.clearCookie('refresh_token')
-        res.status(200).json('User has been deleted')
+        res.status(200).json('User has been deleted');
     } catch (error) {
-        next(error)
-    }
-})
+        next(error);
+    };
+});
 
 router.get('/getUser/:id', async (req, res, next) => {
-    const { id } = req.params
-    console.log(id)
+    const { id } = req.params;
+    console.log(id);
     try {
         const data = await pool.query(`SELECT username, photo
         FROM users
-        WHERE id = $1`, [id])
+        WHERE id = $1`, [id]);
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'User not found'));
-        }
+        };
 
         res.status(200).json(data.rows);
 
     } catch (error) {
         next(error);
-    } 
-})
+    };
+});
 
 router.get('/getBlogCount/:id', async (req, res, next) => {
-    const { id } = req.params
+    const { id } = req.params;
     try {
         const data = await pool.query(`SELECT COUNT(*) FROM blogs
-        WHERE user_id = $1`, [id])
+        WHERE user_id = $1`, [id]);
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
-        }
+        };
 
         res.status(200).json(data.rows[0].count);
 
     } catch (error) {
         next(error);
-    } 
-})
+    };
+});
 
 router.get('/getTripCount/:id', async (req, res, next) => {
-    const { id } = req.params
+    const { id } = req.params;
     try {
         const data = await pool.query(`SELECT COUNT(*) FROM trips
-        WHERE user_id = $1`, [id])
+        WHERE user_id = $1`, [id]);
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Trips not found'));
-        }
+        };
 
         res.status(200).json(data.rows[0].count);
 
     } catch (error) {
         next(error);
-    } 
-})
+    };
+});
 
 export default router;

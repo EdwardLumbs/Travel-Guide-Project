@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { MdMenu, MdOutlineClose } from "react-icons/md";
 import { useState, useEffect, useRef } from 'react';
 
@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 export default function Header() {
     const { currentUser } = useSelector(state => state.user);
     const navigate = useNavigate();
-    const [toggled, setToggled] = useState(false)
+    const [toggled, setToggled] = useState(false);
     const dropdownRef = useRef(null);
 
     const handleClick = (e) => {

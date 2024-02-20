@@ -4,22 +4,22 @@ import { MdDelete } from "react-icons/md";
 import DeleteModal from "../DeleteModal";
 
 export default function BlogCards({home, blog, openDeleteModal}) {
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState([]);
     const {currentUser} = useSelector((state) => state.user);
-    console.log(blog.id)
+    console.log(blog.id);
 
     useEffect(() => {
         const getUser = async () => {
             try {
-                const res  = await fetch(`/api/user/getUser/${blog.user_id}`)
-                const data = await res.json()
-                setUser(data[0])
+                const res  = await fetch(`/api/user/getUser/${blog.user_id}`);
+                const data = await res.json();
+                setUser(data[0]);
               } catch (error) {
                 console.log(error.message)
-              }
-        }
-        getUser()
-    }, [])
+              };
+        };
+        getUser();
+    }, []);
 
     return (
         <div className='bg-white shadow-md hover:shadow-lg 

@@ -1,8 +1,8 @@
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
-import { app } from '../firebase'
+import { app } from '../firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInSuccess } from '../redux/slices/userSlice.js'
+import { signInSuccess } from '../redux/slices/userSlice.js';
 import { useNavigate } from 'react-router-dom';
 
 export default function OAuth() {
@@ -28,7 +28,7 @@ export default function OAuth() {
                 })
             });
            
-            const data = await res.json()
+            const data = await res.json();
 
             if (data.success === false) {
                 console.log(data.message);
@@ -37,11 +37,11 @@ export default function OAuth() {
 
             dispatch(signInSuccess(data))
             console.log(data);
-            navigate('/')
+            navigate('/');
         } catch (error) {
-            console.log("Could not sign in with Google", error)
-        }
-    }
+            console.log("Could not sign in with Google", error);
+        };
+    };
 
   return (
     <button 

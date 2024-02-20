@@ -13,19 +13,19 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
     const input2Ref = useRef(null);
     const input3Ref = useRef(null);
     const buttonRef = useRef(null);
-    const [suggestions, setSuggestions] = useState([])
+    const [suggestions, setSuggestions] = useState([]);
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [tripData, setTripData] = useState({
       title: '',
       destination: '',
       user_id: '',
       note: ''
     })
-    const { country } = useGetCountry('all')
-    const { continentData } = useGetContinent('all')
+    const { country } = useGetCountry('all');
+    const { continentData } = useGetContinent('all');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -66,8 +66,8 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
         setTripData({
             ...tripData,
             [e.target.id]: e.target.value
-        })
-    }
+        });
+    };
 
     const handleDestinationChange = (e) => {
         const text = e.target.value.toLowerCase();
@@ -81,7 +81,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
         );
         setFilteredSuggestions(filtered)
         setHighlightedIndex(filtered.length > 0 ? 0 : -1);
-    }
+    };
 
     const handleSuggestionClick = (e, name = 'none', suggestion) => {
         setTripData({
@@ -117,8 +117,8 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
     };
     
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setLoading(true)
+        e.preventDefault();
+        setLoading(true);
 
         try {
             if (!tripData.title || !tripData.destination || !tripData.note) {
@@ -128,7 +128,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
                     setError(null);
                 }, 2000);
                 return
-            }
+            };
           
             if (!suggestions.includes(tripData.destination)) {
                 setLoading(false)
@@ -137,7 +137,7 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
                     setError(null);
                 }, 2000);
                 return
-            }
+            };
           
             const res = await fetch('/api/trips/createTrip', {
                 method: 'POST',
@@ -145,8 +145,8 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(tripData)
-            })
-            const data = await res.json()
+            });
+            const data = await res.json();
           
             if (data.success === false) {
                 setLoading(false)
@@ -155,17 +155,17 @@ export default function TripModal({ isOpen, onClose, currentDestination, user_id
                       setError(null);
                 }, 2000);
                 return;
-            }
-            setLoading(false)
-            onClose()
-            navigate(`/profile/user-trips/${data.id}`)
+            };
+            setLoading(false);
+            onClose();
+            navigate(`/profile/user-trips/${data.id}`);
         } catch (error) {
-            setError(error.message)
+            setError(error.message);
             setTimeout(() => {
                 setError(null);
             }, 2000);
-        }
-    }
+        };
+    };
 
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>

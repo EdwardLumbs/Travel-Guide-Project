@@ -20,10 +20,10 @@ export default function UploadPicture ({setCoverPhoto, formData, setFormData}) {
     }, [imageFile]);
 
     const handleFileUpload = (imageFile) => {
-        const storage = getStorage(app)
-        const fileName = imageFile.name + v4()
-        console.log(fileName)
-        let storageRef
+        const storage = getStorage(app);
+        const fileName = imageFile.name + v4();
+        console.log(fileName);
+        let storageRef;
         if (setFormData === null) {
             storageRef = ref(storage, `blog-picture/${fileName}`)
         } else {

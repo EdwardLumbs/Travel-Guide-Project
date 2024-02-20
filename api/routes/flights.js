@@ -13,7 +13,7 @@ router.get('/getFlight/:query/:flyFrom/:flyTo', async (req, res, next) => {
 
     if (flyFromUrl.length > 3 || flyToUrl.length > 3) {
       return next(errorHandler(406, 'Invalid IATA Code'));
-    } 
+    };
 
     const url = `https://api.tequila.kiwi.com/v2/search?${queryString}`
     try {
@@ -24,14 +24,14 @@ router.get('/getFlight/:query/:flyFrom/:flyTo', async (req, res, next) => {
             'apikey': process.env.TEQUILA_API_KEY
           }
         });
-        const flight = await data.json()
+        const flight = await data.json();
 
         if (flight.status == 'Unprocessable Entity') {   
             return next(errorHandler(404, flight.error));
         };
 
         if (flight.data.length === 0) {
-            return next(errorHandler(404, 'No flights found for your specifications. Try with different options'))
+            return next(errorHandler(404, 'No flights found for your specifications. Try with different options'));
         };
 
         const flightData = flight.data[0];
@@ -40,8 +40,8 @@ router.get('/getFlight/:query/:flyFrom/:flyTo', async (req, res, next) => {
 
     } catch (error) {
       next(error);
-    } 
-})
+    };
+});
 
 router.get('/getIata', async (req, res, next) => {
   try {

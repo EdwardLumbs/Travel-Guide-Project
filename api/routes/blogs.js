@@ -8,11 +8,11 @@ dotenv.config();
 const router = express.Router();
 
 router.post('/createPost', verifyToken, async (req, res, next) => {
-    const { user_id, title, place_tag, photo, content } = req.body
+    const { user_id, title, place_tag, photo, content } = req.body;
 
     try {
         await pool.query("INSERT INTO blogs (user_id, title, place_tag, photo, content) VALUES ($1, $2, $3, $4, $5)",
-            [user_id, title, place_tag, photo, content])
+            [user_id, title, place_tag, photo, content]);
 
         const result = await pool.query(
             "SELECT * FROM blogs WHERE user_id = $1 AND title = $2 AND place_tag = $3 AND photo = $4 AND content = $5",
@@ -21,7 +21,7 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
 
         if (result.rows.length === 0) {
             return next(errorHandler(408, 'Something went wrong'));
-        }
+        };
         const blog = result.rows[0]
 
         res.status(201).json(blog);
@@ -32,11 +32,11 @@ router.post('/createPost', verifyToken, async (req, res, next) => {
 })
 
 router.delete('/deleteBlog/:blogId', verifyToken, async (req, res, next) => {
-    const { blogId } = req.params
+    const { blogId } = req.params;
     try {
         await pool.query(`DELETE FROM blogs
         WHERE id = $1`,
-        [blogId])
+        [blogId]);
 
         res.status(200).json('Successfully deleted');
 
@@ -125,27 +125,27 @@ router.get('/getBlogs', async (req, res, next) => {
 });
 
 router.get('/getUserBlogs/:userId', async (req, res, next) => {
-    const { userId } = req.params
+    const { userId } = req.params;
     try {
         const data = await pool.query("SELECT * FROM blogs WHERE user_id = $1",
-        [userId])
+        [userId]);
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'No posted blogs'));
-        }
+        };
 
         res.status(200).json(data.rows);
 
     } catch (error) {
         next(error);
-    }
-})
+    };
+});
 
 router.get('/getBlog/:blogId', async (req, res, next) => {
-    const { blogId } = req.params
+    const { blogId } = req.params;
     try {
         const data = await pool.query("SELECT * FROM blogs WHERE id = $1",
-        [blogId])
+        [blogId]);
 
         if (data.rows.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
@@ -155,11 +155,11 @@ router.get('/getBlog/:blogId', async (req, res, next) => {
 
     } catch (error) {
         next(error);
-    }
-})
+    };
+});
 
 router.get('/searchBlogs', async (req, res, next) => {
-    let { searchTerm, page, pageSize } = req.query
+    let { searchTerm, page, pageSize } = req.query;
 
     page = parseInt(page) || 1;
     pageSize = parseInt(pageSize) || 8;
@@ -179,19 +179,19 @@ router.get('/searchBlogs', async (req, res, next) => {
             WHERE title ILIKE $1
             LIMIT ${pageSize}
             OFFSET ${offset}`,
-            [`%${searchTerm}%`])
+            [`%${searchTerm}%`]);
 
-        const blogs = data.rows
+        const blogs = data.rows;
 
         if (blogs.length === 0) {
             return next(errorHandler(404, 'Blogs not found'));
-        }
+        };
 
         res.status(200).json({blogs, totalItems});
     } catch (error) {
         next(error);
-    }
-})
+    };
+});
 
 router.get('/filteredBlogs', async (req, res, next) => {
     let {type, page, pageSize} = req.query;
@@ -214,8 +214,8 @@ router.get('/filteredBlogs', async (req, res, next) => {
             WHERE $1 ILIKE ANY(place_tag)
             LIMIT ${pageSize}
             OFFSET ${offset}`,
-            [type])
-        const blogs = data.rows
+            [type]);
+        const blogs = data.rows;
 
         if (blogs.length === 0) {
             return next(errorHandler(404, 'No blogs found'));
@@ -224,8 +224,8 @@ router.get('/filteredBlogs', async (req, res, next) => {
         res.status(200).json({blogs, totalItems});
     } catch {
         next(error);
-    }
-})
+    };
+});
 
 
 export default router;

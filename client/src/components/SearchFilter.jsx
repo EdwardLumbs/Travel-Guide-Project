@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
-import useGetContinent from '../hooks/useGetContinent'
-import useGetCountry from '../hooks/useGetCountry'
+import useGetContinent from '../hooks/useGetContinent';
+import useGetCountry from '../hooks/useGetCountry';
 
 export default function SearchFilter({
         blog, 
@@ -17,11 +17,11 @@ export default function SearchFilter({
     {
     const [searchTerm, setSearchTerm] = useState('');
     const [tags, setTags] = useState([]);
-    const pageSize = 8
+    const pageSize = 8;
   
     const navigate = useNavigate();
-    const {continentData} = useGetContinent()
-    const {country} = useGetCountry()
+    const {continentData} = useGetContinent();
+    const {country} = useGetCountry();
 
     useEffect(() => {
         if (Array.isArray(continentData) && Array.isArray(country)) {
@@ -39,11 +39,11 @@ export default function SearchFilter({
         const continentFromUrl = urlParams.get('continent');
 
         const filterQuery = urlParams.toString();
-        console.log(searchTermFromUrl)
+        console.log(searchTermFromUrl);
         if (searchTermFromUrl) {
             setSearchTerm(searchTermFromUrl || '');
         } 
-        console.log(searchTerm)
+        console.log(searchTerm);
         
         if (typeFromUrl || sortFromUrl || pageFromUrl || continentFromUrl) {
             if (destination) {
@@ -58,17 +58,17 @@ export default function SearchFilter({
                     type: typeFromUrl || '',
                     page: parseInt(pageFromUrl) || 1,
                 });
-            }
+            };
         };
     
         const fetchSearchedLocation = async () => {
                 setLoading(true);
-                setPages(null)
+                setPages(null);
 
                 try {
                     const res = await fetch(`/api/destination/searchDestination/${searchTermFromUrl}`);
                     const searchedDestination = await res.json();
-                    console.log(res)
+                    console.log(res);
                     
                     if (searchedDestination.success === false) {
                         setLoading(false);
@@ -98,7 +98,7 @@ export default function SearchFilter({
                             setLoading(false);
                             setError(null);
                             setDestinations(destination.location);
-                            setPages(destination.totalItems / pageSize)
+                            setPages(destination.totalItems / pageSize);
                         }
                     } catch (error) {
                         console.log(error);
@@ -106,7 +106,7 @@ export default function SearchFilter({
                         setLoading(false);
                     };
                 } else if (typeFromUrl === 'continent' && continentFromUrl) {
-                    navigate('/destinations?type=continent&sort=ASC&page=1')
+                    navigate('/destinations?type=continent&sort=ASC&page=1');
                 } else {
                   try {
                     const res = await fetch(`/api/destination/filterCountries?${filterQuery}`);
@@ -119,7 +119,7 @@ export default function SearchFilter({
                         setLoading(false);
                         setError(null);
                         setDestinations(destination.location);
-                        setPages(destination.totalItems / pageSize)
+                        setPages(destination.totalItems / pageSize);
                     }
                   } catch (error) {
                     console.log(error);
@@ -133,7 +133,7 @@ export default function SearchFilter({
                 try {
                     const res = await fetch(`/api/blogs/searchBlogs?${filterQuery}`);
                     const searchedBlogs = await res.json();
-                    console.log(searchedBlogs)
+                    console.log(searchedBlogs);
                     if (searchedBlogs.success === false) {
                         setLoading(false);
                         setError(searchedBlogs.message);
@@ -141,7 +141,7 @@ export default function SearchFilter({
                         setLoading(false);
                         setError(null);
                         setBlogs(searchedBlogs.blogs);
-                        setPages(searchedBlogs.totalItems / pageSize)
+                        setPages(searchedBlogs.totalItems / pageSize);
                     }
                 } catch (error) {
                     console.log(error);
@@ -152,8 +152,8 @@ export default function SearchFilter({
         const fetchFilteredBlogs = async (filterQuery) => {
                 setLoading(true);
                 try {
-                    const res = await fetch(`/api/blogs/filteredBlogs?${filterQuery}`)
-                    const blogs = await res.json()
+                    const res = await fetch(`/api/blogs/filteredBlogs?${filterQuery}`);
+                    const blogs = await res.json();
                     if (blogs.success === false) {
                         setLoading(false);
                         setError(blogs.message);
@@ -161,7 +161,7 @@ export default function SearchFilter({
                         setLoading(false);
                         setError(null);
                         setBlogs(blogs.blogs);
-                        setPages(blogs.totalItems / pageSize)
+                        setPages(blogs.totalItems / pageSize);
                     }
                 } catch (error) {
                     console.log(error);
@@ -174,7 +174,7 @@ export default function SearchFilter({
         }
         
         if (typeFromUrl && blog) {
-            console.log('clicked')
+            console.log('clicked');
             fetchFilteredBlogs(filterQuery);
         } 
         
@@ -190,8 +190,8 @@ export default function SearchFilter({
 
     const getUrlParams = () => {
         const urlParams = new URLSearchParams(location.search);
-        return urlParams
-    }
+        return urlParams;
+    };
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -229,7 +229,7 @@ export default function SearchFilter({
             :
             `/destinations?${searchQuery}`
             );
-    }
+    };
 
     const handleOptionSubmit = (e) => {
         e.preventDefault();
@@ -251,7 +251,7 @@ export default function SearchFilter({
             `/blogs?${searchQuery}`
             :
             `/destinations?${searchQuery}`);
-    }
+    };
 
   return (
     <div className='lg:flex lg:flex-col lg:gap-6 mb-4 mt-2 w-full'>

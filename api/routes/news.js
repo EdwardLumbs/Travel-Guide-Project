@@ -16,16 +16,16 @@ router.get('/getNews/:place', async (req, res, next) => {
                 'Authorization': apiKey,
                 'Content-Type': 'application/json', 
             }
-        })
+        });
         const news = await data.json()
         if (news?.articles.length === 0) {
-            return next(errorHandler(404, 'No relevant news found'))
-        }
+            return next(errorHandler(404, 'No relevant news found'));
+        };
 
-        res.status(200).json(news.articles)
+        res.status(200).json(news.articles);
         
     } catch (error) {
-        next(error)
+        next(error);
     }
 
 })

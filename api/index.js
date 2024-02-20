@@ -5,12 +5,12 @@ import pool from './database/db.js';
 import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
 import destinationRouter from './routes/destination.js';
-import flightsRouter from './routes/flights.js'
-import attractionsRouter from './routes/attractions.js'
-import newsRouter from './routes/news.js'
-import blogRouter from './routes/blogs.js'
-import tripsRouter from './routes/trips.js'
-import cors from 'cors'
+import flightsRouter from './routes/flights.js';
+import attractionsRouter from './routes/attractions.js';
+import newsRouter from './routes/news.js';
+import blogRouter from './routes/blogs.js';
+import tripsRouter from './routes/trips.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -32,16 +32,16 @@ app.use("/api/trips", tripsRouter);
 app.get('/test', async (req, res) => {
     try {
         const results = await pool.query("SELECT * FROM users WHERE email = $1",
-        ["edwardlumbao@yahoo.com"])
-        res.json(results.rows)
+        ["edwardlumbao@yahoo.com"]);
+        res.json(results.rows);
     } catch (error) {
-        console.log(error)
-    }
-})
+        console.log(error);
+    };
+});
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server running on port ${process.env.SERVER_PORT}`);
-})
+});
 
 // error handling middleware
 
@@ -52,5 +52,5 @@ app.use((err, req, res,next) => {
         success: false,
         message,
         statusCode
-    })
-})
+    });
+});
