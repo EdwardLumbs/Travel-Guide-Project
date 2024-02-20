@@ -135,15 +135,15 @@ export default function Explore() {
     const filterQuery = urlParams.toString();
 
     if (categoryFromUrl || placeFromUrl || limitFromUrl) {
-        setChosenCategory(categoryFromUrl)
-        setChosen(categoryFromUrl)
+        setChosenCategory(categoryFromUrl);
+        setChosen(categoryFromUrl);
 
         setInputText({
           place: placeFromUrl || '',
           category: categoryFromUrl || '',
           limit: limitFromUrl || 20
         });
-    }
+    };
 
     const getAttractions = async () => {
         setLoading(true);
@@ -152,12 +152,20 @@ export default function Explore() {
             const res = await fetch (`/api/attractions/getAttractions?${filterQuery}`)
             const attractionsData = await res.json() 
             console.log(attractionsData)
-            if (attractionsData.success === false) {
-                setLoading(false)
-                setError(attractionsData.message)
+            console.log(attractionsData.success)
+
+            if (attractionsData.length > 0) {
+              setLoading(false)
+              setAttractions(attractionsData)
+              setError(false)
+            } 
+            
+            if (attractionsData.statusCode === 404) {
+              console.log('clicked')
+              setLoading(false)
+              setError(attractionsData.message)
             }
-            setLoading(false)
-            setAttractions(attractionsData)
+
         } catch (error) {
             setLoading(false)
             setError(error)

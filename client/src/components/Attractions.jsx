@@ -144,6 +144,8 @@ export default function Attractions({capital, countryName, continent}) {
                 }
                 setLoading(false);
                 setAttractions(attractionsData);
+                setError(false);
+
             } catch (error) {
                 setLoading(false);
                 setError(error);
