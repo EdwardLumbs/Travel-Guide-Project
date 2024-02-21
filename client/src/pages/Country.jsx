@@ -83,6 +83,8 @@ export default function Country() {
     getIataCodes();
   }, [])
 
+  console.log(country.continent_name)
+
   const fetchBlogs = async () => {
     try {
       setBlogLoading(true)

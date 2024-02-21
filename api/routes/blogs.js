@@ -53,6 +53,9 @@ router.get('/getBlogs', async (req, res, next) => {
     const pageSize = limit || 8;
     const offset = (page - 1) * pageSize;
 
+    console.log(tag1)
+    console.log(tag2)
+
     try {
         let data;
         let data1;

@@ -23,7 +23,7 @@ export default function Continent() {
   const {continentCountries, continentCountriesLoading, continentCountriesError} = useGetContinentCountries(continent);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  console.log(continentData)
+  console.log(continentData.continent_name)
 
   const fetchBlogs = async () => {
     try {
@@ -48,7 +48,7 @@ export default function Continent() {
   
   useEffect(() => {
     fetchBlogs()
-  }, [continentData.continent, blogError])
+  }, [continentData.continent_name, blogError])
 
   const openModal = () => {
     setModalOpen(true);
