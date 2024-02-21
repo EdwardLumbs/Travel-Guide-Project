@@ -73,10 +73,10 @@ export default function Home() {
         home={true}
         content={
         <>
-          <h1 className="text-8xl font-bold">
+          <h1 className="text-6xl lg:text-8xl font-bold">
             Welcome To
           </h1>
-          <h1 className="text-8xl font-logo text-green-600 flex">
+          <h1 className="text-6xl lg:text-8xl font-logo text-green-600 flex">
             <p className="font-extrabold text-green-500">
               Edward's
             </p>
@@ -84,7 +84,7 @@ export default function Home() {
               TravelGuide
             </p>
           </h1>
-          <p className="mt-4 text-2xl font-semibold">
+          <p className="lg:mt-4 text-xl lg:text-2xl font-semibold">
             Your Journey Starts Here
           </p>
         </>}
