@@ -15,6 +15,7 @@ import path from 'path';
 dotenv.config();
 
 const __dirname = path.resolve();
+
 const app = express();
 
 app.use(express.json());
@@ -30,10 +31,10 @@ app.use("/api/news", newsRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/trips", tripsRouter);
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+app.use(express.static(path.join(__dirname, '/client/dist')))
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
 })
 
 app.listen(process.env.SERVER_PORT, () => {
