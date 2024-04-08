@@ -43,7 +43,7 @@ export default function Header() {
             <nav className= 'py-5'>
                 <div className='flex items-center justify-between px-4 '>
                     <Link to='/'>
-                        <div className="text-xl font-logo text-white">
+                        <div className="md:text-xl font-logo text-white">
                             <span className="font-extrabold">Edward's</span>TravelGuide
                         </div>
                     </Link>
