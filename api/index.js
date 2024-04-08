@@ -31,11 +31,11 @@ app.use("/api/news", newsRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/trips", tripsRouter);
 
-app.use(express.static(path.join(__dirname, '/client/dist')))
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
-})
+});
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server running on port ${process.env.SERVER_PORT}`);

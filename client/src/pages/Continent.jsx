@@ -79,7 +79,7 @@ export default function Continent() {
           {continentError}
         </p>
       : continentLoading ? 
-        <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+        <div className='mx-auto h-screen animate-pulse container px-4 my-4 flex flex-col justify-center items-center'>
           <img 
             className='h-[80px]'
             src="/vectors/plane.svg" 
@@ -122,7 +122,7 @@ export default function Continent() {
               }
               <div className="flex justify-end items-center mt-7 gap-7">
                 <Link to={`/explore`}>
-                  <div className="bg-yellow-100 w-56 h-auauto rounded-lg p-4 flex flex-col gap-7">
+                  <div className="bg-yellow-100 w-56 h-auto rounded-lg p-4 flex flex-col gap-7">
                     <h1 className="text-2xl font-semibold">
                       Find the best things to do
                     </h1>

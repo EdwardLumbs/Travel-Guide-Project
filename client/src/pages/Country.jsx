@@ -295,7 +295,7 @@ export default function Country() {
       {countryError}
     </p>
     : loading ? 
-    <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+    <div className='mx-auto h-screen animate-pulse container px-4 my-4 flex flex-col justify-center items-center'>
       <img 
         className='h-[80px]'
         src="/vectors/plane.svg" 

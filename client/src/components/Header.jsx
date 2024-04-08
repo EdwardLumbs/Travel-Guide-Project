@@ -117,7 +117,7 @@ export default function Header() {
                 
                 <ul 
                     ref={dropdownRef}
-                    className={`${!toggled && 'hidden'} lg:hiddenpx-2 py-3 rounded-md bg-white bg-opacity-10 backdrop-blur-md lg:bg-transparent flex flex-col lg:flex-row gap-1 lg:gap-4 mt-3`}
+                    className={`${!toggled && 'hidden'} lg:hidden px-2 py-3 rounded-md bg-white bg-opacity-10 backdrop-blur-md lg:bg-transparent flex flex-col lg:flex-row gap-1 lg:gap-4 mt-3`}
                 >
                     <li 
                         className='hover:bg-white hover:bg-opacity-50 px-2 rounded font-semibold lg:hover:underline cursor-pointer' 

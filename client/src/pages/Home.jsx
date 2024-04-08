@@ -15,7 +15,6 @@ export default function Home() {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState([])
   const [isModalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -73,10 +72,10 @@ export default function Home() {
         home={true}
         content={
         <>
-          <h1 className="text-6xl lg:text-8xl font-bold">
+          <h1 className="text-3xl lg:text-8xl font-bold">
             Welcome To
           </h1>
-          <h1 className="text-6xl lg:text-8xl font-logo text-green-600 flex">
+          <h1 className="text-3xl lg:text-8xl font-logo text-green-600 flex">
             <p className="font-extrabold text-green-500">
               Edward's
             </p>
@@ -95,7 +94,7 @@ export default function Home() {
         style={{ backgroundImage: `url('/photos/home-plan.jpg')` }}
       >
         <div className="mt-20 container mx-auto px-4 py-20">
-          <h1 className="text-6xl font-bold">
+          <h1 className="text-3xl lg:text-6xl font-bold">
             Plan your trip with us
           </h1>
           <div className="mt-4">
@@ -136,7 +135,7 @@ export default function Home() {
 
           {/* destination section */}
       <div className="mt-20 container flex flex-col mx-auto px-4">
-        <h1 className="text-6xl font-bold ">
+        <h1 className="text-3xl lg:text-6xl font-bold ">
           Your next adventure awaits
         </h1>
         <p className="text-lg mt-2">
@@ -184,7 +183,7 @@ export default function Home() {
         style={{ backgroundImage: `url('/photos/home-flight.jpg')` }}
       >
         <div className="mt-20 container mx-auto px-4 py-20 text-center">
-          <h1 className="text-6xl font-bold">
+          <h1 className="text-3xl lg:text-6xl font-bold">
             Find the cheapest flights
           </h1>
           <p className="text-lg my-4">
@@ -204,7 +203,7 @@ export default function Home() {
 
           {/* blog section */}
       <div className="mt-20 container mx-auto px-4">
-        <h1 className="text-6xl font-bold">
+        <h1 className="text-3xl lg:text-6xl font-bold">
           Read travelers' experiences
         </h1>
         <div className="flex items-center gap-4 mt-2">
@@ -287,7 +286,7 @@ export default function Home() {
         style={{ backgroundImage: `url('/photos/home-explore.jpg')` }}
       >
         <div className="mt-20 container mx-auto px-4 py-20 text-center text-white">
-          <h1 className="text-6xl font-bold">
+          <h1 className="text-3xl lg:text-6xl font-bold">
             Discover attractions
           </h1>
           <p className="text-lg my-4">
