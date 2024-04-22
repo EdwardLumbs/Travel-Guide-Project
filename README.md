@@ -2,6 +2,8 @@
 - Used React and Tailwind for frontend
 - Uses redux toolkit for state management
 - Communicates with GeoAPIfy and Tequila API for real time flights and attractions data
+- GeoAPIfy for explore page
+- Tequila API for flights page
 - Users can make and delete blog posts
 - JWT for cookies and bcryptjs for encryption
 - Firebase OAuth
