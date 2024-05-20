@@ -4,7 +4,8 @@ CREATE TABLE countries (
     capital VARCHAR(255),
     continent_id INT REFERENCES continents(id),
     photo TEXT,
-    description TEXT
+    description TEXT,
+    country_iata VARCHAR(3)
 )
 
 CREATE TABLE continents (
