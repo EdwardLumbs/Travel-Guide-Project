@@ -509,6 +509,7 @@ export default function Flights() {
               </select>
             </div>
             <button 
+              disabled={loading}
               className='bg-blue-800 text-xl rounded-md text-white font-semibold px-5 py-2 w-full
                   hover:bg-white hover:text-blue-800 duration-200 border border-blue-800'
             >
