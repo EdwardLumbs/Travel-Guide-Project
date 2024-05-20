@@ -133,7 +133,7 @@ export default function Blogs() {
         </Link>
           {
             loading ? 
-            <div className='mx-auto animate-pulse container px-4 my-4 flex flex-col items-center'>
+            <div className='mx-auto  h-screen animate-pulse container px-4 my-4 flex flex-col items-center'>
               <img 
                 className='h-[80px]'
                 src="/vectors/plane.svg" 

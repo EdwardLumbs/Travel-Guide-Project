@@ -87,7 +87,7 @@ export default function ProfileSummary() {
           :
             <div className='mt-3'>
               <p className='text-3xl'>
-                No trips found!
+                No trips found
               </p>
               <button 
                 className='mt-2 w-full border py-2 px-3 rounded-lg text-white 

@@ -37,9 +37,9 @@ function App() {
             <Route path='login' element={<Login/>} />
             <Route path='sign-up' element={<SignUp/>} />
           </Route>
-          <Route path='/destinations' element={<Destinations/>} />
-          <Route path='/destinations/:continent' element={<Continent/>} />
-          <Route path='/destinations/:continent/:countryName' element={<Country/>} />
+          <Route path='destinations' element={<Destinations/>} />
+          <Route path='destinations/:continent' element={<Continent/>} />
+          <Route path='destinations/:continent/:countryName' element={<Country/>} />
           <Route path='explore' element={<Explore/>} />
           <Route path='flights' element={<Flights/>} />
           <Route path='blogs' element={<Blogs/>} />

@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import pool from './database/db.js';
 import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
 import destinationRouter from './routes/destination.js';
